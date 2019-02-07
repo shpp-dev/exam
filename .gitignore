@@ -1,0 +1,11 @@
+/site/node_modules
+/site/public/hot
+/site/public/storage
+/site/storage/*.key
+/site/vendor
+/site/.env
+/site/.phpunit.result.cache
+/site/Homestead.json
+/site/Homestead.yaml
+/site/npm-debug.log
+/site/yarn-error.log
