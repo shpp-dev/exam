@@ -15,4 +15,14 @@ class User extends BaseModel
     protected $fillable = [
         'email',
     ];
+
+    public function examSessions()
+    {
+        return $this->hasMany('App\ExamSession');
+    }
+
+    public function activeSession()
+    {
+        return $this->examSessions()->where('finished_at', null)->first();
+    }
 }

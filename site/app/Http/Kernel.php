@@ -3,6 +3,8 @@
 namespace App\Http;
 
 use App\Http\Middleware\CheckAuth;
+use App\Http\Middleware\CheckExamAccess;
+use App\Http\Middleware\CheckExamInProgress;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -39,7 +41,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'throttle:60,1',
+//            'throttle:60,1',
             'bindings',
         ],
     ];
@@ -62,7 +64,8 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'ptp.auth' => CheckAuth::class,
-
+        'ptp.current' => CheckExamInProgress::class,
+        'ptp.access' => CheckExamAccess::class,
     ];
 
     /**

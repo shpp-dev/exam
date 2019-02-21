@@ -13,6 +13,15 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['middleware' => ['ptp.auth']], function () {
+    Route::get('/exam/status', 'ExamController@getStatus');
+});
+
+Route::group(['middleware' => ['ptp.auth', 'ptp.access']], function () {
+    Route::post('/exam/start', 'ExamController@startSession');
+});
+
+Route::group(['middleware' => ['ptp.auth', 'ptp.current']], function () {
+    Route::get('/exam/task', 'ExamController@getTask');
+    Route::post('/exam/answer', 'ExamController@saveAnswer');
 });
