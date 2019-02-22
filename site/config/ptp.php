@@ -7,4 +7,5 @@ return [
     'tasksOnExam' => env('TASKS_ON_EXAM_AMOUNT'),
     'examDurationMins' => env('EXAM_DURATION_MINS'),
     'coderunnerUrl' => env('CODERUNNER_URL'),
+    'coderunnerKey' => env('CODERUNNER_KEY'),
 ];

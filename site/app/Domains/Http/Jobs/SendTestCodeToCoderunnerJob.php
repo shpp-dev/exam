@@ -51,7 +51,7 @@ class SendTestCodeToCoderunnerJob extends Job
 
         $testPack = [
             'userName' => 'testuser',
-            'serverSecret' => '',
+            'serverSecret' => config('ptp.coderunnerKey'),
             'code' => $this->program,
             'language' => $this->lang,
             'testCases' => $testCases
