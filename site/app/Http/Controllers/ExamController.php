@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Features\Exam\CheckExamStatusFeature;
+use App\Features\Exam\FinishExamFeature;
 use App\Features\Exam\GetTaskFeature;
 use App\Features\Exam\SaveAnswerFeature;
 use App\Features\Exam\StartExamSessionFeature;
@@ -28,5 +29,10 @@ class ExamController extends \Lucid\Foundation\Http\Controller
     public function saveAnswer()
     {
         $this->serve(SaveAnswerFeature::class);
+    }
+
+    public function finishExam()
+    {
+        $this->serve(FinishExamFeature::class);
     }
 }

@@ -3,15 +3,81 @@
 namespace App\Features\Exam;
 
 use App\Domains\Auth\Auth;
+use App\Domains\Exam\Jobs\CreateExamResultJob;
+use App\Domains\Exam\Jobs\FinishExamSessionJob;
+use App\Domains\Helpers\Traits\JsonTrait;
 use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Domains\Http\Jobs\SendHttpPostRequestJob;
+use App\Domains\Http\Jobs\SendTestCodeToCoderunnerJob;
+use App\Domains\Http\Jobs\SubmitCodeToCoderunnerJob;
+use App\ExamSession;
+use App\Task;
 use Illuminate\Http\Request;
 use Lucid\Foundation\Feature;
+use Lucid\Foundation\ServesFeaturesTrait;
 
 class SaveAnswerFeature extends Feature
 {
+    use JsonTrait, ServesFeaturesTrait;
+
     public function handle(Request $request)
     {
+        $user = Auth::getAuthUser();
+        $session = $user->activeSession();
 
+        $action = $request->action;
+        $taskNumber = $request->taskNumber;// start from 0 index
+        $lang = $request->lang; // js cpp java
+        $userFunction = $request->userFunction;
+
+        $selectedTasks = json_decode($session->tasksIds, true);
+        $task = Task::find($selectedTasks[$taskNumber]);
+
+        $program = [];
+        switch ($lang) {
+            case 'java':
+                $program = str_replace('{{code}}', $userFunction, $task->javaWrap);
+                break;
+            case 'js':
+                $program = str_replace('{{code}}', $userFunction, $task->jsWrap);
+                break;
+            case 'cpp':
+                $program = str_replace('{{code}}', $userFunction, $task->cppWrap);
+                break;
+        }
+
+        $program = $this->escapeJsonString($program);
+
+        $result = [];
+        switch ($action) {
+            case 'testCode':
+                $result = $this->run(SendTestCodeToCoderunnerJob::class, [
+                    'task' => $task,
+                    'program' => $program,
+                    'lang' => $lang
+                ]);
+                break;
+            case 'submitCode':
+                $result = $this->run(SubmitCodeToCoderunnerJob::class, [
+                    'task' => $task,
+                    'program' => $program,
+                    'lang' => $lang,
+                    'userFunction' => $userFunction
+                ]);
+                $this->run(CreateExamResultJob::class, [
+                    'sessionId' => $session->id,
+                    'task' => $task,
+                    'result' => $result
+                ]);
+                if ($taskNumber == config('ptp.tasksOnExam')) {
+                    $result['finished'] = true;
+                    $this->serve(FinishExamFeature::class);
+                }
+                break;
+        }
+
+        return $this->run(RespondWithJsonJob::class, [
+            'content' => $result
+        ]);
     }
 }

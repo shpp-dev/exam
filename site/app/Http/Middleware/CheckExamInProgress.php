@@ -28,7 +28,7 @@ class CheckExamInProgress
             return $next($request);
         } else {
             return $this->run(RespondWithJsonErrorJob::class, [
-                'message' => 'Your exam have not been started',
+                'message' => 'You are not on exam now',
                 'code' => 418,
             ]);
         }

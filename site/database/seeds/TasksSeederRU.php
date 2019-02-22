@@ -239,9 +239,9 @@ N и K передаются параметрами функции и  0 < N, K <
 [100, 0, 3, 4, 0]"
         ];
 
-        $task_numbers = [1, 5, 5, 0, 5, 5, 5, 5, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4];
+        $taskNumbers = [1, 5, 5, 0, 5, 5, 5, 5, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4];
 
-        $js_wraps = [
+        $jsWraps = [
             "process.stdin.resume();
 var stdin = \"\";
 process.stdin.on('data', function(chunk) {
@@ -624,7 +624,7 @@ process.stdin.on('end', function() {
 {{code}}"
         ];
 
-        $java_wraps = [
+        $javaWraps = [
             "import java.util.Scanner;
  
  
@@ -1086,7 +1086,7 @@ public class Sorting {
 }"
         ];
 
-        $cpp_wraps = [
+        $cppWraps = [
             "#include <iostream>
  
 using namespace std;
@@ -1574,7 +1574,7 @@ int main(int argc, char const *argv[])
 }"
         ];
 
-        $test_cases = [
+        $testCases = [
             '"5 7", "11 8", "100 100"',
             '"60 3*(2 - 5) + 12*(4 * (3 * 11 - 11 / ( 33 - 7)) + 56) - 12/12", "81 3*(2 - 5) + 12*(22 - 9) + 11)*( 4 + (4 * (3 * 11 - 11 / ( 33 - 7)) + 56) - 12/12", "61 3*(2 - 5) + 12*(4 * (3 * 11 - 11 / ( 33 - 7)) + 56) - 12/12)"',
             '"3 0 0 0", "5 3 5 0 1 7", "7 0 6 4 2 10 22 4", "9 2 3 3 57 89 543 25 0 8"',
@@ -1630,7 +1630,7 @@ int main(int argc, char const *argv[])
             "[1,2,3]\ [0,100,75,0,0,0,2]\ [0]\ [100,0,0,0]"
         ];
 
-        $js_start_functions = [
+        $jsStartFunctions = [
             "function resolve(triangleN, rhombK) {\n\n}",
             "function isBracketsPlacedCorrectly(formula){\n\n}",
             "function separateAndSort(array) {\n\n}",
@@ -1658,7 +1658,7 @@ int main(int argc, char const *argv[])
             "function resolve(array, arraySize) {\n\n}",
         ];
 
-        $java_start_functions = [
+        $javaStartFunctions = [
             "static int resolve(int triangleN, int rhombK) {\n\n}",
             "static int isBracketsPlacedCorrectly(String formula) {\n\n}",
             "public static int[] resolve(int[] array, int length) {\n\n}",
@@ -1686,7 +1686,7 @@ int main(int argc, char const *argv[])
             "static int[] resolve(int []array, int arraySize)  {\n\n}"
         ];
 
-        $cpp_start_functions = [
+        $cppStartFunctions = [
             "int resolve(int triangleN, int rhombK) {\n\n}",
             "int isBracketsPlacedCorrectly(char formula[]){\n\n}",
             "int *resolve(int array[], int length) {\n\n}",
@@ -1715,19 +1715,19 @@ int main(int argc, char const *argv[])
         ];
 
         foreach ($names as $key => $name) {
-            \Illuminate\Support\Facades\DB::table("programming_test_tasks")->insert([
+            \Illuminate\Support\Facades\DB::table('tasks')->insert([
                 "id" => $key + 1,
                 "name" => $names[$key],
                 "description" => $descriptions[$key],
-                "task_number" => $task_numbers[$key],
-                "js-wrap" => $js_wraps[$key],
-                "java-wrap" => $java_wraps[$key],
-                "cpp-wrap" => $cpp_wraps[$key],
-                "test-cases" => $test_cases[$key],
+                "number" => $taskNumbers[$key],
+                "js-wrap" => $jsWraps[$key],
+                "java-wrap" => $javaWraps[$key],
+                "cpp-wrap" => $cppWraps[$key],
+                "test-cases" => $testCases[$key],
                 "answers" => $answers[$key],
-                "js_start_function" => $js_start_functions[$key],
-                "java_start_function" => $java_start_functions[$key],
-                "cpp_start_function" => $cpp_start_functions[$key]
+                "js_start_function" => $jsStartFunctions[$key],
+                "java_start_function" => $javaStartFunctions[$key],
+                "cpp_start_function" => $cppStartFunctions[$key]
             ]);
         }
     }

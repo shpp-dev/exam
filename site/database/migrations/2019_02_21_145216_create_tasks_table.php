@@ -17,7 +17,7 @@ class CreateTasksTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->text('description');
-            $table->unsignedInteger('task_number');
+            $table->unsignedInteger('number');
             $table->text('js_wrap');
             $table->text('java_wrap');
             $table->text('cpp_wrap');
