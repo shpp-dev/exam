@@ -7,9 +7,9 @@ use App\Features\Exam\FinishExamFeature;
 use App\Features\Exam\GetTaskFeature;
 use App\Features\Exam\SaveAnswerFeature;
 use App\Features\Exam\StartExamSessionFeature;
-use Illuminate\Http\Request;
+use Lucid\Foundation\Http\Controller as Controller;
 
-class ExamController extends \Lucid\Foundation\Http\Controller
+class ExamController extends Controller
 {
     public function getStatus()
     {

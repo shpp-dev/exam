@@ -16,4 +16,9 @@ class ExamSession extends BaseModel
     {
         return $this->hasMany('App\Result');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

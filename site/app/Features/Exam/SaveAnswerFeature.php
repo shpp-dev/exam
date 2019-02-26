@@ -50,14 +50,14 @@ class SaveAnswerFeature extends Feature
 
         $result = [];
         switch ($action) {
-            case 'testCode':
+            case 'test':
                 $result = $this->run(SendTestCodeToCoderunnerJob::class, [
                     'task' => $task,
                     'program' => $program,
                     'lang' => $lang
                 ]);
                 break;
-            case 'submitCode':
+            case 'submit':
                 $result = $this->run(SubmitCodeToCoderunnerJob::class, [
                     'task' => $task,
                     'program' => $program,
@@ -72,6 +72,8 @@ class SaveAnswerFeature extends Feature
                 if ($taskNumber == config('ptp.tasksOnExam')) {
                     $result['finished'] = true;
                     $this->serve(FinishExamFeature::class);
+                } else {
+                    $result['finished'] = false;
                 }
                 break;
         }

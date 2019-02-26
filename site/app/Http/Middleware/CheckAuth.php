@@ -26,7 +26,7 @@ class CheckAuth
             return $this->run(RespondWithJsonErrorJob::class, [
                 'message' => 'Non authorized',
                 'code' => 401,
-                'redirectUrl' => config('ptp.accountFrontUrl').'/signin'
+                'redirectTo' => 'accountF'
             ]);
         }
 
@@ -35,7 +35,7 @@ class CheckAuth
             return $this->run(RespondWithJsonErrorJob::class, [
                 'message' => 'Non authorized',
                 'code' => 401,
-                'redirectUrl' => config('ptp.accountFrontUrl').'/signin'
+                'redirectTo' => 'accountF'
             ]);
         }
 
@@ -48,7 +48,7 @@ class CheckAuth
             return $this->run(RespondWithJsonErrorJob::class, [
                 'message' => 'Token not active',
                 'code' => 403,
-                'redirectUrl' => config('ptp.accountFrontUrl').'/signin'
+                'redirectTo' => 'accountF'
             ]);
         }
 

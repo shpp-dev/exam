@@ -46,7 +46,7 @@ class GetPreparedTaskDataJob extends Job
                 'java' => $this->task->javaStartFunction,
                 'cpp' => $this->task->cppStartFunction
             ],
-            'deadline' => Carbon::parse($this->examSession->startedAt)->addMinutes(config('ptp.examDurationMins'))
+            'deadlineTs' => Carbon::parse($this->examSession->startedAt)->addMinutes(config('ptp.examDurationMins'))->timestamp
         ];
     }
 }

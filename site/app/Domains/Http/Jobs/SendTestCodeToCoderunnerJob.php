@@ -80,13 +80,15 @@ class SendTestCodeToCoderunnerJob extends Job
             return [
                 'error' => false,
                 'message' => $trimmedErr,
+                'code' => 418
             ];
         }
 
         if (json_decode($response)->response->stderr[0] != '') {
             return [
                 'error' => false,
-                'message' => 'Ваше решение несовместимо с жизнью :) Вам нужно внести какие-то правки'
+                'message' => 'Ваше решение несовместимо с жизнью :) Вам нужно внести какие-то правки',
+                'code' => 418
             ];
         }
 
