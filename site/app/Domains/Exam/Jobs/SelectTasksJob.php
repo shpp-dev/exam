@@ -35,8 +35,8 @@ class SelectTasksJob extends Job
     {
         $tasks = [];
         for ($i= 0; $i <= $this->amount; $i++ ) {
-            $task = Task::where('number', $i )->orderByRaw("RAND()")->get();
-            $tasks[] = $task[0]->id;
+            $task = Task::where('number', $i )->orderByRaw("RAND()")->first();
+            $tasks[] = $task->id;
         }
         return $tasks;
     }

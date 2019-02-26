@@ -45,6 +45,5 @@ class CreateExamResultJob extends Job
         $examResult->taskId = $this->task->id;
         $examResult->result = json_encode($this->result);
         $examResult->save();
-
     }
 }

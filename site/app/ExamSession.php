@@ -14,6 +14,6 @@ class ExamSession extends BaseModel
 
     public function results()
     {
-        return $this->hasMany('App\Result');
+        return $this->hasMany('App\Result', 'session_id');
     }
 }

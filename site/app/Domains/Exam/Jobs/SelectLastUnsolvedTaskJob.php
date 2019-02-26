@@ -20,13 +20,13 @@ class SelectLastUnsolvedTaskJob extends Job
 
     public function handle()
     {
-        $tasks = json_decode($this->examSession->tasks);
-        $mappedRresults = $this->getMapped($this->examSession->results, 'taskId');
+        $tasks = json_decode($this->examSession->tasksIds);
+        $mappedResults = $this->getMapped($this->examSession->results, 'taskId');
 
         $unsolvedId = 1;
         foreach ($tasks as $task) {
-            if (!isset($mappedRresults[$task->id])) {
-                $unsolvedId = $task->id;
+            if (!isset($mappedResults[$task])) {
+                $unsolvedId = $task;
                 break;
             }
         }

@@ -24,11 +24,12 @@ class GetTaskFeature extends Feature
         $task = Task::find($unsolvedTaskId);
 
         $preparedContent = $this->run(GetPreparedTaskDataJob::class, [
-            'task' => $task
+            'task' => $task,
+            'examSession' => $session
         ]);
+
         return $this->run(RespondWithJsonJob::class, [
             'content' => $preparedContent
         ]);
-
     }
 }

@@ -28,7 +28,7 @@ class SendFinishExamMailToStudentJob extends Job
 
     public function handle()
     {
-        Mail::send('emails.exam_finished', [], function ($message) {
+        Mail::send('mails.exam_completed', [], function ($message) {
             $message->to($this->receiverEmail)->subject('Экзамен завершен');
         });
     }

@@ -26,10 +26,14 @@ class CreateExamSessionJob extends Job
 
     public function handle()
     {
-        return new ExamSession([
-            'userId' => $this->userId,
-            'startedAt' => $this->startedAt,
-            'tasksIds' => json_encode($this->tasks),
+        $examSession = new ExamSession([
+            'user_id' => $this->userId,
+            'started_at' => $this->startedAt,
+            'tasks_ids' => json_encode($this->tasks),
         ]);
+
+        $examSession->save();
+
+        return $examSession;
     }
 }

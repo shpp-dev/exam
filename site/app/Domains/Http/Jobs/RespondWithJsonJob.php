@@ -12,7 +12,7 @@ class RespondWithJsonJob extends Job
     protected $headers;
     protected $options;
 
-    public function __construct($content = [], $status = 200, array $headers = [], $options = 0)
+    public function __construct($content = [], $status = 200, array $headers = [], $options = JSON_UNESCAPED_UNICODE)
     {
         $this->content = $content;
         $this->status = $status;

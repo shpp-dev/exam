@@ -2,15 +2,17 @@
 namespace App\Domains\Helpers\Traits;
 
 
+use Illuminate\Database\Eloquent\Collection;
+
 trait MappedTrait
 {
 
     /**
-     * @param array $rows
+     * @param Collection $rows
      * @param string $key
      * @return array
      */
-    public function getMapped(array $rows, string $key)
+    public function getMapped(Collection $rows, string $key)
     {
         $mapped = [];
         foreach ($rows as $row) {
