@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\Admin;
 use App\Http\Middleware\CheckAuth;
 use App\Http\Middleware\CheckExamAccess;
 use App\Http\Middleware\CheckExamInProgress;
@@ -66,6 +67,7 @@ class Kernel extends HttpKernel
         'ptp.auth' => CheckAuth::class,
         'ptp.current' => CheckExamInProgress::class,
         'ptp.access' => CheckExamAccess::class,
+        'ptp.admin' => Admin::class,
     ];
 
     /**

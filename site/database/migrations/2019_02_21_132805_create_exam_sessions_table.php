@@ -19,6 +19,7 @@ class CreateExamSessionsTable extends Migration
             $table->timestamp('started_at');
             $table->timestamp('finished_at')->nullable();
             $table->string('tasks_ids');
+            $table->boolean('passed')->nullable();
             $table->timestamps();
         });
     }

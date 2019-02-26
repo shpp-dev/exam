@@ -26,3 +26,9 @@ Route::group(['middleware' => ['ptp.auth', 'ptp.current']], function () {
     Route::post('exam/answer', 'ExamController@saveAnswer')->name('answer');
     Route::post('exam/finish', 'ExamController@finishExam')->name('finish');
 });
+
+Route::group(['middleware' => ['ptp.auth', 'ptp.admin']], function() {
+    Route::get('list/unchecked', 'AdminController@listUnchecked');
+    Route::get('list/checked', 'AdminController@listChecked');
+    Route::post('check', 'AdminController@check');
+});
