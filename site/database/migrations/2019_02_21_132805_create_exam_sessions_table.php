@@ -16,8 +16,8 @@ class CreateExamSessionsTable extends Migration
         Schema::create('exam_sessions', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->timestamp('started_at');
-            $table->timestamp('finished_at')->nullable();
+            $table->dateTime('started_at');
+            $table->dateTime('finished_at')->nullable();
             $table->string('tasks_ids');
             $table->boolean('passed')->nullable();
             $table->timestamps();
