@@ -4,6 +4,7 @@
 namespace Tests\Feature;
 
 
+use App\Console\Commands\FinishExamSession;
 use App\Domains\Auth\Auth;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -81,9 +82,13 @@ class ExamTest extends TestCase
     {
         $this->withoutMiddleware();
         $response = $this->call('POST', route('answer'), [
-            'action' =>  'testCode',
+            'action' =>  'test',
             'taskNumber' => 0,
-            'lang' => 'js'
+            'lang' => 'java',
+            'userFunction' => 'public static int sum(int a, int b) {
+  int c = a + b; 
+  return c;
+}'
         ]);
 
         $this->assertEquals(200, $response->status());

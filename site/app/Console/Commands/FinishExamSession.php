@@ -3,11 +3,16 @@
 namespace App\Console\Commands;
 
 use App\ExamSession;
+use App\Features\Exam\FinishExamFeature;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Collection;
+use Lucid\Foundation\ServesFeaturesTrait;
 
 class FinishExamSession extends Command
 {
+    use ServesFeaturesTrait;
+
     /**
      * The name and signature of the console command.
      *
@@ -39,8 +44,13 @@ class FinishExamSession extends Command
      */
     public function handle()
     {
-        ExamSession::where('finished_at', null)
-                   ->where('started_at', '<', Carbon::now()->subMinutes(config('ptp.examDurationMins')))
-                   ->update(['finished_at' => Carbon::now()]);
+        /* @var Collection $notClosedSessions */
+        $notClosedSessions = ExamSession::where('finished_at', null)
+            ->where('started_at', '<', Carbon::now()->subMinutes(config('ptp.examDurationMins')))
+            ->get();
+
+        if ($notClosedSessions->isNotEmpty()) {
+            $this->serve(FinishExamFeature::class, ['examSessions' => $notClosedSessions]);
+        }
     }
 }

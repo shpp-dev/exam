@@ -4,7 +4,7 @@ namespace App\Features\Exam;
 
 use App\Domains\Auth\Auth;
 use App\Domains\Exam\Jobs\CreateExamResultJob;
-use App\Domains\Exam\Jobs\FinishExamSessionJob;
+use App\Domains\Exam\Jobs\FinishExamSessionsJob;
 use App\Domains\Helpers\Traits\JsonTrait;
 use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Domains\Http\Jobs\SendHttpPostRequestJob;
