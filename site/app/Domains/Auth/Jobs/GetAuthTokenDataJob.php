@@ -35,7 +35,7 @@ class GetAuthTokenDataJob extends Job
         try {
             $authTokenData = JWT::decode(
                 $this->authToken,
-                openssl_pkey_get_public(config('auth.rsa')['public']),
+                openssl_pkey_get_public('file://'.config('auth.rsa')['public']),
                 ['RS256']
             );
         } catch (SignatureInvalidException $e) {

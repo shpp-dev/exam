@@ -11,9 +11,7 @@ use Lucid\Foundation\MarshalTrait;
 
 class Admin
 {
-    use MarshalTrait;
-    use DispatchesJobs;
-    use JobDispatcherTrait;
+    use MarshalTrait, DispatchesJobs, JobDispatcherTrait;
 
     /**
      * Handle an incoming request.

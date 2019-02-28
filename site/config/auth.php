@@ -99,4 +99,11 @@ return [
         ],
     ],
 
+    'rsa' => [
+        'public' => env(base_path('AUTH_RSA_PUBLIC_FILE'), base_path('serviceRsaKey.pem')),
+    ],
+
+    'eco' => env('PTP_ECO_KEY'),
+
+
 ];

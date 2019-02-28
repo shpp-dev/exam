@@ -26,7 +26,6 @@ class CheckExamForUserFeature extends Feature
             ]);
         }
 
-        // todo send request to account
         $this->run(SendHttpPostRequestJob::class, [
             'url' => config('ptp.accountBackUrl').'/user/exam/add',
             'data' => [

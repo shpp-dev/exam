@@ -8,11 +8,13 @@ use App\Domains\Helpers\Jobs\GetAuthTokenDataJob;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use App\Domains\Http\Jobs\SendHttpPostRequestJob;
 use Closure;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Lucid\Foundation\JobDispatcherTrait;
+use Lucid\Foundation\MarshalTrait;
 
 class CheckExamInProgress
 {
-    use JobDispatcherTrait;
+    use JobDispatcherTrait, MarshalTrait, DispatchesJobs;
 
     /**
      * Handle an incoming request.
