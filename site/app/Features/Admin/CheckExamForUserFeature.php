@@ -29,9 +29,11 @@ class CheckExamForUserFeature extends Feature
         $this->run(SendHttpPostRequestJob::class, [
             'url' => config('ptp.accountBackUrl').'/user/exam/add',
             'data' => [
+                'eco' => config('auth.eco'),
                 'email' => $session->user->email,
                 'examResultsId' => $sessionId,
-                'passed' => $passed
+                'passed' => $passed,
+                'examDateTs' => $session->finishedAt
             ]
         ]);
 

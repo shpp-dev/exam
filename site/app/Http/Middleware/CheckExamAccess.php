@@ -33,8 +33,6 @@ class CheckExamAccess
                 'code' => 418,
             ]);
         } else {
-            // todo check response format
-            dump('here');
             $response = $this->run(SendHttpPostRequestJob::class, [
                 'url' => config('ptp.accountBackUrl').'/user/exam/allowed',
                 'data' => [
@@ -42,7 +40,7 @@ class CheckExamAccess
                     'email' => $user->email
                 ]
             ]);
-            if ($response->getBody()) {
+            if (json_decode($response->getBody())->data->code == 200) {
                 return $next($request);
             } else {
                 return $this->run(RespondWithJsonErrorJob::class, [

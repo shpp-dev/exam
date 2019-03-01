@@ -5,6 +5,7 @@ namespace App\Features\Exam;
 use App\Domains\Auth\Auth;
 use App\Domains\Exam\Jobs\CreateExamResultJob;
 use App\Domains\Helpers\Traits\JsonTrait;
+use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Domains\Http\Jobs\SendTestCodeToCoderunnerJob;
 use App\Domains\Http\Jobs\SubmitCodeToCoderunnerJob;
@@ -26,6 +27,13 @@ class SaveAnswerFeature extends Feature
         $taskNumber = $request->taskNumber;// start from 0 index
         $lang = $request->lang; // js cpp java
         $userFunction = $request->userFunction;
+
+        if ($session->results()->whereTaskNumber($taskNumber)->first()) {
+            return $this->run(RespondWithJsonErrorJob::class, [
+                'message' => 'Nice try but you should not submit you solution twice',
+                'code' => 420
+            ]);
+        }
 
         $selectedTasks = json_decode($session->tasksIds, true);
         $task = Task::find($selectedTasks[$taskNumber]);

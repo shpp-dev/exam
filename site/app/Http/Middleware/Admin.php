@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Domains\Auth\Auth;
+use App\Domains\Helpers\Jobs\GetAuthTokenDataJob;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use Closure;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -22,10 +23,12 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::getAuthUser()->admin) {
+        $authToken = $request->cookie('AT');
+        $authTokenData = $this->run(GetAuthTokenDataJob::class, ['authToken' => $authToken]);
+        if (!$authTokenData['data']->admin) {
             return $this->run(RespondWithJsonErrorJob::class, [
                 'message' => 'Denied',
-                'code' => 405
+                'code' => 403
             ]);
         }
         return $next($request);

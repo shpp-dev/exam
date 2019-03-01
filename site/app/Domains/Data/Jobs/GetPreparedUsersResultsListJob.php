@@ -15,15 +15,15 @@ use Lucid\Foundation\Job;
 class GetPreparedUsersResultsListJob extends Job
 {
     /**
-     * @var array
+     * @var
      */
     private $sessions;
 
     /**
      * GetPreparedUncheckedUsersListJob constructor.
-     * @param array $sessions
+     * @param $sessions
      */
-    public function __construct(array $sessions)
+    public function __construct($sessions)
     {
         $this->sessions = $sessions;
     }
