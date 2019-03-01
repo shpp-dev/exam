@@ -4,11 +4,12 @@
 namespace Tests\Feature;
 
 
-use App\Console\Commands\FinishExamSession;
 use App\Domains\Auth\Auth;
+use App\ExamSession;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use TasksSeederRU;
+use TasksSeederTest;
 use Tests\TestCase;
 
 class ExamTest extends TestCase
@@ -16,11 +17,16 @@ class ExamTest extends TestCase
     use DatabaseMigrations;
 
     const EMAIL = 'user@email';
+    const LANG = 'js';
+    const TASKS_NUM = 5;
+
+    private $taskResolves;
 
     public function setUp()
     {
         parent::setUp();
 
+//        $this->taskResolves = json_decode(file_get_contents(storage_path('test_function_resolves.json')), true);
         $this->app->make('config')->set('mail.driver', 'log');
     }
 
@@ -32,15 +38,19 @@ class ExamTest extends TestCase
         $this->authorization();
         $this->startExamSession();
         $this->checkExamStatus();
-        $this->getTask();
-        $this->saveAnswer();
-        $this->finishExam();
+
+        do {
+            $taskNumber = $this->getTask();
+            $this->saveAnswer($taskNumber, self::LANG, $this->taskResolves[$taskNumber][self::LANG]);
+        } while ($taskNumber < self::TASKS_NUM);
+
+//        $this->finishExam();
     }
 
     private function databaseMigrations()
     {
         $this->runDatabaseMigrations();
-        $this->seed(TasksSeederRU::class);
+        $this->seed(TasksSeederRu::class);
     }
 
     private function authorization()
@@ -53,7 +63,7 @@ class ExamTest extends TestCase
     {
         $this->withoutMiddleware();
         $response = $this->post(route('start'));
-
+        $this->tasks = ExamSession::find(1)->tasksIds;
         $this->assertEquals(200, $response->status());
     }
 
@@ -74,21 +84,21 @@ class ExamTest extends TestCase
     {
         $this->withoutMiddleware();
         $response = $this->get(route('task'));
+
         $this->assertEquals(200, $response->status());
         $this->printTestResponse($response->content());
+
+        return json_decode($response->content(), true)['data']['number'];
     }
 
-    private function saveAnswer()
+    private function saveAnswer($taskNumber, $lang, $function)
     {
         $this->withoutMiddleware();
         $response = $this->call('POST', route('answer'), [
-            'action' =>  'test',
-            'taskNumber' => 0,
-            'lang' => 'java',
-            'userFunction' => 'public static int sum(int a, int b) {
-  int c = a + b; 
-  return c;
-}'
+            'action' =>  'submit',
+            'taskNumber' => $taskNumber,
+            'lang' => $lang,
+            'userFunction' => $function
         ]);
 
         $this->assertEquals(200, $response->status());

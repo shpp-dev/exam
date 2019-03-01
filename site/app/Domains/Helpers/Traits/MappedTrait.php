@@ -16,7 +16,7 @@ trait MappedTrait
     {
         $mapped = [];
         foreach ($rows as $row) {
-            $mapped[$row->{$key}()] = $row;
+            $mapped[$row->{$key}] = $row;
         }
         return $mapped;
     }

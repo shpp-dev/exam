@@ -96,7 +96,7 @@ class SubmitCodeToCoderunnerJob extends Job
         }
 
         $result = [
-            'userFunction' => trim($this->escapeJsonString($this->userFunction)),
+            'userFunction' => trim($this->userFunction),
             'passedCases' => $cases,
             'resultCases' => $resultCases
         ];

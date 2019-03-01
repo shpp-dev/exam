@@ -4,13 +4,10 @@ namespace App\Features\Exam;
 
 use App\Domains\Auth\Auth;
 use App\Domains\Exam\Jobs\CreateExamResultJob;
-use App\Domains\Exam\Jobs\FinishExamSessionsJob;
 use App\Domains\Helpers\Traits\JsonTrait;
 use App\Domains\Http\Jobs\RespondWithJsonJob;
-use App\Domains\Http\Jobs\SendHttpPostRequestJob;
 use App\Domains\Http\Jobs\SendTestCodeToCoderunnerJob;
 use App\Domains\Http\Jobs\SubmitCodeToCoderunnerJob;
-use App\ExamSession;
 use App\Task;
 use Illuminate\Http\Request;
 use Lucid\Foundation\Feature;
@@ -45,8 +42,6 @@ class SaveAnswerFeature extends Feature
                 $program = str_replace('{{code}}', $userFunction, $task->cppWrap);
                 break;
         }
-
-        $program = $this->escapeJsonString($program);
 
         $result = [];
         switch ($action) {

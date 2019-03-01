@@ -1,0 +1,45 @@
+{
+  "1": {
+    "number": 1,
+    "js": "function resolve(triangleN, rhombK) {\n    return 3 * triangleN + 4 * rhombK;\n}",
+    "java": "static int resolve(int triangleN, int rhombK) {\n    return 3 * triangleN + 4 * rhombK;\n}",
+    "cpp": "int resolve(int triangleN, int rhombK) {\n    return 3 * triangleN + 4 * rhombK;\n}"
+  },
+
+  "2": {
+    "number": 5,
+    "js": "function isBracketsPlacedCorrectly(formula){\n    let stack = [];\n    \n    for (let i = 0; i < formula.length; i++) {\n        const symbol = formula[i];\n        \n        if (symbol === '(') {\n            stack.push(symbol);\n        } else if (symbol === ')') {\n            if (stack[stack.length-1] === '(') {\n                stack.pop();\n            } else {\n                stack.push(symbol);\n            }\n        }\n    }\n    \n    return (stack.length === 0) ? 100 : stack.length;\n}",
+    "java": "",
+    "cpp": ""
+  },
+
+  "4": {
+    "taskId": 4,
+    "js": "function sum(a, b) {\n  c = a + b; \n  return c;\n}",
+    "java": "",
+    "cpp": ""
+  },
+
+  "11": {
+    "taskId": 11,
+    "js": "function resolve(first, second, third) {\n    if (first === second && first === third) {\n        return -1;        \n    }    \n    if (first === second) {\n        return third;\n    }    \n    if (second === third) {\n        return first;\n    }    \n    if (first === third) {\n        return second;\n    }\n}",
+    "java" : "",
+    "cpp": ""
+  },
+
+  "15": {
+    "taskId": 15,
+    "js" : "function resolve(first, second, third) {\n    let result = first;\n    \n    while (result >= third) {\n        result -= second;\n    }\n    \n    return result;\n}",
+    "java": "static int resolve(int first, int second, int third) {    \n    int result = first;\n\n    while (result >= third) {\n        result -= second;\n    }\n\n    return result;\n    \n}",
+    "cpp": ""
+  },
+
+  "20": {
+    "taskId" : 20,
+    "js": "function resolve(array, arraySize) {\n    for (let i = 0; i < arraySize - 2; i++) {\n        if (array[i] === 0 && array[i + 2] === 0) {\n            return i + 1;\n        }\n    }\n    \n    return -1;\n}",
+    "java": "",
+    "cpp": ""
+  }
+
+
+}
