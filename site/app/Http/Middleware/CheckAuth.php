@@ -7,11 +7,13 @@ use App\Domains\Helpers\Jobs\CheckAuthTokenInRedisJob;
 use App\Domains\Helpers\Jobs\GetAuthTokenDataJob;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use Closure;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Lucid\Foundation\JobDispatcherTrait;
+use Lucid\Foundation\MarshalTrait;
 
 class CheckAuth
 {
-    use JobDispatcherTrait;
+    use JobDispatcherTrait, MarshalTrait, DispatchesJobs;
 
     /**
      * Handle an incoming request.
@@ -42,7 +44,8 @@ class CheckAuth
         // check it in redis blacklist
         $white = $this->run(CheckAuthTokenInRedisJob::class, [
             'authToken' => $authToken,
-            'authTokenData' => $authTokenData['data']]);
+            'authTokenData' => $authTokenData['data']
+        ]);
 
         if (!$white) {
             return $this->run(RespondWithJsonErrorJob::class, [

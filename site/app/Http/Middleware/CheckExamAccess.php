@@ -9,11 +9,13 @@ use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Domains\Http\Jobs\SendHttpPostRequestJob;
 use Closure;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Lucid\Foundation\JobDispatcherTrait;
+use Lucid\Foundation\MarshalTrait;
 
 class CheckExamAccess
 {
-    use JobDispatcherTrait;
+    use JobDispatcherTrait, MarshalTrait, DispatchesJobs;
 
     /**
      * Handle an incoming request.
@@ -32,13 +34,15 @@ class CheckExamAccess
             ]);
         } else {
             // todo check response format
-            $access = $this->run(SendHttpPostRequestJob::class, [
+            dump('here');
+            $response = $this->run(SendHttpPostRequestJob::class, [
                 'url' => config('ptp.accountBackUrl').'/user/exam/allowed',
                 'data' => [
+                    'eco' => config('auth.eco'),
                     'email' => $user->email
                 ]
             ]);
-            if ($access) {
+            if ($response->getBody()) {
                 return $next($request);
             } else {
                 return $this->run(RespondWithJsonErrorJob::class, [

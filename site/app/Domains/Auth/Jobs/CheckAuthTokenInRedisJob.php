@@ -23,9 +23,9 @@ class CheckAuthTokenInRedisJob extends Job
     /**
      * CheckAuthTokenInRedisJob constructor.
      * @param string $authToken
-     * @param array $authTokenData
+     * @param $authTokenData
      */
-    public function __construct(string $authToken, array $authTokenData)
+    public function __construct(string $authToken, $authTokenData)
     {
         $this->authToken = $authToken;
         $this->authTokenData = $authTokenData;

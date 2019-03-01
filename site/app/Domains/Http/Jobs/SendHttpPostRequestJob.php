@@ -35,7 +35,10 @@ class SendHttpPostRequestJob extends Job
     public function handle()
     {
         $client = new Client();
-        return $client->post($this->url, $this->data);
-        // todo handle error
+        $fullUrl = $this->url.'?';
+        foreach ($this->data as $key => $value) {
+            $fullUrl .= "$key=$value&";
+        }
+        return $client->post($fullUrl);
     }
 }

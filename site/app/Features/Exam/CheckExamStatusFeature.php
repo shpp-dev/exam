@@ -21,15 +21,14 @@ class CheckExamStatusFeature extends Feature
                ]
             ]);
         }
-        // todo check answer format
-        $access = $this->run(SendHttpPostRequestJob::class, [
+        $response = $this->run(SendHttpPostRequestJob::class, [
             'url' => config('ptp.accountBackUrl').'/user/exam/allowed',
             'data' => [
+                'eco' => config('auth.eco'),
                 'email' => $user->email
             ]
         ]);
-
-        if ($access) {
+        if (json_decode($response->getBody())->data->code == 200) {
             $message = [
                 'message' => 'Ready to start',
                 'code' => 200
@@ -40,7 +39,7 @@ class CheckExamStatusFeature extends Feature
                 'code' => 403
             ];
         }
-        $this->run(RespondWithJsonJob::class, [
+        return $this->run(RespondWithJsonJob::class, [
             'content' => $message
         ]);
     }
