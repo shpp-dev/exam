@@ -25,6 +25,12 @@ class CheckExamForUserFeature extends Feature
                 'code' => 404
             ]);
         }
+        if ($session->finishedAt) {
+            return $this->run(RespondWithJsonErrorJob::class, [
+                'message' => 'Exam was already checked',
+                'code' => 404
+            ]);
+        }
 
         $this->run(SendHttpPostRequestJob::class, [
             'url' => config('ptp.accountBackUrl').'/user/exam/add',
