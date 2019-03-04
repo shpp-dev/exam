@@ -27,8 +27,8 @@ class CheckExamForUserFeature extends Feature
         }
         if ($session->finishedAt) {
             return $this->run(RespondWithJsonErrorJob::class, [
-                'message' => 'Exam was already checked',
-                'code' => 404
+                'message' => 'Exam has been already checked',
+                'code' => 405
             ]);
         }
 
