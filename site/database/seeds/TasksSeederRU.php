@@ -300,7 +300,8 @@ process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
 process.stdin.on('end', function() {
-    process.stdout.write(resolve(stdin).toString());
+    var array = stdin.split(' ');
+    process.stdout.write(resolve(array[1]).toString());
 });
  
 {{code}}",
@@ -310,7 +311,8 @@ process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
 process.stdin.on('end', function() {
-    process.stdout.write(resolve(stdin).toString());
+    var array = stdin.split(' ');
+    process.stdout.write(resolve(array[1]).toString());
 });
  
 {{code}}",
@@ -320,7 +322,8 @@ process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
 process.stdin.on('end', function() {
-    process.stdout.write(resolve(stdin).toString());
+    var array = stdin.split(' ');
+    process.stdout.write(resolve(array[1].replace('\\n', '')).toString());
 });
  
 {{code}}",
@@ -330,7 +333,8 @@ process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
 process.stdin.on('end', function() {
-    process.stdout.write(resolve(stdin).toString());
+    var array = stdin.split(' '); 
+    process.stdout.write(resolve(array[1].replace('\\n', '')).toString());
 });
  
 {{code}}",
@@ -377,7 +381,7 @@ process.stdin.on('end', function() {
  
     var first = parseInt(array[0]);
     var second = parseInt(array[1]);
-    var third = parseInt(array[1]);
+    var third = parseInt(array[2]);
  
     process.stdout.write(resolve(first, second, third).toString());
 });
@@ -394,7 +398,7 @@ process.stdin.on('end', function() {
  
     var first = parseInt(array[0]);
     var second = parseInt(array[1]);
-    var third = parseInt(array[1]);
+    var third = parseInt(array[2]);
  
     process.stdout.write(resolve(first, second, third).toString());
 });
@@ -426,7 +430,7 @@ process.stdin.on('end', function() {
  
     var first = parseInt(array[0]);
     var second = parseInt(array[1]);
-    var third = parseInt(array[1]);
+    var third = parseInt(array[2]);
  
     process.stdout.write(resolve(first, second, third).toString());
 });
@@ -443,7 +447,7 @@ process.stdin.on('end', function() {
  
     var first = parseInt(array[0]);
     var second = parseInt(array[1]);
-    var third = parseInt(array[1]);
+    var third = parseInt(array[2]);
  
     process.stdout.write(resolve(first, second, third).toString());
 });
@@ -489,7 +493,7 @@ process.stdin.on('end', function() {
  
     var first = parseInt(array[0]);
     var second = parseInt(array[1]);
-    var third = parseInt(array[1]);
+    var third = parseInt(array[2]);
  
     process.stdout.write(resolve(first, second, third).toString());
 });
@@ -706,7 +710,7 @@ public class Numbers {
  
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String number = scanner.nextLine();
+        String number = scanner.nextLine().split(\" \")[1];
         System.out.print(resolve(number));
     }
 }",
@@ -719,7 +723,7 @@ public class Sparrow {
  
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String stdin = scanner.nextLine();
+        String stdin = scanner.nextLine().split(\" \")[1];
         System.out.print(resolve(stdin));
     }
 }",
@@ -732,7 +736,7 @@ public class Pangramms {
  
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String stdin = scanner.nextLine();
+        String stdin = scanner.nextLine().split(\" \")[1];
         System.out.print(isPangramm(stdin));
     }
 }",
@@ -745,7 +749,7 @@ public class Mars {
  
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String stdin = scanner.nextLine();
+        String stdin = scanner.nextLine().split(\" \")[1];
         System.out.print(resolve(stdin));
     }
 }",
@@ -1049,7 +1053,7 @@ public class Sorting {
         }
         int[] result = resolve(array, arraySize);
         System.out.print('[');
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < arraySize; i++) {
             System.out.print(result[i]);
             if(i != arraySize-1)  System.out.print(\",\");
         }
@@ -1076,7 +1080,7 @@ public class Sorting {
         }
         int[] result = resolve(array, arraySize);
         System.out.print(\"[\");
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < arraySize; i++) {
             System.out.print(result[i]);
             if(i != arraySize-1)  System.out.print(\",\");
         }
@@ -1575,31 +1579,31 @@ int main(int argc, char const *argv[])
         ];
 
         $testCases = [
-            '"5 7", "11 8", "100 100"',
-            '"60 3*(2 - 5) + 12*(4 * (3 * 11 - 11 / ( 33 - 7)) + 56) - 12/12", "81 3*(2 - 5) + 12*(22 - 9) + 11)*( 4 + (4 * (3 * 11 - 11 / ( 33 - 7)) + 56) - 12/12", "61 3*(2 - 5) + 12*(4 * (3 * 11 - 11 / ( 33 - 7)) + 56) - 12/12)"',
-            '"3 0 0 0", "5 3 5 0 1 7", "7 0 6 4 2 10 22 4", "9 2 3 3 57 89 543 25 0 8"',
-            '"5 2", "4 3", "9 1", "-1 2", "2 0"',
-            '"7 P204BT", "7 X182YZ", "7 a216bc", "7 A216BC", "7 ABC216"',
-            '"30 <<<<>>--><--<<--<<>>>--><<<<<", "20 <<<<>>>>-<<-<---->>", "21 <<--<<<--<<<--<<<--<", "20 >>--<--<-<--<<>>-->", "15 >>-->->>->>-->"',
-            '"47 Wepromptlyjudgedantiqueivorybucklesfortheprize", "51 Wepromptlyjudgedantiqueivorybucklesforthenextprize", "30 QuickzephyrsblowvexingdaftJim", " 34 Thequickbrownfoxjumpsoveralazydog", "22 Squdgyfezjimpcrwthvox"',
-            '"16 SDSSOSSOSSSSOOS", "10 SOSCOSSSS", "13 SDDSOLSWSOOO", "4 SOS"',
-            '"5 7", "11 8", "100 100"',
-            '"5 7", "11 8", "100 100"',
-            '"0 2 2", "11 8 11", "100 100 100", "3 5 5", "17 17 17"',
-            '"0 2 8", "8 8 11", "100 100 100", "3 5 5", "17 17 17"',
-            '"0 0", "7 -8", "-9 15", "0 -5", "17 18"',
-            '"0 2 8", "8 8 8", "100 100 100", "3 5 4", "17 17 17"',
-            '"35 6 17", "15 20 0", "100 100 0", "3 5 2", "17 17 17"',
-            '"0 2", "27 2", "40 4", "50 -5"',
-            '"1000000", "4400", "1", "37893"',
-            '"40 20 7", "0 6 3", "10 -2 4", "-2 7 3", "27 10 8"',
-            '"3 7", "7 1", "4 5", "1 1"',
-            '"9 1 13 4 0 5 0 77 9 0", "3 0 2 0", "9 7 0 70 17 0 8 10 10", "1 1", "2 0 0"',
-            '"3 0 0 0", "7 1 2 3 4 2 6 7", "8 0 0 0 9 -3 7 0 1", "3 0 2 0"',
-            '"3 1 2 3", "7 10 12 3 42 21 6 7", "8 -2 3 4 9 -3 7 11 12", "3 11 12 12"',
-            '"3 0 4 0", "7 1 1 1 1 1 1 7", "8 0 0 0 0 9 0 0 0", "3 0 2 2"',
-            '"3 1 0 2", "7 6 0 5 4 1 3 2", "1 0", "6 5 3 0 1 4 2" ',
-            '"3 1 2 3", "7 -8 901 75 -4 -5 0 2", "1 -100", "4 150 -150 0 0" '
+            '5 7,11 8,100 100',
+            '60 3*(2-5)+12*(4*(3*11-11/(33-7))+56)-12/12,81 3*(2-5)+12*(22-9)+11)*(4+(4*(3*11-11/(33-7))+56)-12/12,61 3*(2-5)+12*(4*(3*11-11/(33-7))+56)-12/12)',
+            '3 0 0 0,5 3 5 0 1 7,7 0 6 4 2 10 22 4,9 2 3 3 57 89 543 25 0 8',
+            '5 2,4 3,9 1,-1 2,2 0',
+            '7 P204BT,7 X182YZ,7 a216bc,7 A216BC,7 ABC216',
+            '30 <<<<>>--><--<<--<<>>>--><<<<<,20 <<<<>>>>-<<-<---->>,21 <<--<<<--<<<--<<<--<,20 >>--<--<-<--<<>>-->,15 >>-->->>->>-->',
+            '47 Wepromptlyjudgedantiqueivorybucklesfortheprize,51 Wepromptlyjudgedantiqueivorybucklesforthenextprize,30 QuickzephyrsblowvexingdaftJim,34 Thequickbrownfoxjumpsoveralazydog,22 Squdgyfezjimpcrwthvox',
+            '16 SDSSOSSOSSSSOOS,10 SOSCOSSSS,13 SDDSOLSWSOOO,4 SOS',
+            '5 7,11 8,100 100',
+            '5 7,11 8,100 100',
+            '0 2 2,11 8 11,100 100 100,3 5 5,17 17 17',
+            '0 2 8,8 8 11,100 100 100,3 5 5,17 17 17',
+            '0 0,7 -8,-9 15,0 -5,17 18',
+            '0 2 8,8 8 8,100 100 100,3 5 4,17 17 17',
+            '35 6 17,15 20 0,100 100 0,3 5 2,17 17 17',
+            '0 2,27 2,40 4,50 -5',
+            '1000000,4400,1,37893',
+            '40 20 7,0 6 3,10 -2 4,-2 7 3,27 10 8',
+            '3 7,7 1,4 5,1 1',
+            '9 1 13 4 0 5 0 77 9 0,3 0 2 0,8 7 0 70 17 0 8 10 10,1 1,2 0 0',
+            '3 0 0 0,7 1 2 3 4 2 6 7,8 0 0 0 9 -3 7 0 1,3 0 2 0',
+            '3 1 2 3,7 10 12 3 42 21 6 7,8 -2 3 4 9 -3 7 11 12,3 11 12 12',
+            '3 0 4 0,7 1 1 1 1 1 1 7,8 0 0 0 0 9 0 0 0,3 0 2 2',
+            '3 1 0 2,7 6 0 5 4 1 3 2,1 0,6 5 3 0 1 4 2',
+            '3 1 2 3,7 -8 901 75 -4 -5 0 2,1 -100,4 150 -150 0 0'
         ];
 
         $answers = [
@@ -1616,15 +1620,15 @@ int main(int argc, char const *argv[])
             "0\ 8\ -1\ 3\ -1",
             "100\ 11\ -1\ 5\ -1",
             "100\ 7\ 15\ 0\ -1",
-            "2\ -1\ -1\ 4\ -1 ",
+            "2\ -1\ -1\ 4\ -1",
             "11\ -5\ -100\ -2\ 0",
             "-2\ -1\ -8\ -10",
             "2000000\ 1126400\ 1048576\ 1212576",
             "-79\ -15\ 24\ -20\ -25",
             "3333333\ 7\ 44444\ 1",
-            "4\ 1\ 1\ -1\ -1",
+            "4\ 1\ -1\ -1\ -1",
             "0\ 5\ 3\ 1",
-            "0\ 2\ 0\ 1",
+            "0\ 2\ 0\ 0",
             "1\ 6\ 4\ 0",
             "[0,1,2]\ [6,1,4,5,0,2,3]\ [0]\ [4,2,1,0,5,3]",
             "[1,2,3]\ [0,100,75,0,0,0,2]\ [0]\ [100,0,0,0]"

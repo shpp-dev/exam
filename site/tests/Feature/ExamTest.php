@@ -17,16 +17,20 @@ class ExamTest extends TestCase
     use DatabaseMigrations;
 
     const EMAIL = 'user@email';
-    const LANG = 'js';
-    const TASKS_NUM = 5;
+    const LANG = 'cpp';
+    const TASKS_NUM = 6;
+    const TASK_KEYS = [4,1,11,15,20,2];
+    const SEEDER = TasksSeederTest::class;
 
-    private $taskResolves;
+    private $examTasks;
+    private $testNumber;
 
     public function setUp()
     {
         parent::setUp();
 
-//        $this->taskResolves = json_decode(file_get_contents(storage_path('test_function_resolves.json')), true);
+        $this->testNumber = 0;
+        $this->examTasks = json_decode(file_get_contents(storage_path('exam_tasks.json')), true);
         $this->app->make('config')->set('mail.driver', 'log');
     }
 
@@ -39,10 +43,10 @@ class ExamTest extends TestCase
         $this->startExamSession();
         $this->checkExamStatus();
 
-        do {
+        for ($i = 0; $i < self::TASKS_NUM; $i++) {
             $taskNumber = $this->getTask();
-            $this->saveAnswer($taskNumber, self::LANG, $this->taskResolves[$taskNumber][self::LANG]);
-        } while ($taskNumber < self::TASKS_NUM);
+            $this->saveAnswer($taskNumber, self::LANG, $this->examTasks[self::TASK_KEYS[$i]][self::LANG]);
+        }
 
 //        $this->finishExam();
     }
@@ -50,7 +54,7 @@ class ExamTest extends TestCase
     private function databaseMigrations()
     {
         $this->runDatabaseMigrations();
-        $this->seed(TasksSeederRu::class);
+        $this->seed(self::SEEDER);
     }
 
     private function authorization()

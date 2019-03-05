@@ -9,37 +9,167 @@
   "2": {
     "number": 5,
     "js": "function isBracketsPlacedCorrectly(formula){\n    let stack = [];\n    \n    for (let i = 0; i < formula.length; i++) {\n        const symbol = formula[i];\n        \n        if (symbol === '(') {\n            stack.push(symbol);\n        } else if (symbol === ')') {\n            if (stack[stack.length-1] === '(') {\n                stack.pop();\n            } else {\n                stack.push(symbol);\n            }\n        }\n    }\n    \n    return (stack.length === 0) ? 100 : stack.length;\n}",
-    "java": "",
-    "cpp": ""
+    "java": "static int isBracketsPlacedCorrectly(String formula) {\n    char[] stack = new char[formula.length()];\n    int pos = 0;\n    \n    for (int i = 0; i < stack.length; i++) {\n        char symbol = formula.charAt(i);\n\n        if (symbol == '(') {\n              stack[pos++] = symbol;\n        } else if (symbol == ')') {\n          if (pos > 0 && stack[pos - 1] == '(') {\n            pos--;\n          } else {\n            stack[pos++] = symbol;\n          }\n        }\n    }\n\n    return (pos == 0) ? 100 : pos;\n    }",
+    "cpp": "int isBracketsPlacedCorrectly(char formula[]) {\n    int length = 0;\nwhile(formula[length] != '\\0') {length++;}    char stack[length];\n    int pos = 0;\n    \n    for (int i = 0; i < length; i++) {\n        char symbol = formula[i];\n\n        if (symbol == '(') {\n              stack[pos++] = symbol;\n        } else if (symbol == ')') {\n          if (pos > 0 && stack[pos - 1] == '(') {\n            pos--;\n          } else {\n            stack[pos++] = symbol;\n          }\n        }\n    }\n\n    return (pos == 0) ? 100 : pos;\n}"
   },
 
+  "3": {
+    "number": 5,
+    "js": "function separateAndSort(array) {\n    let odds = [];\n    let evens = [];\n    \n    for (let i = 0; i < array.length; i++) {\n        const number = array[i];\n        (number % 2 !== 0) ? odds.push(number) : evens.push(number);\n    }\n    \n    return odds.sort((a,b) => a - b).concat(evens.sort((a,b) => a - b));\n}",
+    "java": "public static int[] resolve(int[] array, int length) {\n    int[] odds = new int[length];\n    int[] evens = new int[length];\n    int oddIndex = 0;\n    int evenIndex = 0;\n    \n    for (int i = 0; i < length; i++) {\n      int number = array[i];\n      \n      if (number % 2 != 0) {\n        if (oddIndex == 0) {\n          odds[oddIndex++] = number;\n        } \n        \n        sort(number, oddIndex, odds);\n        oddIndex++;\n      } else {\n        if (evenIndex == 0) {\n          evens[evenIndex++] = number;\n        }\n        \n        sort(number, evenIndex, evens);   \n        evenIndex++;\n      }\n    }\n    \n    if (oddIndex == 0) {\n        return evens;\n    }\n    \n    for (int i = 0; i < evenIndex - 1; i++) {\n       odds[oddIndex + i - 1] = evens[i];\n    }\n    \n    return odds;    \n  }\n  \n  private static void sort(int number, int index, int[] arr) {\n    int count = index;\n    \n    for (int i = 0; i < count; i++) {\n      if (number < arr[i]) {\n        System.arraycopy(arr, i, arr, i + 1, count - 1 - i);\n        arr[i] = number;        \n        break;\n      }\n          \n      if (i == count - 1) {\n        arr[i] = number;        \n      }          \n    }        \n  }",
+    "cpp": "void sort(int number, int count, int arr[]);\n\nint * resolve(int array[], int length) {\n    int *odds = new int[length];\n    int *evens = new int[length];\n    int oddIndex = 0;\n    int evenIndex = 0;\n    \n    for (int i = 0; i < length; i++) {\n      int number = array[i];\n      \n      if (number % 2 != 0) {\n        if (oddIndex == 0) {\n          odds[oddIndex++] = number;\n        } \n        \n        sort(number, oddIndex, odds);\n        oddIndex++;\n      } else {\n        if (evenIndex == 0) {\n          evens[evenIndex++] = number;\n        }\n        \n        sort(number, evenIndex, evens);   \n        evenIndex++;\n      }\n    }\n    \n    if (oddIndex == 0) {\n        return evens;\n    }\n    \n    for (int i = 0; i < evenIndex - 1; i++) {\n       odds[oddIndex + i - 1] = evens[i];\n    }\n    \n    return odds;    \n  }\n  \n  void sort(int number, int count, int arr[]) {\n    for (int i = 0; i < count; i++) {\n      if (number < arr[i]) {\n          for (int j = count; j > i; j--) {\n            arr[j] = arr[j - 1];    \n          }\n          \n          arr[i] = number;           \n          break;\n      }\n          \n      if (i == count - 1) {\n        arr[i] = number;        \n      }          \n    }        \n  }"
+  },
   "4": {
-    "taskId": 4,
+    "number": 0,
     "js": "function sum(a, b) {\n  c = a + b; \n  return c;\n}",
-    "java": "",
-    "cpp": ""
+    "java": "public static int sum(int a, int b) {\n  int c = a + b; \n  return c;\n}",
+    "cpp": "int sum(int a, int b) {\n  int c = a + b;  \n  return c;\n}"
+  },
+
+  "5": {
+    "number": 5,
+    "js": "function resolve(line){\n  const letters = ['A', 'B', 'C', 'E', 'H', 'K', 'M', 'O', 'P', 'T', 'X', 'Y'];\n  const numbers = [0,1,2,3,4,5,6,7,8,9];\n  const template = ['l','n','n','n','l','l'];\n  let result = true;\n  let lettersNumber = 0;\n  \n  for (let i = 0; i < line.length; i++) {\n      if (template[i] == 'l') {\n           if (!contains(line[i], letters)) {\n               result = false;\n           }\n          \n      }\n      \n      if (template[i] == 'n') {\n          if (!contains(line[i], numbers)) {\n              result = false;\n          }\n      }\n      \n      if (!contains(line[i], numbers)) {\n          lettersNumber++;\n      }\n  }\n  \n  return result ? 100 : lettersNumber;\n}\n\nfunction contains (symbol, array) {\n    for (let i = 0; i < array.length; i++) {\n        if (symbol == array[i]) {\n            return true;\n        }\n    }\n    \n    return false;\n}",
+    "java": "static int resolve(String line) {\n    char[] letters = {'A', 'B', 'C', 'E', 'H', 'K', 'M', 'O', 'P', 'T', 'X', 'Y'};\n    char[] numbers = {'0','1','2','3','4','5','6','7','8','9'};\n    char[] template = {'l','n','n','n','l','l'};\n    boolean result = true;\n    int lettersNumber = 0;\n  \n    for (int i = 0; i < line.length(); i++) {\n      char symbol = line.charAt(i);\n      \n      if (template[i] == 'l') {\n           if (!contains(symbol, letters)) {\n               result = false;\n           }\n          \n      }\n      \n      if (template[i] == 'n') {\n          if (!contains(symbol, numbers)) {\n              result = false;\n          }\n      }\n      \n      if (!contains(symbol, numbers)) {\n          lettersNumber++;\n      }\n  }\n  \n  return result ? 100 : lettersNumber;\n  }\n  \n  static boolean contains (char symbol,char[] array) {\n    for (int i = 0; i < array.length; i++) {\n        if (symbol == array[i]) {\n            return true;\n        }\n    }\n    \n    return false;\n  }",
+    "cpp": "bool contains (char symbol,char array[], int size);\n int resolve(char line[]) {\n    char letters[12] = {'A', 'B', 'C', 'E', 'H', 'K', 'M', 'O', 'P', 'T', 'X', 'Y'};\n    char numbers[10] = {'0','1','2','3','4','5','6','7','8','9'};\n    char temp[6] = {'l','n','n','n','l','l'};\n    bool result = true;\n    int lettersNumber = 0;\n    int length = 0;\n    \n    while (line[length] != '\\0') {\n      length++;\n    }\n  \n    for (int i = 0; i < length; i++) {\n      char symbol = line[i];\n      \n      if (temp[i] == 'l') {\n           if (!contains(symbol, letters, 12)) {\n               result = false;\n           }\n          \n      }\n      \n      if (temp[i] == 'n') {\n          if (!contains(symbol, numbers, 10)) {\n              result = false;\n          }\n      }\n      \n      if (!contains(symbol, numbers, 10)) {\n          lettersNumber++;\n      }\n  }\n  \n  return result ? 100 : lettersNumber;\n  }\n  \n  bool contains (char symbol,char array[], int size) {\n    for (int i = 0; i < size; i++) {\n        if (symbol == array[i]) {\n            return true;\n        }\n    }\n    \n    return false;\n  }"
+  },
+
+  "6": {
+    "number": 5,
+    "js": "function resolve(line){\n    let arrowsNum = 0;\n    \n    for (let i = 0; i < line.length; i++) {\n        let count = 0;\n        let str = '';\n        \n        for (let j = i; j < line.length; j++) {\n            str += line[j];\n            count++;\n        \n            if (count == 5) {\n                if (str == '>>-->' || str == '<--<<') {\n                    arrowsNum++;\n                    break;\n                }\n            }\n        }\n    }\n    \n    return arrowsNum;\n}",
+    "java": "static int resolve(String line) {\n    int arrowsNum = 0;\n    \n    for (int i = 0; i < line.length(); i++) {\n        int count = 0;\n        String str = \"\";\n        \n        for (int j = i; j < line.length(); j++) {\n            str += line.charAt(j);\n            count++;\n        \n            if (count == 5 && (str.equals(\">>-->\") || str.equals(\"<--<<\"))) {\n                arrowsNum++;      \n                break; \n            }\n        }\n    }\n    \n    return arrowsNum;\n  }",
+    "cpp": "int resolve(char line[]) {\n    int arrowsNum = 0;\n    int length = 0;\n    \n    while (line[length] != '\\0') {\n        length++;\n    }\n    \n    for (int i = 0; i < length; i++) {\n        int count = 0;\n        std::string str = \"\";\n        \n        for (int j = i; j < length; j++) {\n            str += line[j];\n            count++;\n        \n            if (count == 5 && (str == \">>-->\") || (str == \"<--<<\")) {\n                arrowsNum++;      \n                break; \n            }\n        }\n    }\n    \n    return arrowsNum;\n  }"
+  },
+
+  "7": {
+    "number": 5,
+    "js": "function resolve(line){\n    line = line.toLowerCase();\n    const uniqueLetters = [];\n    \n    uniqueLetters.push(line[0]);\n    \n    for (let i = 1; i < line.length; i++) {\n        for (let j = 0; j < uniqueLetters.length; j++) {\n            if (line[i] == uniqueLetters[j]) {\n                break;\n            }\n            \n            if (j == uniqueLetters.length - 1) {\n                uniqueLetters.push(line[i]);\n            }\n        }\n    }\n    \n    return uniqueLetters.length == 26 ? 100 : 26 - uniqueLetters.length;\n}",
+    "java": "static int isPangramm(String phrase) {\n    phrase = phrase.toLowerCase();\n    char[] uniqueLetters = new char[26];\n    int currentIndex = 0;\n    \n    uniqueLetters[0] = phrase.charAt(0);\n    \n    for (int i = 1; i < phrase.length(); i++) {\n        for (int j = 0; j < uniqueLetters.length; j++) {\n            if (phrase.charAt(i) == uniqueLetters[j]) {\n                break;\n            }\n            \n            if (j == currentIndex) {\n                uniqueLetters[++currentIndex] = phrase.charAt(i);\n            }\n        }\n    }\n    \n    return currentIndex == 25 ? 100 : 25 - currentIndex;\n  }",
+    "cpp": "int isPangramm(char phrase[]) {\n    std::string str = phrase;\n    char uniqueLetters[26];\n    int currentIndex = 0;    \n    uniqueLetters[0] = phrase[0];\n    int i = 0;\n    \n    while (str[i]) {\n        str[i] = (char)tolower(str[i]);\ni++;\n    }\n    \n    for (int i = 1; i < str.length(); i++) {\n        for (int j = 0; j < 26; j++) {\n            if (str[i] == uniqueLetters[j]) {\n                break;\n            }\n            \n            if (j == currentIndex) {\n                uniqueLetters[++currentIndex] = str[i];\n            }\n        }\n    }\n    \n    return currentIndex == 25 ? 100 : 25 - currentIndex;\n  }"
+  },
+
+  "8": {
+    "number": 5,
+    "js": "function resolve(line){\n  const sos = \"SOS\";\n  let failLetters = 0;\n  \n  for (let i = 0; i < line.length; i++) {\n      if (line[i] != sos[i % 3]) {\n          failLetters++;\n      }\n  }\n  \n  return failLetters;\n}",
+    "java": "static int resolve(String line) {\n    String sos = \"SOS\";\n    int failLetters = 0;\n  \n    for (int i = 0; i < line.length(); i++) {\n      if (line.charAt(i) != sos.charAt(i % 3)) {\n          failLetters++;\n      }\n    }\n  \n    return failLetters;\n  }",
+    "cpp": "int resolve(char line[]) {\n    std::string str = line;\n    std::string sos = \"SOS\";\n    int failLetters = 0;\n  \n    for (int i = 0; i < str.length(); i++) {\n      if (str[i] != sos[i % 3]) {\n          failLetters++;\n      }\n    }\n  \n    return failLetters;\n  }"
+  },
+
+  "9": {
+    "number": 1,
+    "js": "function resolve(triangleN, pentagonK) {\n    return 3 * triangleN + 5 * pentagonK;\n}",
+    "java": "static int resolve(int triangleN, int pentagonK) {\n      return 3 * triangleN + 5 * pentagonK;\n}",
+    "cpp": "int resolve(int triangleN, int pentagonK) {\n      return 3 * triangleN + 5 * pentagonK;\n}"
+  },
+
+  "10": {
+    "number": 1,
+    "js": "function resolve(peopleN, catsK) {\n    return (peopleN + catsK) * 2;\n}",
+    "java": "static int resolve(int peopleN, int catsK) {\n    return (peopleN + catsK) * 2;\n}",
+    "cpp": "int resolve(int peopleN, int catsK) {\n    return (peopleN + catsK) * 2;\n}"
   },
 
   "11": {
-    "taskId": 11,
+    "number": 2,
     "js": "function resolve(first, second, third) {\n    if (first === second && first === third) {\n        return -1;        \n    }    \n    if (first === second) {\n        return third;\n    }    \n    if (second === third) {\n        return first;\n    }    \n    if (first === third) {\n        return second;\n    }\n}",
-    "java" : "",
-    "cpp": ""
+    "java" : "static int resolve(int first, int second, int third) {\n    if (first == second && first == third) {\n        return -1;        \n    } else if (first == second) {\n        return third;\n    } else if (second == third) {\n        return first;\n    } else {\n        return second;\n    }    \n  }",
+    "cpp": "int resolve(int first, int second, int third) {\n    if (first == second && first == third) {\n        return -1;        \n    } else if (first == second) {\n        return third;\n    } else if (second == third) {\n        return first;\n    } else {\n        return second;\n    }    \n  }"
+  },
+
+  "12": {
+    "number": 2,
+    "js": "function resolve(first, second, third) {\n    if (first == second && first == third) {\n        return -1;\n    }\n    \n    if (first != second && second != third && first != third) {\n        return 100;\n    }\n    \n    if (first == second) {\n        if (first > third) {\n            return first;\n        }\n        return third; \n    }\n    \n    if (first == third) {\n        if (first > second) {\n            return first;\n        }\n        return second;\n    }\n    \n    if (second == third) {\n        if (second > first) {\n            return second;\n        }\n        return first;\n    }\n}",
+    "java": "static int resolve(int first, int second, int third) {\n    if (first == second && first == third) {\n        return -1;\n    }\n    \n    if (first != second && second != third && first != third) {\n        return 100;\n    }\n    \n    if (first == second) {\n        if (first > third) {\n            return first;\n        }\n        return third; \n    }\n    \n    if (first == third) {\n        if (first > second) {\n            return first;\n        }\n        return second;\n    }\n    \n    if (second == third) {\n        if (second > first) {\n            return second;\n        }\n        return first;\n    }\n    \n    return -1;\n  }",
+    "cpp": "int resolve(int first, int second, int third) {\n    if (first == second && first == third) {\n        return -1;\n    }\n    \n    if (first != second && second != third && first != third) {\n        return 100;\n    }\n    \n    if (first == second) {\n        if (first > third) {\n            return first;\n        }\n        return third; \n    }\n    \n    if (first == third) {\n        if (first > second) {\n            return first;\n        }\n        return second;\n    }\n    \n    if (second == third) {\n        if (second > first) {\n            return second;\n        }\n        return first;\n    }\n    \n    return -1;\n  }"
+  },
+
+  "13": {
+    "number": 2,
+    "js": "function resolve(first, second) {\n    const sum = first + second;\n    const mult = first * second;\n    \n    if (mult == sum) {\n        return 100;\n    }\n    \n    if (mult < 0 || sum < 0) {\n        if (first > second) {\n            return first;\n        }\n        return second;\n    }\n    \n    return -1;\n}",
+    "java": "static int resolve(int first, int second) {\n    int sum = first + second;\n    int mult = first * second;\n    \n    if (mult == sum) {\n        return 100;\n    }\n    \n    if (mult < 0 || sum < 0) {\n        if (first > second) {\n            return first;\n        }\n        return second;\n    }\n    \n    return -1;\n}",
+    "cpp": "int resolve(int first, int second) {\n    int sum = first + second;\n    int mult = first * second;\n    \n    if (mult == sum) {\n        return 100;\n    }\n    \n    if (mult < 0 || sum < 0) {\n        if (first > second) {\n            return first;\n        }\n        return second;\n    }\n    \n    return -1;\n}"
+  },
+
+  "14": {
+    "number": 2,
+    "js": "function resolve(first, second, third) {\n    if (first < second && second < third) {\n        return second;\n    }\n    \n    if (second < first && first < third) {\n        return first;\n    }\n    \n    if (first < third && third < second) {\n        return third;\n    }\n    \n    return -1;\n}",
+    "java": "static int resolve(int first, int second, int third) {\n    if (first < second && second < third) {\n        return second;\n    }\n    \n    if (second < first && first < third) {\n        return first;\n    }\n    \n    if (first < third && third < second) {\n        return third;\n    }\n    \n    return -1;\n}",
+    "cpp": "int resolve(int first, int second, int third) {\n    if (first < second && second < third) {\n        return second;\n    }\n    \n    if (second < first && first < third) {\n        return first;\n    }\n    \n    if (first < third && third < second) {\n        return third;\n    }\n    \n    return -1;\n}"
   },
 
   "15": {
-    "taskId": 15,
+    "number": 3,
     "js" : "function resolve(first, second, third) {\n    let result = first;\n    \n    while (result >= third) {\n        result -= second;\n    }\n    \n    return result;\n}",
     "java": "static int resolve(int first, int second, int third) {    \n    int result = first;\n\n    while (result >= third) {\n        result -= second;\n    }\n\n    return result;\n    \n}",
-    "cpp": ""
+    "cpp": "static int resolve(int first, int second, int third) {    \n    int result = first;\n\n    while (result >= third) {\n        result -= second;\n    }\n\n    return result;\n    \n}"
+  },
+
+  "16": {
+    "number": 3,
+    "js": "function resolve(first, second) {\n    let result = first;\n    \n    do {\n        result = (result + second) - second * second;\n    } while (result >= 0);\n    \n    return result;\n\n}",
+    "java": "static int resolve(int first, int second) {\n    int result = first;\n    \n    do {\n        result = (result + second) - second * second;\n    } while (result >= 0);\n    \n    return result;\n\n}",
+    "cpp": "int resolve(int first, int second) {\n    int result = first;\n    \n    do {\n        result = (result + second) - second * second;\n    } while (result >= 0);\n    \n    return result;\n\n}"
+  },
+
+  "17": {
+    "number": 3,
+    "js": "function resolve(number) {\n    while (number <= 1000000) {\n        number *= 2;\n    }\n    \n    return number;\n}",
+    "java": "static int resolve(int number) {\n    while (number <= 1000000) {\n        number *= 2;\n    }\n    \n    return number;\n}",
+    "cpp": "int resolve(int number) {\n    while (number <= 1000000) {\n        number *= 2;\n    }\n    \n    return number;\n}"
+  },
+
+  "18": {
+    "number": 3,
+    "js": "function resolve(first, second, third) {\n    let result = first;\n    \n    for (let i = 0; i < third; i++) {\n        result -= second - i;\n    }\n    \n    return result;\n}",
+    "java": "static int resolve(int first, int second, int third) {\n    int result = first;\n    \n    for (int i = 0; i < third; i++) {\n        result -= second - i;\n    }\n    \n    return result;\n}",
+    "cpp": "int resolve(int first, int second, int third) {\n    int result = first;\n    \n    for (int i = 0; i < third; i++) {\n        result -= second - i;\n    }\n    \n    return result;\n}"
+  },
+
+  "19": {
+    "number": 3,
+    "js": "function resolve(first, second) {\n    let result = 0;\n    let num = 1;\n    \n    for (let i = 0; i < second; i++) {\n        result += first * num;\n        num *= 10;\n    }\n    \n    return result;\n}",
+    "java": "static int resolve(int first, int second) {\n    int result = 0;\n    int num = 1;\n    \n    for (int i = 0; i < second; i++) {\n        result += first * num;\n        num *= 10;\n    }\n    \n    return result;\n}",
+    "cpp": "int resolve(int first, int second) {\n    int result = 0;\n    int num = 1;\n    \n    for (int i = 0; i < second; i++) {\n        result += first * num;\n        num *= 10;\n    }\n    \n    return result;\n}"
   },
 
   "20": {
-    "taskId" : 20,
+    "number": 4,
     "js": "function resolve(array, arraySize) {\n    for (let i = 0; i < arraySize - 2; i++) {\n        if (array[i] === 0 && array[i + 2] === 0) {\n            return i + 1;\n        }\n    }\n    \n    return -1;\n}",
-    "java": "",
-    "cpp": ""
+    "java": "public static int resolve(int[] array, int arraySize) {\n      for (int i = 0; i < arraySize - 2; i++) {\n        if (array[i] == 0 && array[i + 2] == 0) {\n            return i + 1;\n        }\n    }\n    \n    return -1;\n  }",
+    "cpp": "int resolve(int array[], int arraySize) {\n      for (int i = 0; i < arraySize - 2; i++) {\n        if (array[i] == 0 && array[i + 2] == 0) {\n            return i + 1;\n        }\n    }\n    \n    return -1;\n  }"
+  },
+
+  "21": {
+    "number": 4,
+    "js": "function resolve(array, arraySize) {\n    let count = 0;\n    \n    for (let i = 1; i < arraySize; i++) {\n        if (array[i] > array[i-1]) {\n            count++;\n        }\n    }\n    \n    return count;\n}",
+    "java": "static int resolve(int[] array, int arraySize) {\n    int count = 0;\n    \n    for (int i = 1; i < arraySize; i++) {\n        if (array[i] > array[i-1]) {\n            count++;\n        }\n    }\n    \n    return count;\n}",
+    "cpp": "int resolve(int array[], int arraySize) {\n    int count = 0;\n    \n    for (int i = 1; i < arraySize; i++) {\n        if (array[i] > array[i-1]) {\n            count++;\n        }\n    }\n    \n    return count;\n}"
+  },
+
+  "22": {
+    "number": 4,
+    "js": "function resolve(array, arraySize) {\n  let min = array[0];\n  let index = 0;\n  \n  for (let i = 1; i < arraySize; i++) {\n    if (Math.abs(array[i]) < min) {\n      min = array[i];\n      index = i;\n    } \n  }\n  \n  return index;\n}",
+    "java": "static int resolve(int[] array, int arraySize) {\n  int min = array[0];\n  int index = 0;\n  \n  for (int i = 1; i < arraySize; i++) {\n    if (Math.abs(array[i]) < min) {\n      min = array[i];\n      index = i;\n    } \n  }\n  \n  return index;\n}",
+    "cpp": "int resolve(int array[], int arraySize) {\n  int min = array[0];\n  int index = 0;\n  \n  for (int i = 1; i < arraySize; i++) {\n    if (abs(array[i]) < min) {\n      min = array[i];\n      index = i;\n    } \n  }\n  \n  return index;\n}"
+  },
+
+  "23": {
+    "number": 4,
+    "js": "function resolve(array, arraySize) {\n  let num = 0;\n  \n  if (array[0] == array[1]) {\n      num = array[0];\n  } else if (array[1] == array[2]) {\n      num = array[1];\n  } else {\n      num = array[2];\n  }\n  \n  for (let i = 0; i < arraySize; i++) {\n    if ((array[i]) != num) {\n      return i;\n    }\n  }\n  \n  return -1;\n}",
+    "java": "static int resolve(int[] array, int arraySize) {\n  int num = 0;\n  \n  if (array[0] == array[1]) {\n      num = array[0];\n  } else if (array[1] == array[2]) {\n      num = array[1];\n  } else {\n      num = array[2];\n  }\n  \n  for (int i = 0; i < arraySize; i++) {\n    if ((array[i]) != num) {\n      return i;\n    }\n  }\n  \n  return -1;\n}",
+    "cpp": "int resolve(int array[],int arraySize) {\n  int num = 0;\n  \n  if (array[0] == array[1]) {\n      num = array[0];\n  } else if (array[1] == array[2]) {\n      num = array[1];\n  } else {\n      num = array[2];\n  }\n  \n  for (int i = 0; i < arraySize; i++) {\n    if ((array[i]) != num) {\n      return i;\n    }\n  }\n  \n  return -1;\n}"
+  },
+
+  "24": {
+    "number": 4,
+    "js": "function resolve(array, arraySize) {\n    for (let i = 0; i < arraySize; i += 2) {\n        let firstIndex = indexOf(i, array);\n        let secondIndex = indexOf(i+1, array);\n        \n        \n        if (firstIndex != -1 && secondIndex != -1) {\n            array[secondIndex] = i;\n            array[firstIndex] = i + 1;\n        }\n    }\n    \n    return array;\n}\n\nfunction indexOf(number, array) {\n    for (let i = 0; i < array.length; i++) {\n        if (number == array[i]) {\n            return i;\n        }\n    }\n    \n    return -1;\n}",
+    "java": "static int[] resolve(int[] array, int arraySize) {\n    for (int i = 0; i < arraySize; i += 2) {\n        int firstIndex = indexOf(i, array);\n        int secondIndex = indexOf(i+1, array);\n        \n        \n        if (firstIndex != -1 && secondIndex != -1) {\n            array[secondIndex] = i;\n            array[firstIndex] = i + 1;\n        }\n    }\n    \n    return array;\n}\n\nstatic int indexOf(int number, int[] array) {\n    for (int i = 0; i < array.length; i++) {\n        if (number == array[i]) {\n            return i;\n        }\n    }\n    \n    return -1;\n}",
+    "cpp": "int indexOf(int number, int array[], int arraySize);\n\nint * resolve(int array[], int arraySize) {\n    for (int i = 0; i < arraySize; i += 2) {\n        int firstIndex = indexOf(i, array, arraySize);\n        int secondIndex = indexOf(i+1, array, arraySize);\n        \n        \n        if (firstIndex != -1 && secondIndex != -1) {\n            array[secondIndex] = i;\n            array[firstIndex] = i + 1;\n        }\n    }\n    \n    return array;\n}\n\nint indexOf(int number, int array[], int arraySize) {\n    for (int i = 0; i < arraySize; i++) {\n        if (number == array[i]) {\n            return i;\n        }\n    }\n    \n    return -1;\n}"
+  },
+
+  "25": {
+    "number": 4,
+    "js": "function resolve(array, arraySize) {\n  for (let i = 0; i < arraySize; i++) {\n      if (array[i] < 0) {\n          array[i] = 0;\n      }\n      \n      if (array[i] > 100) {\n          array[i] = 100;\n      }\n  }\n  \n  return array;\n}",
+    "java": "static int[] resolve(int[] array, int arraySize) {\n  for (int i = 0; i < arraySize; i++) {\n      if (array[i] < 0) {\n          array[i] = 0;\n      }\n      \n      if (array[i] > 100) {\n          array[i] = 100;\n      }\n  }\n  \n  return array;\n}",
+    "cpp": "int * resolve(int array[], int arraySize) {\n  for (int i = 0; i < arraySize; i++) {\n      if (array[i] < 0) {\n          array[i] = 0;\n      }\n      \n      if (array[i] > 100) {\n          array[i] = 100;\n      }\n  }\n  \n  return array;\n}"
   }
-
-
 }
