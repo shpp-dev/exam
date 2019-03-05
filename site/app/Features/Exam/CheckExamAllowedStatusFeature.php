@@ -8,7 +8,7 @@ use App\Domains\Http\Jobs\SendHttpPostRequestJob;
 use Illuminate\Http\Request;
 use Lucid\Foundation\Feature;
 
-class CheckExamStatusFeature extends Feature
+class CheckExamAllowedStatusFeature extends Feature
 {
     public function handle(Request $request)
     {

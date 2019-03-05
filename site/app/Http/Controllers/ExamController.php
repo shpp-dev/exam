@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Features\Exam\CheckExamStatusFeature;
+use App\Features\Exam\CheckExamAllowedStatusFeature;
 use App\Features\Exam\FinishExamFeature;
 use App\Features\Exam\GetTaskFeature;
 use App\Features\Exam\SaveAnswerFeature;
@@ -13,7 +13,7 @@ class ExamController extends Controller
 {
     public function getStatus()
     {
-        return $this->serve(CheckExamStatusFeature::class);
+        return $this->serve(CheckExamAllowedStatusFeature::class);
     }
 
     public function startSession()

@@ -11,17 +11,17 @@ class AdminController extends Controller
 {
     public function listUnchecked()
     {
-        $this->serve(ListUncheckedUsersFeature::class);
+        return $this->serve(ListUncheckedUsersFeature::class);
     }
 
     public function listChecked()
     {
-        $this->serve(ListCheckedUsersFeature::class);
+        return $this->serve(ListCheckedUsersFeature::class);
     }
 
     public function check()
     {
-        $this->serve(CheckExamForUserFeature::class);
+        return $this->serve(CheckExamForUserFeature::class);
     }
 
 }

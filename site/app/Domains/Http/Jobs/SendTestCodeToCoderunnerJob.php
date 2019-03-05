@@ -104,7 +104,7 @@ class SendTestCodeToCoderunnerJob extends Job
         }
         return [
             'error' => false,
-            'cases' => $cases,
+            'resultCases' => $resultCases,
             'program' => $this->program
         ];
     }
