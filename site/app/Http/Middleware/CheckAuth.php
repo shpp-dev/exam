@@ -55,7 +55,14 @@ class CheckAuth
             ]);
         }
 
-        Auth::authorizeByEmail($authTokenData['data']->userEmail);
+        $user = Auth::authorizeByEmail($authTokenData['data']->userEmail);
+        if (!$user) {
+            return $this->run(RespondWithJsonErrorJob::class, [
+                'message' => 'User not found',
+                'code' => 404,
+                'redirectTo' => 'accountF'
+            ]);
+        }
 
         return $next($request);
     }
