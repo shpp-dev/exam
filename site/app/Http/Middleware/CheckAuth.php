@@ -58,8 +58,8 @@ class CheckAuth
         $user = Auth::authorizeByEmail($authTokenData['data']->userEmail);
         if (!$user) {
             return $this->run(RespondWithJsonErrorJob::class, [
-                'message' => 'User not found',
-                'code' => 404,
+                'message' => 'It looks like we have not invite you yet',
+                'code' => 407,
                 'redirectTo' => 'accountF'
             ]);
         }
