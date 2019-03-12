@@ -11,6 +11,7 @@ use App\Domains\Http\Jobs\SendTestCodeToCoderunnerJob;
 use App\Domains\Http\Jobs\SubmitCodeToCoderunnerJob;
 use App\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 use Lucid\Foundation\ServesFeaturesTrait;
 
@@ -59,6 +60,7 @@ class SaveAnswerFeature extends Feature
                     'program' => $program,
                     'lang' => $lang
                 ]);
+                Log::info('User '.$user->id.' sent for testing solution for task '.$task->id);
                 break;
             case 'submit':
                 $result = $this->run(SubmitCodeToCoderunnerJob::class, [
@@ -78,6 +80,7 @@ class SaveAnswerFeature extends Feature
                 } else {
                     $result['finished'] = false;
                 }
+                Log::info('User '.$user->id.' submit solution for task '.$task->id);
                 break;
         }
 

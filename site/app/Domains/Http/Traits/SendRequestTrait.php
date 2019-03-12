@@ -13,7 +13,6 @@ trait SendRequestTrait
         $response = $client->post($coderunnerUrl, [
             RequestOptions::JSON => $data
         ]);
-        // todo check response
         $responseContent = $response->getBody();
 
         return $responseContent;

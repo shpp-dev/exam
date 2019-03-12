@@ -9,6 +9,7 @@ use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Domains\Http\Jobs\SendHttpPostRequestJob;
 use App\ExamSession;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 
 class CheckExamForUserFeature extends Feature
@@ -47,5 +48,7 @@ class CheckExamForUserFeature extends Feature
             'session' => $session,
             'passed' => $passed
         ]);
+
+        Log::info('Exam was checked for user '.$session->user->id.'. Passed: '.$passed);
     }
 }

@@ -10,6 +10,7 @@ use App\Domains\Mail\Jobs\SendFinishExamMailToStudentJob;
 use App\ExamSession;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 
 class FinishExamFeature extends Feature
@@ -54,6 +55,7 @@ class FinishExamFeature extends Feature
 
             $this->run(SendFinishExamMailToStudentJob::class, ['emails' => $emails]);
             DB::commit();
+            Log::info('Exam was finished for user '.$user->id);
         } catch (\Exception $e) {
             DB::rollBack();
             return $this->run(RespondWithJsonErrorJob::class, [

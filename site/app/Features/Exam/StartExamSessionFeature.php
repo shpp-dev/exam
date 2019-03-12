@@ -6,6 +6,7 @@ use App\Domains\Auth\Auth;
 use App\Domains\Exam\Jobs\CreateExamSessionJob;
 use App\Domains\Exam\Jobs\SelectTasksJob;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 
 class StartExamSessionFeature extends Feature
@@ -23,5 +24,6 @@ class StartExamSessionFeature extends Feature
             'startedAt' => Carbon::now(),
             'tasks' => $tasks
         ]);
+        Log::info('Exam session started for user '.$user->id);
     }
 }

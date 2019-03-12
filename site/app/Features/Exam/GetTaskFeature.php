@@ -8,6 +8,7 @@ use App\Domains\Exam\Jobs\SelectLastUnsolvedTaskJob;
 use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 
 class GetTaskFeature extends Feature
@@ -28,6 +29,7 @@ class GetTaskFeature extends Feature
             'examSession' => $session
         ]);
 
+        Log::info('Task '. $task->id.' description sent to user '.$user->id);
         return $this->run(RespondWithJsonJob::class, [
             'content' => $preparedContent
         ]);
