@@ -8,6 +8,7 @@ use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use App\Domains\Http\Jobs\SendHttpPostRequestJob;
 use App\Domains\Mail\Jobs\SendFinishExamMailToStudentJob;
 use App\ExamSession;
+use Exception;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -55,8 +56,8 @@ class FinishExamFeature extends Feature
 
             $this->run(SendFinishExamMailToStudentJob::class, ['emails' => $emails]);
             DB::commit();
-            Log::info('Exam was finished for user '.$user->id);
-        } catch (\Exception $e) {
+            Log::info('Exam was finished for user '. implode(', ', $emails));
+        } catch (Exception $e) {
             DB::rollBack();
             return $this->run(RespondWithJsonErrorJob::class, [
                 'message' => 'Internal server error',

@@ -25,7 +25,7 @@ class ExamTest extends TestCase
     private $examTasks;
     private $testNumber;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
