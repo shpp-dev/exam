@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Exam\Jobs;
+namespace App\Domains\ExamSession\Jobs;
 
 
 use Carbon\Carbon;

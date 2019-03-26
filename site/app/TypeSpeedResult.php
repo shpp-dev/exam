@@ -4,7 +4,7 @@ namespace App;
 
 use App\Foundation\BaseModel;
 
-class Task extends BaseModel
+class TypeSpeedResult extends BaseModel
 {
     //
 }

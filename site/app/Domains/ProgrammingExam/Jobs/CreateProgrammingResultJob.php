@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Domains\Exam\Jobs;
+namespace App\Domains\ProgrammingExam\Jobs;
 
 
-use App\Result;
-use App\Task;
+use App\ProgrammingResult;
+use App\ProgrammingTask;
 use Lucid\Foundation\Job;
 
-class CreateExamResultJob extends Job
+class CreateProgrammingResultJob extends Job
 {
     /**
      * @var int
@@ -15,7 +15,7 @@ class CreateExamResultJob extends Job
     private $sessionId;
 
     /**
-     * @var Task
+     * @var ProgrammingTask
      */
     private $task;
 
@@ -27,10 +27,10 @@ class CreateExamResultJob extends Job
     /**
      * CreateExamResultJob constructor.
      * @param int $sessionId
-     * @param Task $task
+     * @param ProgrammingTask $task
      * @param array $result
      */
-    public function __construct(int $sessionId, Task $task, array $result)
+    public function __construct(int $sessionId, ProgrammingTask $task, array $result)
     {
         $this->sessionId = $sessionId;
         $this->task = $task;
@@ -39,7 +39,7 @@ class CreateExamResultJob extends Job
 
     public function handle()
     {
-        $examResult = new Result();
+        $examResult = new ProgrammingResult();
         $examResult->sessionId = $this->sessionId;
         $examResult->taskNumber = $this->task->number;
         $examResult->taskId = $this->task->id;

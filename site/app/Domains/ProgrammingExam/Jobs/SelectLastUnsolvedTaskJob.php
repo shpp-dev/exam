@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\Exam\Jobs;
+namespace App\Domains\ProgrammingExam\Jobs;
 
 
 use App\Domains\Helpers\Traits\MappedTrait;
@@ -21,7 +21,7 @@ class SelectLastUnsolvedTaskJob extends Job
     public function handle()
     {
         $tasks = json_decode($this->examSession->tasksIds);
-        $mappedResults = $this->getMapped($this->examSession->results, 'taskId');
+        $mappedResults = $this->getMapped($this->examSession->programmingResults, 'taskId');
 
         $unsolvedId = 1;
         foreach ($tasks as $task) {

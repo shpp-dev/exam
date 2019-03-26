@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Domains\Exam\Jobs;
+namespace App\Domains\Data\Jobs;
 
 
 use App\ExamSession;
-use App\Task;
+use App\ProgrammingTask;
 use Carbon\Carbon;
 use Firebase\JWT\BeforeValidException;
 use Firebase\JWT\ExpiredException;

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Domains\Exam\Jobs;
+namespace App\Domains\Data\Jobs;
 
 
 use App\ExamSession;
-use App\Task;
+use App\ProgrammingTask;
 use Carbon\Carbon;
 use Firebase\JWT\BeforeValidException;
 use Firebase\JWT\ExpiredException;
@@ -15,7 +15,7 @@ use Lucid\Foundation\Job;
 class GetPreparedTaskDataJob extends Job
 {
     /**
-     * @var Task
+     * @var ProgrammingTask
      */
     private $task;
 
@@ -26,10 +26,10 @@ class GetPreparedTaskDataJob extends Job
 
     /**
      * GetPreparedTaskDataJob constructor.
-     * @param Task $task
+     * @param ProgrammingTask $task
      * @param ExamSession $examSession
      */
-    public function __construct(Task $task, ExamSession $examSession)
+    public function __construct(ProgrammingTask $task, ExamSession $examSession)
     {
         $this->task = $task;
         $this->examSession = $examSession;

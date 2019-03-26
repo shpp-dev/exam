@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\ExamSession;
-use App\Features\Exam\FinishExamFeature;
+use App\Features\Exam\FinishExamSessionFeature;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;
@@ -50,7 +50,7 @@ class FinishExamSession extends Command
             ->get();
 
         if ($notClosedSessions->isNotEmpty()) {
-            $this->serve(FinishExamFeature::class, ['examSessions' => $notClosedSessions]);
+            $this->serve(FinishExamSessionFeature::class, ['examSessions' => $notClosedSessions]);
         }
     }
 }

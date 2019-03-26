@@ -3,7 +3,7 @@ namespace App\Domains\Http\Jobs;
 
 use App\Domains\Helpers\Traits\JsonTrait;
 use App\Domains\Http\Traits\SendRequestTrait;
-use App\Task;
+use App\ProgrammingTask;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 use Lucid\Foundation\Job;
@@ -18,7 +18,7 @@ class SubmitCodeToCoderunnerJob extends Job
     private $coderunnerUrl;
 
     /**
-     * @var Task
+     * @var ProgrammingTask
      */
     private $task;
 
@@ -39,12 +39,12 @@ class SubmitCodeToCoderunnerJob extends Job
 
     /**
      * SubmitCodeToCoderunnerJob constructor.
-     * @param Task $task
+     * @param ProgrammingTask $task
      * @param string $program
      * @param string $lang
      * @param string $userFunction
      */
-    public function __construct(Task $task, string $program, string $lang, string $userFunction)
+    public function __construct(ProgrammingTask $task, string $program, string $lang, string $userFunction)
     {
         $this->coderunnerUrl = config('ptp.coderunnerUrl');
         $this->task = $task;

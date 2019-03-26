@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Domains\Exam\Jobs;
+namespace App\Domains\ProgrammingExam\Jobs;
 
 
 use App\ExamSession;
-use App\Task;
+use App\ProgrammingTask;
 use Carbon\Carbon;
 use Firebase\JWT\BeforeValidException;
 use Firebase\JWT\ExpiredException;
@@ -35,7 +35,7 @@ class SelectTasksJob extends Job
     {
         $tasks = [];
         for ($i= 0; $i <= $this->amount; $i++ ) {
-            $task = Task::where('number', $i )->orderByRaw("RAND()")->first();
+            $task = ProgrammingTask::where('number', $i )->orderByRaw("RAND()")->first();
             $tasks[] = $task->id;
         }
         return $tasks;

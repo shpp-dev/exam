@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Domains\Exam\Jobs;
+namespace App\Domains\ExamSession\Jobs;
 
 
 use App\ExamSession;
-use App\Result;
-use App\Task;
+use App\ProgrammingResult;
+use App\ProgrammingTask;
 use Carbon\Carbon;
 use Lucid\Foundation\Job;
 

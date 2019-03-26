@@ -1,5 +1,6 @@
 <?php
 
+use App\Data\ExamSystem;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -18,8 +19,11 @@ class CreateExamSessionsTable extends Migration
             $table->unsignedInteger('user_id');
             $table->dateTime('started_at');
             $table->dateTime('finished_at')->nullable();
-            $table->string('tasks_ids');
+            $table->string('programming_tasks_ids')->nullable();
             $table->boolean('passed')->nullable();
+            $table->integer('programming_status')->default(ExamSystem::DISABLED_STATUS);
+            $table->integer('english_status')->default(ExamSystem::DISABLED_STATUS);
+            $table->integer('type_speed_status')->default(ExamSystem::DISABLED_STATUS);
             $table->timestamps();
         });
     }

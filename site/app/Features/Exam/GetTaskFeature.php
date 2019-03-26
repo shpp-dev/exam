@@ -3,17 +3,16 @@
 namespace App\Features\Exam;
 
 use App\Domains\Auth\Auth;
-use App\Domains\Exam\Jobs\GetPreparedTaskDataJob;
-use App\Domains\Exam\Jobs\SelectLastUnsolvedTaskJob;
+use App\Domains\Data\Jobs\GetPreparedTaskDataJob;
+use App\Domains\ProgrammingExam\Jobs\SelectLastUnsolvedTaskJob;
 use App\Domains\Http\Jobs\RespondWithJsonJob;
-use App\Task;
-use Illuminate\Http\Request;
+use App\ProgrammingTask;
 use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 
 class GetTaskFeature extends Feature
 {
-    public function handle(Request $request)
+    public function handle()
     {
         $user = Auth::getAuthUser();
         $session = $user->activeSession();
@@ -22,7 +21,7 @@ class GetTaskFeature extends Feature
             'examSession' => $session
         ]);
 
-        $task = Task::find($unsolvedTaskId);
+        $task = ProgrammingTask::find($unsolvedTaskId);
 
         $preparedContent = $this->run(GetPreparedTaskDataJob::class, [
             'task' => $task,

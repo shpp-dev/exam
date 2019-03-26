@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateResultsTable extends Migration
+class CreateTypeSpeedResultsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateResultsTable extends Migration
      */
     public function up()
     {
-        Schema::create('results', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('session_id');
-            $table->unsignedInteger('task_number');
-            $table->unsignedInteger('task_id');
-            $table->text('result');
+        Schema::create('type_speed_results', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ class CreateResultsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('results');
+        Schema::dropIfExists('type_speed_results');
     }
 }

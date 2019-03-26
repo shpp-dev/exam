@@ -3,7 +3,7 @@ namespace App\Domains\Http\Jobs;
 
 use App\Domains\Helpers\Traits\JsonTrait;
 use App\Domains\Http\Traits\SendRequestTrait;
-use App\Task;
+use App\ProgrammingTask;
 use Lucid\Foundation\Job;
 
 class SendTestCodeToCoderunnerJob extends Job
@@ -16,7 +16,7 @@ class SendTestCodeToCoderunnerJob extends Job
     private $coderunnerUrl;
 
     /**
-     * @var Task
+     * @var ProgrammingTask
      */
     private $task;
 
@@ -32,11 +32,11 @@ class SendTestCodeToCoderunnerJob extends Job
 
     /**
      * SendTestCodeToCoderunnerJob constructor.
-     * @param Task $task
+     * @param ProgrammingTask $task
      * @param string $program
      * @param string $lang
      */
-    public function __construct(Task $task, string $program, string $lang)
+    public function __construct(ProgrammingTask $task, string $program, string $lang)
     {
         $this->coderunnerUrl = config('ptp.coderunnerUrl');
         $this->task = $task;

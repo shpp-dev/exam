@@ -3,13 +3,15 @@
 namespace App\Features\Exam;
 
 use App\Domains\Auth\Auth;
-use App\Domains\Exam\Jobs\CreateExamResultJob;
+use App\Domains\ExamSession\Jobs\CheckAllExamsFinishedJob;
+use App\Domains\ExamSession\Jobs\FinishProgrammingExamJob;
+use App\Domains\ProgrammingExam\Jobs\CreateProgrammingResultJob;
 use App\Domains\Helpers\Traits\JsonTrait;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Domains\Http\Jobs\SendTestCodeToCoderunnerJob;
 use App\Domains\Http\Jobs\SubmitCodeToCoderunnerJob;
-use App\Task;
+use App\ProgrammingTask;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
@@ -29,7 +31,7 @@ class SaveAnswerFeature extends Feature
         $lang = $request->lang; // js cpp java
         $userFunction = $request->userFunction;
 
-        if ($session->results()->whereTaskNumber($taskNumber)->first()) {
+        if ($session->programmingResults()->whereTaskNumber($taskNumber)->first()) {
             return $this->run(RespondWithJsonErrorJob::class, [
                 'message' => 'Nice try but you should not submit you solution twice',
                 'code' => 420
@@ -37,7 +39,7 @@ class SaveAnswerFeature extends Feature
         }
 
         $selectedTasks = json_decode($session->tasksIds, true);
-        $task = Task::find($selectedTasks[$taskNumber]);
+        $task = ProgrammingTask::find($selectedTasks[$taskNumber]);
 
         $program = [];
         switch ($lang) {
@@ -69,14 +71,17 @@ class SaveAnswerFeature extends Feature
                     'lang' => $lang,
                     'userFunction' => $userFunction
                 ]);
-                $this->run(CreateExamResultJob::class, [
+                $this->run(CreateProgrammingResultJob::class, [
                     'sessionId' => $session->id,
                     'task' => $task,
                     'result' => $result
                 ]);
                 if ($taskNumber == config('ptp.tasksOnExam')) {
                     $result['finished'] = true;
-                    $this->serve(FinishExamFeature::class);
+                    $this->run(FinishProgrammingExamJob::class, ['session' => $session]);
+                    if ($this->run(CheckAllExamsFinishedJob::class, ['session' => $session])) {
+                        $this->serve(FinishExamSessionFeature::class);
+                    }
                 } else {
                     $result['finished'] = false;
                 }

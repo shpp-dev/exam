@@ -3,7 +3,7 @@
 namespace App\Features\Exam;
 
 use App\Domains\Auth\Auth;
-use App\Domains\Exam\Jobs\FinishExamSessionsJob;
+use App\Domains\ExamSession\Jobs\FinishExamSessionsJob;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use App\Domains\Http\Jobs\SendHttpPostRequestJob;
 use App\Domains\Mail\Jobs\SendFinishExamMailToStudentJob;
@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 
-class FinishExamFeature extends Feature
+class FinishExamSessionFeature extends Feature
 {
     private $examSessions;
 

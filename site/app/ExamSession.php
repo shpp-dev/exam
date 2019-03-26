@@ -9,12 +9,25 @@ class ExamSession extends BaseModel
     protected $fillable = [
         'user_id',
         'started_at',
-        'tasks_ids'
+        'programming_tasks_ids',
+        'programming_status',
+        'english_status',
+        'type_speed_status'
     ];
 
-    public function results()
+    public function programmingResults()
     {
-        return $this->hasMany('App\Result', 'session_id');
+        return $this->hasMany('App\ProgrammingResult', 'session_id');
+    }
+
+    public function englishResult()
+    {
+        return $this->hasMany('App\EnglishResult', 'session_id');
+    }
+
+    public function typeSpeedResult()
+    {
+        return $this->hasOne('App\TypeSpeedResult', 'session_id');
     }
 
     public function user()
