@@ -4,22 +4,21 @@ namespace App\Features\Exam\Programming;
 
 use App\Data\ExamSystem;
 use App\Domains\Auth\Auth;
-use App\Domains\Exam\Session\Jobs\CheckAllExamsFinishedJob;
-use App\Domains\Exam\Session\Jobs\FinishExamByNameJob;
 use App\Domains\Exam\Programming\Jobs\CreateProgrammingResultJob;
+use App\Domains\Exam\Session\Jobs\CheckFinishedExamJob;
 use App\Domains\Helpers\Traits\JsonTrait;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Domains\Http\Jobs\SendTestCodeToCoderunnerJob;
 use App\Domains\Http\Jobs\SubmitCodeToCoderunnerJob;
-use App\Features\Exam\Session\FinishExamSessionFeature;
+use App\Features\Exam\Session\FinishExamFeature;
 use App\ProgrammingTask;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 use Lucid\Foundation\ServesFeaturesTrait;
 
-class SaveAnswerFeature extends Feature
+class SaveProgrammingAnswerFeature extends Feature
 {
     use JsonTrait, ServesFeaturesTrait;
 
@@ -32,6 +31,17 @@ class SaveAnswerFeature extends Feature
         $taskNumber = $request->taskNumber;// start from 0 index
         $lang = $request->lang; // js cpp java
         $userFunction = $request->userFunction;
+
+        $isFinished = $this->run(CheckFinishedExamJob::class, [
+            'session' => $session,
+            'examName' => ExamSystem::PROGRAMMING_EXAM_NAME
+        ]);
+
+        if ($isFinished) {
+            return $this->run(RespondWithJsonErrorJob::class, [
+                'message' => ExamSystem::EXAM_WAS_FINISHED
+            ]);
+        }
 
         if ($session->programmingResults()->whereTaskNumber($taskNumber)->first()) {
             return $this->run(RespondWithJsonErrorJob::class, [
@@ -78,15 +88,12 @@ class SaveAnswerFeature extends Feature
                     'task' => $task,
                     'result' => $result
                 ]);
-                if ($taskNumber == config('ptp.tasksOnExam')) {
+                if ($taskNumber == config('ptp.programmingTasksAmount')) {
                     $result['finished'] = true;
-                    $this->run(FinishExamByNameJob::class, [
+                    $this->run(FinishExamFeature::class, [
                         'session' => $session,
                         'examName' => ExamSystem::PROGRAMMING_EXAM_NAME
                     ]);
-                    if ($this->run(CheckAllExamsFinishedJob::class, ['session' => $session])) {
-                        $this->serve(FinishExamSessionFeature::class);
-                    }
                 } else {
                     $result['finished'] = false;
                 }

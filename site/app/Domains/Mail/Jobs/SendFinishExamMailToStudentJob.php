@@ -13,21 +13,21 @@ class SendFinishExamMailToStudentJob extends Job
     /**
      * @var array
      */
-    private $emails;
+    private $email;
 
     /**
      * SendFinishExamMailToStudentJob constructor.
-     * @param array $emails
+     * @param string $email
      */
-    public function __construct(array $emails)
+    public function __construct(string $email)
     {
-        $this->emails = $emails;
+        $this->email = $email;
     }
 
     public function handle()
     {
         Mail::send('mails.exam_completed', [], function ($message) {
-            $message->to($this->emails)->subject('Экзамен завершен');
+            $message->to($this->email)->subject('Экзамен завершен');
         });
     }
 }

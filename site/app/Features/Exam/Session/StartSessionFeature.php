@@ -9,14 +9,14 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 
-class StartExamSessionFeature extends Feature
+class StartSessionFeature extends Feature
 {
     public function handle()
     {
         $user = Auth::getAuthUser();
 
         $programmingTasks = config('ptp.programmingExam')
-            ? $this->run(SelectTasksJob::class, ['amount' => config('ptp.tasksOnExam')])
+            ? $this->run(SelectTasksJob::class, ['amount' => config('ptp.programmingTasksAmount')])
             : null;
 
         $this->run(CreateExamSessionJob::class, [

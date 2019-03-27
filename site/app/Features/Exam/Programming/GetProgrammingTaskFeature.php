@@ -10,7 +10,7 @@ use App\ProgrammingTask;
 use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 
-class GetTaskFeature extends Feature
+class GetProgrammingTaskFeature extends Feature
 {
     public function handle()
     {

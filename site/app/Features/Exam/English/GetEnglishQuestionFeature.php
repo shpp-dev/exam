@@ -12,7 +12,7 @@ use App\Domains\Http\Jobs\RespondWithJsonJob;
 use Exception;
 use Lucid\Foundation\Feature;
 
-class GetQuestionFeature extends Feature
+class GetEnglishQuestionFeature extends Feature
 {
     public function handle()
     {

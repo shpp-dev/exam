@@ -22,12 +22,19 @@ Route::group(['middleware' => ['ptp.auth', 'ptp.access']], function () {
 });
 
 Route::group(['middleware' => ['ptp.auth', 'ptp.current']], function () {
+    Route::post('exam/programming/start', 'ProgrammingController@start');
     Route::get('exam/programming/task', 'ProgrammingController@getTask')->name('task');
     Route::post('exam/programming/answer', 'ProgrammingController@saveAnswer')->name('answer');
-    Route::get('exam/english/question', 'EnglishControllerW@getQuestion');
-    Route::post('exam/english/answer', 'EnglishControllerW@saveAnswer');
+    Route::post('exam/programming/finish', 'ProgrammingController@finish')->name('answer');
+
+    Route::post('exam/english/start', 'EnglishController@start');
+    Route::get('exam/english/question', 'EnglishController@getQuestion');
+    Route::post('exam/english/answer', 'EnglishController@saveAnswer');
+    Route::post('exam/english/finish', 'EnglishController@finish');
+
     Route::post('exam/type/speed', 'TypeSpeedController@saveResult')->name('typeSpeed');
-    Route::post('exam/finish', 'ExamSessionController@finish')->name('finish');
+
+//    Route::post('exam/finish', 'ExamSessionController@finish')->name('finish');
 });
 
 Route::group(['middleware' => ['ptp.auth', 'ptp.admin']], function() {

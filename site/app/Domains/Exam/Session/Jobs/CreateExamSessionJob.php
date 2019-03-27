@@ -39,9 +39,9 @@ class CreateExamSessionJob extends Job
             'user_id' => $this->userId,
             'started_at' => $this->startedAt,
             'programming_tasks_ids' => json_encode($this->programmingTasks),
-            'programming_status' => $this->programmingExam ? ExamSystem::IN_PROGRESS_STATUS : ExamSystem::DISABLED_STATUS,
-            'english_status' => $this->englishExam ? ExamSystem::IN_PROGRESS_STATUS : ExamSystem::DISABLED_STATUS,
-            'type_speed_status' => $this->typeSpeedExam ? ExamSystem::IN_PROGRESS_STATUS : ExamSystem::DISABLED_STATUS
+            'programming_status' => $this->programmingExam ? ExamSystem::PREPARED_STATUS : ExamSystem::DISABLED_STATUS,
+            'english_status' => $this->englishExam ? ExamSystem::PREPARED_STATUS : ExamSystem::DISABLED_STATUS,
+            'type_speed_status' => $this->typeSpeedExam ? ExamSystem::PREPARED_STATUS : ExamSystem::DISABLED_STATUS
         ]);
 
         $examSession->save();
