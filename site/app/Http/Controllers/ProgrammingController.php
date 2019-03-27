@@ -3,8 +3,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Features\Exam\GetTaskFeature;
-use App\Features\Exam\SaveAnswerFeature;
+use App\Features\Exam\Programming\GetTaskFeature;
+use App\Features\Exam\Programming\SaveAnswerFeature;
 use \Lucid\Foundation\Http\Controller as Controller;
 
 

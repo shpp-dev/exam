@@ -1,16 +1,18 @@
 <?php
 
-namespace App\Features\Exam;
+namespace App\Features\Exam\Programming;
 
+use App\Data\ExamSystem;
 use App\Domains\Auth\Auth;
-use App\Domains\ExamSession\Jobs\CheckAllExamsFinishedJob;
-use App\Domains\ExamSession\Jobs\FinishProgrammingExamJob;
-use App\Domains\ProgrammingExam\Jobs\CreateProgrammingResultJob;
+use App\Domains\Exam\Session\Jobs\CheckAllExamsFinishedJob;
+use App\Domains\Exam\Session\Jobs\FinishExamByNameJob;
+use App\Domains\Exam\Programming\Jobs\CreateProgrammingResultJob;
 use App\Domains\Helpers\Traits\JsonTrait;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Domains\Http\Jobs\SendTestCodeToCoderunnerJob;
 use App\Domains\Http\Jobs\SubmitCodeToCoderunnerJob;
+use App\Features\Exam\Session\FinishExamSessionFeature;
 use App\ProgrammingTask;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -78,7 +80,10 @@ class SaveAnswerFeature extends Feature
                 ]);
                 if ($taskNumber == config('ptp.tasksOnExam')) {
                     $result['finished'] = true;
-                    $this->run(FinishProgrammingExamJob::class, ['session' => $session]);
+                    $this->run(FinishExamByNameJob::class, [
+                        'session' => $session,
+                        'examName' => ExamSystem::PROGRAMMING_EXAM_NAME
+                    ]);
                     if ($this->run(CheckAllExamsFinishedJob::class, ['session' => $session])) {
                         $this->serve(FinishExamSessionFeature::class);
                     }

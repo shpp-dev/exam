@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 
 use Lucid\Foundation\Http\Controller as Controller;
 
-
 class EnglishController extends Controller
 {
     public function getQuestion()
@@ -14,6 +13,11 @@ class EnglishController extends Controller
     }
 
     public function saveResult()
+    {
+
+    }
+
+    public function getScore()
     {
 
     }

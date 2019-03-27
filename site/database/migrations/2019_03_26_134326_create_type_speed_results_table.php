@@ -14,7 +14,10 @@ class CreateTypeSpeedResultsTable extends Migration
     public function up()
     {
         Schema::create('type_speed_results', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
+            $table->unsignedInteger('session_id');
+            $table->integer('speed');
+            $table->float('accuracy');
             $table->timestamps();
         });
     }

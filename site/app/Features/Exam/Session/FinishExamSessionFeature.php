@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Features\Exam;
+namespace App\Features\Exam\Session;
 
 use App\Domains\Auth\Auth;
-use App\Domains\ExamSession\Jobs\FinishExamSessionsJob;
+use App\Domains\Exam\Session\Jobs\FinishExamSessionsJob;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use App\Domains\Http\Jobs\SendHttpPostRequestJob;
 use App\Domains\Mail\Jobs\SendFinishExamMailToStudentJob;

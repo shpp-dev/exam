@@ -14,17 +14,18 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['middleware' => ['ptp.auth']], function () {
-    Route::get('exam/status', 'ExamController@getStatus')->name('status');
+    Route::get('exam/status', 'ExamSessionController@gstatus')->name('status');
 });
 
 Route::group(['middleware' => ['ptp.auth', 'ptp.access']], function () {
-    Route::post('exam/start', 'ExamController@startSession')->name('start');
+    Route::post('exam/start', 'ExamSessionController@start')->name('start');
 });
 
 Route::group(['middleware' => ['ptp.auth', 'ptp.current']], function () {
-    Route::get('exam/task', 'ExamController@getTask')->name('task');
-    Route::post('exam/answer', 'ExamController@saveAnswer')->name('answer');
-    Route::post('exam/finish', 'ExamController@finishExam')->name('finish');
+    Route::get('exam/programming/task', 'ProgrammingController@getTask')->name('task');
+    Route::post('exam/programming/answer', 'ProgrammingController@saveAnswer')->name('answer');
+    Route::post('exam/type/speed', 'TypeSpeedController@saveResult')->name('typeSpeed');
+    Route::post('exam/finish', 'ExamSessionController@finish')->name('finish');
 });
 
 Route::group(['middleware' => ['ptp.auth', 'ptp.admin']], function() {

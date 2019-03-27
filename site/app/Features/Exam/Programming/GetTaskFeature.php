@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Features\Exam;
+namespace App\Features\Exam\Programming;
 
 use App\Domains\Auth\Auth;
 use App\Domains\Data\Jobs\GetPreparedTaskDataJob;
-use App\Domains\ProgrammingExam\Jobs\SelectLastUnsolvedTaskJob;
+use App\Domains\Exam\Programming\Jobs\SelectLastUnsolvedTaskJob;
 use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\ProgrammingTask;
 use Illuminate\Support\Facades\Log;

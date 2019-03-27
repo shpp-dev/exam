@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Features\Exam;
+namespace App\Features\Exam\Session;
 
 use App\Domains\Auth\Auth;
 use App\Domains\Http\Jobs\RespondWithJsonJob;

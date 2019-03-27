@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\ExamSession;
-use App\Features\Exam\FinishExamSessionFeature;
+use App\Features\Exam\Session\FinishExamSessionFeature;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Collection;

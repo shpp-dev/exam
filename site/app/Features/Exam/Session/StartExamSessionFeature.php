@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Features\Exam;
+namespace App\Features\Exam\Session;
 
 use App\Domains\Auth\Auth;
-use App\Domains\ExamSession\Jobs\CreateExamSessionJob;
-use App\Domains\ProgrammingExam\Jobs\SelectTasksJob;
+use App\Domains\Exam\Session\Jobs\CreateExamSessionJob;
+use App\Domains\Exam\Programming\Jobs\SelectTasksJob;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;

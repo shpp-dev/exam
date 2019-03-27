@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\ProgrammingExam\Jobs;
+namespace App\Domains\Exam\Programming\Jobs;
 
 
 use App\ExamSession;

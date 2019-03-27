@@ -3,9 +3,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Features\Exam\CheckExamAllowedStatusFeature;
-use App\Features\Exam\FinishExamSessionFeature;
-use App\Features\Exam\StartExamSessionFeature;
+use App\Features\Exam\Session\CheckExamAllowedStatusFeature;
+use App\Features\Exam\Session\FinishExamSessionFeature;
+use App\Features\Exam\Session\StartExamSessionFeature;
 use Lucid\Foundation\Http\Controller as Controller;
 
 class ExamSessionController extends Controller
