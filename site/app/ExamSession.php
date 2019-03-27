@@ -22,7 +22,7 @@ class ExamSession extends BaseModel
 
     public function englishResult()
     {
-        return $this->hasMany('App\EnglishResult', 'session_id');
+        return $this->hasOne('App\EnglishResult', 'session_id');
     }
 
     public function typeSpeedResult()

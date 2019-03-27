@@ -8,6 +8,7 @@ use App\Domains\Auth\Auth;
 use App\ExamSession;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Support\Facades\Storage;
 use TasksSeederRU;
 use TasksSeederTest;
 use Tests\TestCase;
@@ -30,7 +31,7 @@ class ExamTest extends TestCase
         parent::setUp();
 
         $this->testNumber = 0;
-        $this->examTasks = json_decode(file_get_contents(storage_path('exam_tasks.json')), true);
+        $this->examTasks = json_decode(file_get_contents(Storage::get('programmingAnswers.json')), true);
         $this->app->make('config')->set('mail.driver', 'log');
     }
 

@@ -14,7 +14,11 @@ class CreateEnglishResults extends Migration
     public function up()
     {
         Schema::create('english_results', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
+            $table->unsignedInteger('session_id');
+            $table->text('results')->nullable();
+            $table->integer('answers_amount')->default(0);
+            $table->integer('score')->default(0);
             $table->timestamps();
         });
     }
