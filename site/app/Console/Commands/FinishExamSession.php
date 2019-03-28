@@ -44,12 +44,12 @@ class FinishExamSession extends Command
      */
     public function handle()
     {
-        $notClosedSessions = ExamSession::where('finished_at', null);
+        $notClosedSessions = ExamSession::where('finished_at', null)->get();
 
         foreach ($notClosedSessions as $session) {
             // check programming exam duration
             if ($session->programmingStatus == ExamSystem::IN_PROGRESS_STATUS
-                && Carbon::instance($session->programmingStartedAt) < Carbon::now()->subMinutes(config('ptp.programmingExamDurationMins'))) {
+                && Carbon::parse($session->programmingStartedAt) < Carbon::now()->subMinutes(config('ptp.programmingExamDurationMins'))) {
                 $this->serve(FinishExamFeature::class, [
                     'examName' => ExamSystem::PROGRAMMING_EXAM_NAME,
                     'session' => $session
@@ -58,7 +58,7 @@ class FinishExamSession extends Command
 
             // check english exam duration
             if ($session->englishStatus == ExamSystem::IN_PROGRESS_STATUS
-                && Carbon::instance($session->englishStartedAt) < Carbon::now()->subMinutes(config('ptp.englishExamDurationMins'))) {
+                && Carbon::parse($session->englishStartedAt) < Carbon::now()->subMinutes(config('ptp.englishExamDurationMins'))) {
                 $this->serve(FinishExamFeature::class, [
                     'examName' => ExamSystem::ENGLISH_EXAM_NAME,
                     'session' => $session

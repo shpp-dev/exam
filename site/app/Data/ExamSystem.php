@@ -6,7 +6,7 @@ namespace App\Data;
 
 class ExamSystem
 {
-    // session statuses
+    // exam statuses
     const DISABLED_STATUS = -1;
     const PREPARED_STATUS = 0;
     const IN_PROGRESS_STATUS = 1;
@@ -23,5 +23,5 @@ class ExamSystem
     const EXAM_WAS_FINISHED = 'exam was finished';
 
     // file paths
-    const ENGLISH_QUESTIONS_PATH = 'site' . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'exam' . DIRECTORY_SEPARATOR . 'englishQuestions.json';
+    const ENGLISH_QUESTIONS_PATH = 'storage' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'exam' . DIRECTORY_SEPARATOR . 'englishQuestions.json';
 }

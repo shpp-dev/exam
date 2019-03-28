@@ -15,6 +15,7 @@ use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Features\Exam\Session\FinishExamFeature;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 use Lucid\Foundation\ServesFeaturesTrait;
 
@@ -27,18 +28,18 @@ class SaveEnglishAnswerFeature extends Feature
         $user = Auth::getAuthUser();
         $session = $user->activeSession();
 
-        $finished = $this->run(CheckFinishedExamJob::class, [
+        $isFinished = $this->run(CheckFinishedExamJob::class, [
             'session' => $session,
             'examName' => ExamSystem::ENGLISH_EXAM_NAME
         ]);
 
-        if ($finished) {
+        if ($isFinished) {
             return $this->run(RespondWithJsonErrorJob::class, [
                 'message' => ExamSystem::EXAM_WAS_FINISHED
             ]);
         }
 
-        $englishResult = $session->englishResult();
+        $englishResult = $session->englishResult()->first();
 
         if (!$englishResult) {
             $englishResult = $this->run(CreateEnglishResultJob::class, [
@@ -64,17 +65,23 @@ class SaveEnglishAnswerFeature extends Feature
             'answer' => $request->input('answer')
         ]);
 
-        if ($englishResult->answerAmounts == config('ptp.englishQuestionsOnExam')) {
-            $finished = true;
-            $this->serve(FinishExamFeature::class, [
+        if ($englishResult->answersAmount == config('ptp.englishQuestionsAmount')) {
+            $finished = $this->serve(FinishExamFeature::class, [
                 'session' => $session,
                 'examName' => ExamSystem::ENGLISH_EXAM_NAME
             ]);
+        } else {
+            $finished = [
+                'english' => false,
+                'session' => false
+            ];
         }
+
+        Log::info('User' . $user->id . ' submit answer to english question');
 
         return $this->run(RespondWithJsonJob::class, [
             'content' => [
-                'score' => $englishResult->score,
+                'score' => $englishResult->score ?? 0,
                 'finished' => $finished
             ]
         ]);

@@ -1719,7 +1719,7 @@ int main(int argc, char const *argv[])
         ];
 
         foreach ($names as $key => $name) {
-            \Illuminate\Support\Facades\DB::table('tasks')->insert([
+            \Illuminate\Support\Facades\DB::table('programming_tasks')->insert([
                 "id" => $key + 1,
                 "name" => $names[$key],
                 "description" => $descriptions[$key],

@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 */
 
 Route::group(['middleware' => ['ptp.auth']], function () {
-    Route::get('exam/status', 'ExamSessionController@gstatus')->name('status');
+    Route::get('exam/status', 'ExamSessionController@status')->name('status');
 });
 
 Route::group(['middleware' => ['ptp.auth', 'ptp.access']], function () {
@@ -22,23 +22,24 @@ Route::group(['middleware' => ['ptp.auth', 'ptp.access']], function () {
 });
 
 Route::group(['middleware' => ['ptp.auth', 'ptp.current']], function () {
-    Route::post('exam/programming/start', 'ProgrammingController@start');
-    Route::get('exam/programming/task', 'ProgrammingController@getTask')->name('task');
-    Route::post('exam/programming/answer', 'ProgrammingController@saveAnswer')->name('answer');
-    Route::post('exam/programming/finish', 'ProgrammingController@finish')->name('answer');
+    Route::get('exam/list', 'ExamSessionController@examsList')->name('examsList');
 
-    Route::post('exam/english/start', 'EnglishController@start');
-    Route::get('exam/english/question', 'EnglishController@getQuestion');
-    Route::post('exam/english/answer', 'EnglishController@saveAnswer');
-    Route::post('exam/english/finish', 'EnglishController@finish');
+    Route::get('exam/programming/task', 'ProgrammingController@getTask')->name('programmingTask');
+    Route::post('exam/programming/answer', 'ProgrammingController@saveAnswer')->name('programmingAnswer');
+    Route::post('exam/programming/finish', 'ProgrammingController@finish')->name('programmingFinish');
 
+    Route::get('exam/english/question', 'EnglishController@getQuestion')->name('englishQuestion');
+    Route::post('exam/english/answer', 'EnglishController@saveAnswer')->name('englishAnswer');
+    Route::post('exam/english/finish', 'EnglishController@finish')->name('englishFinish');
+
+    Route::post('exam/type/start', 'TypeSpeedController@start')->name('typeStart');
     Route::post('exam/type/speed', 'TypeSpeedController@saveResult')->name('typeSpeed');
 
 //    Route::post('exam/finish', 'ExamSessionController@finish')->name('finish');
 });
 
 Route::group(['middleware' => ['ptp.auth', 'ptp.admin']], function() {
-    Route::get('list/unchecked', 'AdminController@listUnchecked');
+    Route::get('list/unchecked', 'AdminController@listUnchecked')->name('uncheckedList');
     Route::get('list/checked', 'AdminController@listChecked');
     Route::post('check', 'AdminController@check');
 });

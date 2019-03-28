@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Features\Exam\Session\CheckExamAllowedStatusFeature;
 use App\Features\Exam\Session\FinishSessionFeature;
+use App\Features\Exam\Session\GetPreparedExamsListFeature;
 use App\Features\Exam\Session\StartSessionFeature;
 use Lucid\Foundation\Http\Controller as Controller;
 
@@ -18,6 +19,11 @@ class ExamSessionController extends Controller
     public function start()
     {
         return $this->serve(StartSessionFeature::class);
+    }
+
+    public function examsList()
+    {
+        return $this->serve(GetPreparedExamsListFeature::class);
     }
 
     public function finish()

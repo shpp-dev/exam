@@ -19,7 +19,7 @@ class SelectLastUnsolvedTaskJob extends Job
 
     public function handle()
     {
-        $englishResult = $this->session->englishResult();
+        $englishResult = $this->session->englishResult()->first();
         $taskId = 0;
 
         if ($englishResult) {

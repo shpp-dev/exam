@@ -18,6 +18,7 @@ class CreateTypeSpeedResultJob extends Job
     {
         $this->session = $session;
         $this->speed = $speed;
+        $this->accuracy = $accuracy;
     }
 
     public function handle()

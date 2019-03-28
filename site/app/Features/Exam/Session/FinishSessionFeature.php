@@ -42,6 +42,6 @@ class FinishSessionFeature extends Feature
 
         $this->run(SendFinishExamMailToStudentJob::class, ['email' => $email]);
 
-        Log::info('Exam was finished for user '. $email);
+        Log::info('Exam session was finished for user '. $this->session->user->id);
     }
 }

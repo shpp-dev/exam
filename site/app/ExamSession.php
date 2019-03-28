@@ -17,17 +17,17 @@ class ExamSession extends BaseModel
 
     public function programmingResults()
     {
-        return $this->hasMany('App\ProgrammingResult', 'session_id');
+        return $this->hasMany('App\ProgrammingResult', 'session_id', 'id');
     }
 
     public function englishResult()
     {
-        return $this->hasOne('App\EnglishResult', 'session_id');
+        return $this->hasOne('App\EnglishResult', 'session_id', 'id');
     }
 
     public function typeSpeedResult()
     {
-        return $this->hasOne('App\TypeSpeedResult', 'session_id');
+        return $this->hasOne('App\TypeSpeedResult', 'session_id', 'id');
     }
 
     public function user()

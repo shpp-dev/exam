@@ -50,7 +50,7 @@ class SaveProgrammingAnswerFeature extends Feature
             ]);
         }
 
-        $selectedTasks = json_decode($session->tasksIds, true);
+        $selectedTasks = json_decode($session->programmingTasksIds, true);
         $task = ProgrammingTask::find($selectedTasks[$taskNumber]);
 
         $program = [];
@@ -89,13 +89,15 @@ class SaveProgrammingAnswerFeature extends Feature
                     'result' => $result
                 ]);
                 if ($taskNumber == config('ptp.programmingTasksAmount')) {
-                    $result['finished'] = true;
-                    $this->run(FinishExamFeature::class, [
+                    $result['finished'] = $this->run(FinishExamFeature::class, [
                         'session' => $session,
                         'examName' => ExamSystem::PROGRAMMING_EXAM_NAME
                     ]);
                 } else {
-                    $result['finished'] = false;
+                    $result['finished'] = [
+                        'programming' => false,
+                        'session' => false
+                    ];
                 }
                 Log::info('User '.$user->id.' submit solution for task '.$task->id);
                 break;

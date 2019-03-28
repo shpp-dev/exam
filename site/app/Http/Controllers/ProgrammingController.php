@@ -15,7 +15,7 @@ class ProgrammingController extends Controller
 {
     public function start()
     {
-        return $this->serve(StartExamFeature::class, ['examName' => ExamSystem::PROGRAMMING_EXAM_NAME]);
+        $this->serve(StartExamFeature::class, ['examName' => ExamSystem::PROGRAMMING_EXAM_NAME]);
     }
 
     public function getTask()
@@ -30,6 +30,6 @@ class ProgrammingController extends Controller
 
     public function finish()
     {
-        return $this->serve(FinishExamFeature::class, ['examName' => ExamSystem::PROGRAMMING_EXAM_NAME]);
+        $this->serve(FinishExamFeature::class, ['examName' => ExamSystem::PROGRAMMING_EXAM_NAME]);
     }
 }

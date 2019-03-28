@@ -20,7 +20,7 @@ class CreateExamSessionJob extends Job
     public function __construct(
         int $userId,
         Carbon $startedAt,
-        array $programmingTasks,
+        ?array $programmingTasks,
         bool $programmingExam,
         bool $englishExam,
         bool $typeSpeedExam

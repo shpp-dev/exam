@@ -32,20 +32,24 @@ class GetPreparedUsersResultsListJob extends Job
     {
         $preparedData = ['exams' => []];
 
-        foreach ($this->sessions as $uncheckedSession) {
+        /* @var ExamSession $session */
+        foreach ($this->sessions as $session) {
             $examData = [
-                'sessionId' => $uncheckedSession->id,
+                'sessionId' => $session->id,
                 'timing' => [
-                    'startedAtTs' => Carbon::parse($uncheckedSession->startedAt)->timestamp,
-                    'finishedAtTs' => Carbon::parse($uncheckedSession->finishedAt)->timestamp
+                    'startedAtTs' => Carbon::parse($session->startedAt)->timestamp,
+                    'finishedAtTs' => Carbon::parse($session->finishedAt)->timestamp
                 ],
-                'passed' => $uncheckedSession->passed,
-                'results' => []
+                'passed' => $session->passed,
+                'programming' => [],
+                'english' => [],
+                'typeSpeed' => []
             ];
-            $results = $uncheckedSession->results;
-            foreach ($results as $result) {
+
+            $programmingResults = $session->programmingResults()->get();
+            foreach ($programmingResults as $result) {
                 $solution = json_decode($result->result, true);
-                $examData['results'][] = [
+                $examData['programming'][] = [
                     'task' => [
                         'id' => $result->taskId,
                         'number' => $result->taskNumber,
@@ -58,6 +62,23 @@ class GetPreparedUsersResultsListJob extends Job
                     ]
                 ];
             }
+
+            $englishResult = $session->englishResult()->first();
+            if ($englishResult) {
+                $examData['english'] = [
+                    'answers' => $englishResult->answersAmount,
+                    'score' => $englishResult->score
+                ];
+            }
+
+            $typeSpeedResult = $session->typeSpeedResult()->first();
+            if ($typeSpeedResult) {
+                $examData['typeSpeed'] = [
+                    'speed' => $typeSpeedResult->speed,
+                    'accuracy' => $typeSpeedResult->accuracy
+                ];
+            }
+
             $preparedData['exams'][] = $examData;
         }
 

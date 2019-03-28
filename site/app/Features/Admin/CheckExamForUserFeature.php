@@ -2,10 +2,8 @@
 
 namespace App\Features\Exam;
 
-use App\Domains\Auth\Auth;
-use App\Domains\Exam\Jobs\CheckExamSessionJob;
+use App\Domains\Exam\Session\Jobs\CheckExamSessionJob;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
-use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Domains\Http\Jobs\SendHttpPostRequestJob;
 use App\ExamSession;
 use Illuminate\Http\Request;
@@ -26,7 +24,7 @@ class CheckExamForUserFeature extends Feature
                 'code' => 404
             ]);
         }
-        if ($session->finishedAt) {
+        if ($session->passed != null) {
             return $this->run(RespondWithJsonErrorJob::class, [
                 'message' => 'Exam has been already checked',
                 'code' => 405

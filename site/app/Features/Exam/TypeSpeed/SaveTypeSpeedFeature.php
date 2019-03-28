@@ -7,8 +7,10 @@ namespace App\Features\Exam\TypeSpeed;
 use App\Data\ExamSystem;
 use App\Domains\Auth\Auth;
 use App\Domains\Exam\TypeSpeed\Jobs\CreateTypeSpeedResultJob;
+use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Features\Exam\Session\FinishExamFeature;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 use Lucid\Foundation\ServesFeaturesTrait;
 
@@ -27,9 +29,17 @@ class SaveTypeSpeedFeature extends Feature
             'accuracy' => $request->input('accuracy')
         ]);
 
-        $this->serve(FinishExamFeature::class, [
+        $finished = $this->serve(FinishExamFeature::class, [
             'session' => $session,
             'examName' => ExamSystem::TYPE_SPEED_EXAM_NAME
+        ]);
+
+        Log::info('Save type speed for user' . $user->id);
+
+        return $this->run(RespondWithJsonJob::class, [
+            'content' => [
+                'finished' => $finished
+            ]
         ]);
     }
 }
