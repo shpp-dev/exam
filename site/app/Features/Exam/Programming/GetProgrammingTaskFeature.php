@@ -6,6 +6,7 @@ use App\Data\ExamSystem;
 use App\Domains\Auth\Auth;
 use App\Domains\Data\Jobs\GetPreparedTaskDataJob;
 use App\Domains\Exam\Programming\Jobs\SelectLastUnsolvedTaskJob;
+use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Features\Exam\Session\StartExamFeature;
 use App\ProgrammingTask;
@@ -26,6 +27,10 @@ class GetProgrammingTaskFeature extends Feature
             $this->serve(StartExamFeature::class, [
                 'session' => $session,
                 'examName' => ExamSystem::PROGRAMMING_EXAM_NAME
+            ]);
+        } elseif ($session->programmingStatus != ExamSystem::IN_PROGRESS_STATUS) {
+            return $this->run(RespondWithJsonErrorJob::class, [
+                'message' => ExamSystem::NOT_ACTIVE_EXAM_ERROR
             ]);
         }
 

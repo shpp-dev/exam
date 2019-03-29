@@ -1,5 +1,5 @@
-[
-  {
+{
+  "1": {
     "question": "Time <span class='lightspan'>_________</span> a good teacher.",
     "answers": [
       "am",
@@ -9,7 +9,8 @@
     ],
     "right": 4
   },
-  {
+
+  "2": {
     "question": "He <span class='lightspan'>_________</span> like hockey.",
     "answers": [
       "don't",
@@ -19,7 +20,8 @@
     ],
     "right": 4
   },
-  {
+
+  "3": {
     "question": "<span class='lightspan'>_________</span> some tomatoes in the fridge.",
     "answers": [
       "It is",
@@ -29,7 +31,8 @@
     ],
     "right": 3
   },
-  {
+
+  "4": {
     "question": "There isn't  <span class='lightspan'>_________</span> fruit in the shop. ",
     "answers": [
       "the",
@@ -39,7 +42,8 @@
     ],
     "right": 2
   },
-  {
+
+  "5": {
     "question": " What are you doing now? - I <span class='lightspan'>_________</span> a letter.",
     "answers": [
       "is writing",
@@ -49,7 +53,8 @@
     ],
     "right": 3
   },
-  {
+
+  "6": {
     "question": "Why <span class='lightspan'>_________</span> last Thursday?",
     "answers": [
       "you was late",
@@ -59,7 +64,8 @@
     ],
     "right": 3
   },
-  {
+
+  "7": {
     "question": "John <span class='lightspan'>_________</span> to visit his parents this weekend.",
     "answers": [
       "must",
@@ -69,7 +75,8 @@
     ],
     "right": 4
   },
-  {
+
+  "8": {
     "question": "Mary and Stephanie  <span class='lightspan'>_________</span> this film.",
     "answers": [
       "already seen",
@@ -79,7 +86,8 @@
     ],
     "right": 4
   },
-  {
+
+  "9": {
     "question": "I've been working for Microsoft <span class='lightspan'>_________</span> last year.",
     "answers": [
       "until",
@@ -89,7 +97,8 @@
     ],
     "right": 4
   },
-  {
+
+  "10": {
     "question": "Mike doesn't like school and <span class='lightspan'>_________</span>.",
     "answers": [
       "neither do I",
@@ -99,7 +108,8 @@
     ],
     "right": 1
   },
-  {
+
+  "11": {
     "question": "I <span class='lightspan'>_________</span> a shower last night when my friend rang.",
     "answers": [
       "have been taking",
@@ -109,7 +119,8 @@
     ],
     "right": 2
   },
-  {
+
+  "12": {
     "question": "There was a robbery at the bank and all the money <span class='lightspan'>_________</span>. ",
     "answers": [
       "were stealing",
@@ -119,7 +130,8 @@
     ],
     "right": 3
   },
-  {
+
+  "13": {
     "question": "If I were you, <span class='lightspan'>_________</span> to the doctor.",
     "answers": [
       "I went",
@@ -129,7 +141,8 @@
     ],
     "right": 4
   },
-  {
+
+  "14": {
     "question": "When I came back home with flowers, Mary <span class='lightspan'>_________</span>.",
     "answers": [
       "already left",
@@ -139,7 +152,8 @@
     ],
     "right": 2
   },
-  {
+
+  "15": {
     "question": "After <span class='lightspan'>_________</span> his report Harry got down to work again.",
     "answers": [
       "write",
@@ -149,7 +163,8 @@
     ],
     "right": 4
   },
-  {
+
+  "16": {
     "question": "We knew she would let us know as soon as the letter <span class='lightspan'>_________</span> .",
     "answers": [
       "arrives",
@@ -159,7 +174,8 @@
     ],
     "right": 2
   },
-  {
+
+  "17": {
     "question": "If I had apologized, Mary  <span class='lightspan'>_________</span> left me.",
     "answers": [
       "wouldn't have",
@@ -169,7 +185,8 @@
     ],
     "right": 1
   },
-  {
+
+  "18": {
     "question": "By next year she <span class='lightspan'>_________</span> a mother.",
     "answers": [
       "had become",
@@ -179,7 +196,8 @@
     ],
     "right": 3
   },
-  {
+
+  "19": {
     "question": "I'm thinking <span class='lightspan'>_________</span> out with him next Sunday.",
     "answers": [
       "for going",
@@ -189,7 +207,8 @@
     ],
     "right": 3
   },
-  {
+
+  "20": {
     "question": "He didn't even notice me when passing by. He <span class='lightspan'>_________</span> in a hurry.",
     "answers": [
       "must have been",
@@ -199,7 +218,8 @@
     ],
     "right": 1
   },
-  {
+
+  "21": {
     "question": "I've been sitting at home <span class='lightspan'>_________</span>.",
     "answers": [
       "for myself",
@@ -209,7 +229,8 @@
     ],
     "right": 2
   },
-  {
+
+  "22": {
     "question": "He <span class='lightspan'>_________</span> done something himself before asking for help.",
     "answers": [
       "should",
@@ -219,7 +240,8 @@
     ],
     "right": 4
   },
-  {
+
+  "23": {
     "question": "It's high time you <span class='lightspan'>_________</span> some work!",
     "answers": [
       "would do",
@@ -229,7 +251,8 @@
     ],
     "right": 4
   },
-  {
+
+  "24": {
     "question": "I wish I <span class='lightspan'>_________</span> that.",
     "answers": [
       "didn't said",
@@ -239,7 +262,8 @@
     ],
     "right": 3
   },
-  {
+
+  "25": {
     "question": "Please hold on for a while in case I  <span class='lightspan'>_________</span>.",
     "answers": [
       "have been late",
@@ -249,4 +273,4 @@
     ],
     "right": 2
   }
-]
+}

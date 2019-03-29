@@ -6,6 +6,7 @@ namespace App\Domains\Exam\English\Jobs;
 
 use App\Data\ExamSystem;
 use App\ExamSession;
+use InvalidArgumentException;
 use Lucid\Foundation\Job;
 
 class SelectLastUnsolvedTaskJob extends Job
@@ -20,12 +21,18 @@ class SelectLastUnsolvedTaskJob extends Job
     public function handle()
     {
         $englishResult = $this->session->englishResult()->first();
-        $taskId = 0;
+        $nextTaskId = 1;
 
         if ($englishResult) {
-            $taskId = $englishResult->answersAmount;
+            $nextTaskId = $englishResult->answersAmount + 1;
         }
 
-        return json_decode(file_get_contents(base_path(ExamSystem::ENGLISH_QUESTIONS_PATH)), true)[$taskId];
+        $tasks = json_decode(file_get_contents(base_path(ExamSystem::ENGLISH_QUESTIONS_PATH)), true);
+
+        if (!array_key_exists($nextTaskId, $tasks)) {
+            throw new InvalidArgumentException('non-existent task number');
+        }
+
+        return $tasks[$nextTaskId];
     }
 }

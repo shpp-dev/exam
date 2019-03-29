@@ -30,6 +30,10 @@ class GetEnglishQuestionFeature extends Feature
                 'session' => $session,
                 'examName' => ExamSystem::ENGLISH_EXAM_NAME
             ]);
+        } elseif ($session->englishStatus != ExamSystem::IN_PROGRESS_STATUS) {
+            return $this->run(RespondWithJsonErrorJob::class, [
+                'message' => ExamSystem::NOT_ACTIVE_EXAM_ERROR
+            ]);
         }
 
         try {
@@ -42,7 +46,7 @@ class GetEnglishQuestionFeature extends Feature
             return $this->run(RespondWithJsonErrorJob::class, [
                 'code' => 500,
                 'status' => 500,
-                'message' => ExamSystem::ENGLISH_QUESTIONS_STORAGE_ERROR
+                'message' => $exception->getMessage()
             ]);
         }
 

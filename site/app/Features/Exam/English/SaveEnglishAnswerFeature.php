@@ -47,21 +47,9 @@ class SaveEnglishAnswerFeature extends Feature
             ]);
         }
 
-        try {
-            $task = $this->run(SelectLastUnsolvedTaskJob::class, [
-                'session' => $session,
-            ]);
-        } catch (Exception $exception) {
-            return $this->run(RespondWithJsonErrorJob::class, [
-                'code' => 500,
-                'status' => 500,
-                'message' => ExamSystem::ENGLISH_QUESTIONS_STORAGE_ERROR
-            ]);
-        }
-
-        $this->run(SaveAnswerJob::class, [
+        $isCorrectAnswer = $this->run(SaveAnswerJob::class, [
             'englishResult' => $englishResult,
-            'task' => $task,
+            'taskNumber' => $request->input('taskNumber'),
             'answer' => $request->input('answer')
         ]);
 
@@ -81,6 +69,7 @@ class SaveEnglishAnswerFeature extends Feature
 
         return $this->run(RespondWithJsonJob::class, [
             'content' => [
+                'correctAnswer' => $isCorrectAnswer,
                 'score' => $englishResult->score ?? 0,
                 'finished' => $finished
             ]

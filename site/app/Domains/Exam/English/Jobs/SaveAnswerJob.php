@@ -4,43 +4,53 @@
 namespace App\Domains\Exam\English\Jobs;
 
 
+use App\Data\ExamSystem;
 use App\EnglishResult;
 use Lucid\Foundation\Job;
 
 class SaveAnswerJob extends Job
 {
     private $englishResult;
-    private $task;
+    private $taskNumber;
     private $answer;
 
-    public function __construct(EnglishResult $englishResult, array $task, int $answer)
+    public function __construct(EnglishResult $englishResult, int $taskNumber, int $answer)
     {
         $this->englishResult = $englishResult;
-        $this->task = $task;
+        $this->taskNumber = $taskNumber;
         $this->answer = $answer;
     }
 
     public function handle()
     {
+        $isCorrectAnswer = false;
+        $task = json_decode(file_get_contents(base_path(ExamSystem::ENGLISH_QUESTIONS_PATH)), true)[$this->taskNumber];
         $results = json_decode($this->englishResult->results, true);
 
         if (!$results) {
             $results = [];
         }
 
-        $results[] = [
-            'question' => $this->task['question'],
-            'answers' => $this->task['answers'],
-            'answer' => $this->answer
-        ];
+        if (!isset($results[$this->taskNumber])) {
+            $results[$this->taskNumber] = [
+                'question' => $task['question'],
+                'answers' => $task['answers'],
+                'answer' => $this->answer
+            ];
 
-        $this->englishResult->results = json_encode($results);
-        $this->englishResult->answersAmount++;
+            $this->englishResult->results = json_encode($results);
+            $this->englishResult->answersAmount++;
 
-        if ($this->task['right'] == $this->answer) {
-            $this->englishResult->score++;
+            if ($task['right'] == $this->answer) {
+                $this->englishResult->score++;
+                $isCorrectAnswer = true;
+            }
+
+            $this->englishResult->save();
+        } else {
+            $isCorrectAnswer = $task['right'] == $results[$this->taskNumber][$this->answer];
         }
 
-        $this->englishResult->save();
+        return $isCorrectAnswer;
     }
 }

@@ -55,7 +55,7 @@ class ExamTest extends TestCase
 
         for ($i = 0; $i < self::ENGLISH_TASKS_NUM; $i++) {
             $this->getEnglishQuestion();
-            $this->saveEnglishAnswer();
+            $this->saveEnglishAnswer($i + 1);
         }
 
         $this->getExamsList();
@@ -173,11 +173,12 @@ class ExamTest extends TestCase
         $this->printTestResponse($response->content());
     }
 
-    private function saveEnglishAnswer()
+    private function saveEnglishAnswer($taskNumber)
     {
         $this->printTestHeader(++$this->testNumber, __FUNCTION__);
         $this->withoutMiddleware();
         $response = $this->call('POST', route('englishAnswer'), [
+            'taskNumber' => $taskNumber,
             'answer' => '4'
         ]);
         $this->assertEquals(200, $response->status());
