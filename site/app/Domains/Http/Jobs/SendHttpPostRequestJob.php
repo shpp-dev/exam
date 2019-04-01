@@ -39,6 +39,6 @@ class SendHttpPostRequestJob extends Job
         foreach ($this->data as $key => $value) {
             $fullUrl .= "$key=$value&";
         }
-        return $client->post($fullUrl);
+        return $client->request('POST', $fullUrl);
     }
 }
