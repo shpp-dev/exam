@@ -45,5 +45,5 @@ Route::group(['middleware' => ['ptp.auth', 'ptp.admin']], function() {
 });
 
 Route::group(['middleware' => ['ptp.eco']], function() {
-   Route::get('user/register', 'UserController@createUser');
+   Route::post('user/register', 'UserController@createUser');
 });
