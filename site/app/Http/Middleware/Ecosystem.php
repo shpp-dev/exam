@@ -21,7 +21,8 @@ class Ecosystem
      */
     public function handle($request, Closure $next)
     {
-        if (!$request->eco || $request->eco != config('auth.eco')) {
+        $data = json_decode($request->getContent(), true);
+        if (!$data['eco'] || strcmp($data['eco'], config('auth.eco')) != 0) {
             return $this->run(RespondWithJsonErrorJob::class, [
                 'message' => 'Denied',
                 'code' => 403
