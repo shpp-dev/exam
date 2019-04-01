@@ -43,3 +43,7 @@ Route::group(['middleware' => ['ptp.auth', 'ptp.admin']], function() {
     Route::get('list/checked', 'AdminController@listChecked');
     Route::post('check', 'AdminController@check');
 });
+
+Route::group(['middleware' => ['ptp.eco']], function() {
+   Route::get('user/register', 'UserController@createUser');
+});
