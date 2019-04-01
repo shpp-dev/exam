@@ -47,7 +47,7 @@ class SaveEnglishAnswerFeature extends Feature
             ]);
         }
 
-        $isCorrectAnswer = $this->run(SaveAnswerJob::class, [
+        $this->run(SaveAnswerJob::class, [
             'englishResult' => $englishResult,
             'taskNumber' => $request->input('taskNumber'),
             'answer' => $request->input('answer')
@@ -69,7 +69,6 @@ class SaveEnglishAnswerFeature extends Feature
 
         return $this->run(RespondWithJsonJob::class, [
             'content' => [
-                'correctAnswer' => $isCorrectAnswer,
                 'score' => $englishResult->score ?? 0,
                 'finished' => $finished
             ]
