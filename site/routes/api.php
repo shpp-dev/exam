@@ -39,9 +39,9 @@ Route::group(['middleware' => ['ptp.auth', 'ptp.current']], function () {
 });
 
 Route::group(['middleware' => ['ptp.auth', 'ptp.admin']], function() {
-    Route::get('list/unchecked', 'AdminController@listUnchecked')->name('uncheckedList');
-    Route::get('list/checked', 'AdminController@listChecked');
-    Route::post('check', 'AdminController@check');
+    Route::get('admin/list/unchecked', 'AdminController@listUnchecked')->name('uncheckedList');
+    Route::get('admin/list/checked', 'AdminController@listChecked');
+    Route::post('admin/check', 'AdminController@check');
 });
 
 Route::group(['middleware' => ['ptp.eco']], function() {
