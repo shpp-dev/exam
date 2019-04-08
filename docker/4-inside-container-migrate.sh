@@ -1,2 +1,4 @@
-cd /var/www/html
-php artisan migrate
+do-default 
+
+#cd /project/site
+#php artisan doctrine:migrations:migrate

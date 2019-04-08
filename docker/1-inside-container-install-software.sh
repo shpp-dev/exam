@@ -1,1 +1,1 @@
-do-default install-software "$@"
+do-default 
