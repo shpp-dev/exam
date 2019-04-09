@@ -48,12 +48,19 @@ class ExamTest extends TestCase
 
         for ($i = 0; $i < self::PROGRAMMING_TASKS_NUM; $i++) {
             $taskNumber = $this->getProgrammingTask();
+            $this->getExamsList();
+//            $this->finishProgrammingExam();
+//            break;
             $this->saveProgrammingAnswer($taskNumber, self::LANG, $this->examTasks[self::TASK_KEYS[$i]][self::LANG]);
         }
 
         $this->getExamsList();
 
         for ($i = 0; $i < self::ENGLISH_TASKS_NUM; $i++) {
+            if ($i === 1) {
+                $this->getExamsList();
+            }
+
             $this->getEnglishQuestion();
             $this->saveEnglishAnswer($i + 1);
         }
@@ -61,9 +68,10 @@ class ExamTest extends TestCase
         $this->getExamsList();
 
         $this->startTypeExam();
+        $this->getExamsList();
         $this->saveTypeSpeedExam();
 
-        $this->getUncheckedUsersData();
+//        $this->getUncheckedUsersData();
     }
 
     private function databaseMigrations()
