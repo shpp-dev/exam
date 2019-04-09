@@ -47,7 +47,7 @@ class GetPreparedExamsListFeature extends Feature
 
         return $this->run(RespondWithJsonJob::class, [
             'content' => [
-                'examsList' => json_encode($exams)
+                'examsList' => $exams
             ]
         ]);
     }

@@ -35,10 +35,8 @@ class SendHttpPostRequestJob extends Job
     public function handle()
     {
         $client = new Client();
-        $fullUrl = $this->url.'?';
-        foreach ($this->data as $key => $value) {
-            $fullUrl .= "$key=$value&";
-        }
-        return $client->post($fullUrl);
+        return $client->request('POST', $this->url, [
+            'body' => json_encode($this->data)
+        ]);
     }
 }

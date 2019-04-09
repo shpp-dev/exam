@@ -10,6 +10,7 @@ use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Domains\Http\Jobs\SendHttpPostRequestJob;
 use Closure;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\JobDispatcherTrait;
 use Lucid\Foundation\MarshalTrait;
 
@@ -40,6 +41,7 @@ class CheckExamAccess
                     'email' => $user->email
                 ]
             ]);
+            Log::info(json_encode($response));
             if (json_decode($response->getBody())->data->code == 200) {
                 return $next($request);
             } else {
