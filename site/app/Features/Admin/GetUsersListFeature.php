@@ -1,21 +1,29 @@
 <?php
 
-namespace App\Features\Exam;
+
+namespace App\Features\Admin;
+
 
 use App\Domains\Data\Jobs\GetPreparedUsersResultsListJob;
 use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\ExamSession;
-use Illuminate\Http\Request;
 use Lucid\Foundation\Feature;
 
-class ListUncheckedUsersFeature extends Feature
+class GetUsersListFeature extends Feature
 {
-    public function handle(Request $request)
+    private $passed;
+
+    public function __construct(?bool $passed)
     {
-        $uncheckedSessions = ExamSession::whereNull('passed')->get();
+        $this->passed = $passed;
+    }
+
+    public function handle()
+    {
+        $sessions = ExamSession::where('passed', $this->passed)->get();
 
         $preparedData = $this->run(GetPreparedUsersResultsListJob::class, [
-            'sessions' => $uncheckedSessions
+            'sessions' => $sessions
         ]);
 
         return $this->run(RespondWithJsonJob::class, [

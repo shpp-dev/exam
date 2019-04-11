@@ -40,7 +40,8 @@ Route::group(['middleware' => ['ptp.auth', 'ptp.current']], function () {
 
 Route::group(['middleware' => ['ptp.auth', 'ptp.admin']], function() {
     Route::get('admin/list/unchecked', 'AdminController@listUnchecked')->name('uncheckedList');
-    Route::get('admin/list/checked', 'AdminController@listChecked');
+    Route::get('admin/list/passed', 'AdminController@listPassed');
+    Route::get('admin/list/failed', 'AdminController@listFailed');
     Route::post('admin/check', 'AdminController@check');
 });
 
