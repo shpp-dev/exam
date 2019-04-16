@@ -57,7 +57,7 @@ class GetPreparedUsersResultsListJob extends Job
                         'description' => $result->task->description
                     ],
                     'solution' => [
-                        'userFunction' => nl2br($solution['userFunction'], false),
+                        'userFunction' => $solution['userFunction'],
                         'caseResults' => $solution['resultCases']
                     ]
                 ];
