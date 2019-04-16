@@ -2,26 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Features\Admin\GetUsersListFeature;
 use App\Features\Exam\CheckExamForUserFeature;
-use App\Features\Exam\ListCheckedUsersFeature;
-use App\Features\Exam\ListUncheckedUsersFeature;
 use Lucid\Foundation\Http\Controller as Controller;
 
 class AdminController extends Controller
 {
-    public function listUnchecked()
+    public function list(string $status)
     {
-        return $this->serve(ListUncheckedUsersFeature::class);
-    }
-
-    public function listChecked()
-    {
-        return $this->serve(ListCheckedUsersFeature::class);
+        return $this->serve(GetUsersListFeature::class, ['status' => $status]);
     }
 
     public function check()
     {
         return $this->serve(CheckExamForUserFeature::class);
     }
-
 }

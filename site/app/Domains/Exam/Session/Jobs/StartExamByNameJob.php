@@ -31,6 +31,9 @@ class StartExamByNameJob extends Job
                 $this->session->englishStartedAt = Carbon::now();
                 $this->session->englishStatus = ExamSystem::IN_PROGRESS_STATUS;
                 break;
+            case ExamSystem::TYPE_SPEED_EXAM_NAME:
+                $this->session->typeSpeedStatus = ExamSystem::IN_PROGRESS_STATUS;
+                break;
         }
 
         $this->session->save();
