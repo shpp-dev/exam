@@ -22,6 +22,8 @@ class ExamSystem
     const CONCURRENT_EXAM_ERROR = 'another exam is already running';
     const EXAM_WAS_FINISHED = 'exam was finished';
     const NOT_ACTIVE_EXAM_ERROR = 'exam is not active';
+    const NOT_ACTIVE_SESSION_ERROR = 'session is not active';
+    const STATUS_NOT_FOUND = 'status not found';
 
     // file paths
     const ENGLISH_QUESTIONS_PATH = 'storage' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'exam' . DIRECTORY_SEPARATOR . 'englishQuestions.json';
