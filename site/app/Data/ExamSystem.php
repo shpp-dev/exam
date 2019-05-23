@@ -24,6 +24,7 @@ class ExamSystem
     const NOT_ACTIVE_EXAM_ERROR = 'exam is not active';
     const NOT_ACTIVE_SESSION_ERROR = 'session is not active';
     const STATUS_NOT_FOUND = 'status not found';
+    const SESSION_STARTED = 'session has already started';
 
     // file paths
     const ENGLISH_QUESTIONS_PATH = 'storage' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'exam' . DIRECTORY_SEPARATOR . 'englishQuestions.json';

@@ -18,7 +18,7 @@ class ExamTest extends TestCase
     use DatabaseMigrations;
 
     const EMAIL = 'user@email';
-    const LANG = 'cpp';
+    const LANG = 'js';
     const PROGRAMMING_TASKS_NUM = 6;
     const ENGLISH_TASKS_NUM = 25;
     const TASK_KEYS = [4,1,11,15,20,2];
@@ -54,22 +54,22 @@ class ExamTest extends TestCase
             $this->saveProgrammingAnswer($taskNumber, self::LANG, $this->examTasks[self::TASK_KEYS[$i]][self::LANG]);
         }
 
-        $this->getExamsList();
-
-        for ($i = 0; $i < self::ENGLISH_TASKS_NUM; $i++) {
-            if ($i === 1) {
-                $this->getExamsList();
-            }
-
-            $this->getEnglishQuestion();
-            $this->saveEnglishAnswer($i + 1);
-        }
-
-        $this->getExamsList();
-
-        $this->startTypeExam();
-        $this->getExamsList();
-        $this->saveTypeSpeedExam();
+//        $this->getExamsList();
+//
+//        for ($i = 0; $i < self::ENGLISH_TASKS_NUM; $i++) {
+//            if ($i === 1) {
+//                $this->getExamsList();
+//            }
+//
+//            $this->getEnglishQuestion();
+//            $this->saveEnglishAnswer($i + 1);
+//        }
+//
+//        $this->getExamsList();
+//
+//        $this->startTypeExam();
+//        $this->getExamsList();
+//        $this->saveTypeSpeedExam();
 
 //        $this->getUncheckedUsersData();
     }

@@ -16,31 +16,41 @@ class CheckExamAllowedStatusFeature extends Feature
         if ($activeSession = $user->activeSession()) {
             return $this->run(RespondWithJsonJob::class, [
                'content' => [
-                   'message' => 'In progress',
+                   'status' => 'started',
                    'code' => 201
                ]
             ]);
         }
-        $response = $this->run(SendHttpPostRequestJob::class, [
-            'url' => config('ptp.accountBackUrl').'/user/exam/allowed',
-            'data' => [
-                'eco' => config('auth.eco'),
-                'email' => $user->email
+
+        // todo delete for production
+        return $this->run(RespondWithJsonJob::class, [
+            'content' => [
+                'status' => 'readyToStart',
+                'code' => 200
             ]
         ]);
-        if (json_decode($response->getBody())->data->code == 200) {
-            $message = [
-                'message' => 'Ready to start',
-                'code' => 200
-            ];
-        } else {
-            $message = [
-                'message' => 'Denied',
-                'code' => 403
-            ];
-        }
-        return $this->run(RespondWithJsonJob::class, [
-            'content' => $message
-        ]);
+
+        // todo uncommented for production
+//        $response = $this->run(SendHttpPostRequestJob::class, [
+//            'url' => config('ptp.accountBackUrl').'/user/exam/allowed',
+//            'data' => [
+//                'eco' => config('auth.eco'),
+//                'email' => $user->email
+//            ]
+//        ]);
+//        if (json_decode($response->getBody())->data->code == 200) {
+//            $message = [
+//                'status' => 'readyToStart',
+//                'code' => 200
+//            ];
+//        } else {
+//            $message = [
+//                'status' => 'denied',
+//                'code' => 403
+//            ];
+//        }
+//        return $this->run(RespondWithJsonJob::class, [
+//            'content' => $message
+//        ]);
     }
 }

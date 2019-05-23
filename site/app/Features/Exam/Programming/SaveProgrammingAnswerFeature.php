@@ -83,25 +83,32 @@ class SaveProgrammingAnswerFeature extends Feature
                     'lang' => $lang,
                     'userFunction' => $userFunction
                 ]);
-                $this->run(CreateProgrammingResultJob::class, [
-                    'sessionId' => $session->id,
-                    'task' => $task,
-                    'result' => $result
-                ]);
-                if ($taskNumber == config('ptp.programmingTasksAmount')) {
-                    $result['finished'] = $this->run(FinishExamFeature::class, [
-                        'session' => $session,
-                        'examName' => ExamSystem::PROGRAMMING_EXAM_NAME
+
+                if (!$result['error']) {
+                    $this->run(CreateProgrammingResultJob::class, [
+                        'sessionId' => $session->id,
+                        'task' => $task,
+                        'result' => $result
                     ]);
-                } else {
-                    $result['finished'] = [
-                        'programming' => false,
-                        'session' => false
-                    ];
                 }
+
                 Log::info('User '.$user->id.' submit solution for task '.$task->id);
                 break;
         }
+
+        if ($taskNumber == config('ptp.programmingTasksAmount')) {
+            $result['finished'] = $this->run(FinishExamFeature::class, [
+                'session' => $session,
+                'examName' => ExamSystem::PROGRAMMING_EXAM_NAME
+            ]);
+        } else {
+            $result['finished'] = [
+                'programming' => false,
+                'session' => false
+            ];
+        }
+
+        Log::info(json_encode($result));
 
         return $this->run(RespondWithJsonJob::class, [
             'content' => $result

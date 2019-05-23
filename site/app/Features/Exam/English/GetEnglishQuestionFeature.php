@@ -54,9 +54,9 @@ class GetEnglishQuestionFeature extends Feature
 
         return $this->run(RespondWithJsonJob::class, [
             'content' => [
-                'question' => $task['question'],
-                'answers' => json_encode($task['answers']),
-                'deadlineTs' => Carbon::parse($session->englishStartAt)->addMinutes(config('ptp.englishExamDurationMins'))->timestamp
+                'task' => $task,
+                'tasksAmount' => config('ptp.englishQuestionsAmount'),
+                'deadlineTs' => Carbon::parse($session->englishStartedAt)->addMinutes(config('ptp.englishExamDurationMins'))->timestamp
             ]
         ]);
     }

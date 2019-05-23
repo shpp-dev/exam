@@ -4,6 +4,7 @@ namespace App\Domains\Http\Jobs;
 use App\Domains\Helpers\Traits\JsonTrait;
 use App\Domains\Http\Traits\SendRequestTrait;
 use App\ProgrammingTask;
+use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Job;
 
 class SendTestCodeToCoderunnerJob extends Job
@@ -56,44 +57,53 @@ class SendTestCodeToCoderunnerJob extends Job
             'language' => $this->lang,
             'testCases' => $testCases
         ];
-        $response = $this->sendCodeToCoderunner($this->coderunnerUrl, $testPack);
+        $response = json_decode($this->sendCodeToCoderunner($this->coderunnerUrl, $testPack));
 
-        if ($response == '' || property_exists(json_decode($response), 'error')) {
+        if ($response == '' || property_exists($response, 'error')) {
             return [
                 'error' => true,
-                'message' => 'Наш кодераннер отключен :( <br>Пожалуйста, свяжитесь с администрацией.',
+                'message' => 'Наш кодераннер отключен. :( Пожалуйста, свяжитесь с администрацией.',
                 'code' => 503
             ];
         }
 
-        if (json_decode($response)->code != 200) {
+        if ($response->code != 200) {
+            Log::error(json_encode($response));
             return [
                 'error' => true,
-                'message' => $response,
+                'message' => 'Проблемы с кодраннером. :( Пожалуйста, свяжитесь с администрацией.',
                 'code' => 500
             ];
         }
 
-        if (json_decode($response)->response->compilerErrors != '') {
-            $errorLines = explode('\n', $this->escapeJsonString(json_decode($response)->response->compilerErrors));
+        if ($response->response->compilerErrors != '') {
+            $errorLines = explode('\n', $this->escapeJsonString($response->response->compilerErrors));
             $trimmedErr = implode('\n', array_slice($errorLines, 0, 4));
             return [
-                'error' => false,
+                'error' => true,
                 'message' => $trimmedErr,
                 'code' => 418
             ];
         }
 
-        if (json_decode($response)->response->stderr[0] != '') {
+        if (empty($response->response->stdout) && empty($response->response->stderr)) {
             return [
-                'error' => false,
-                'message' => 'Ваше решение несовместимо с жизнью :) Вам нужно внести какие-то правки',
+                'error' => true,
+                'message' => 'Проблемы с кодраннером. :( Пожалуйста, свяжитесь с администрацией.',
+                'code' => 500
+            ];
+        }
+
+        if ($response->response->stderr[0] != '') {
+            return [
+                'error' => true,
+                'message' => 'Ваше решение несовместимо с жизнью. :) Вам нужно внести какие-то правки',
                 'code' => 418
             ];
         }
 
         $answers = explode('\ ', $this->task->answers);
-        $stdOut = json_decode($response)->response->stdout;
+        $stdOut = $response->response->stdout;
         $cases = 0;
         $resultCases = [];
         for ($i = 0; $i < 2; $i++) {
@@ -104,8 +114,7 @@ class SendTestCodeToCoderunnerJob extends Job
         }
         return [
             'error' => false,
-            'resultCases' => $resultCases,
-            'program' => $this->program
+            'resultCases' => $resultCases
         ];
     }
 }

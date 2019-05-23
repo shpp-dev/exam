@@ -2,10 +2,11 @@
 
 namespace App\Features\Exam\Session;
 
+use App\Data\ExamSystem;
 use App\Domains\Auth\Auth;
 use App\Domains\Exam\Session\Jobs\CreateExamSessionJob;
 use App\Domains\Exam\Programming\Jobs\SelectTasksJob;
-use App\Domains\Http\Jobs\RespondWithJsonJob;
+use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
@@ -19,6 +20,12 @@ class StartSessionFeature extends Feature
         $programmingTasks = config('ptp.programmingExam')
             ? $this->run(SelectTasksJob::class, ['amount' => config('ptp.programmingTasksAmount')])
             : null;
+
+        if ($user->activeSession()) {
+            return $this->run(RespondWithJsonErrorJob::class, [
+                'message' => ExamSystem::SESSION_STARTED
+            ]);
+        }
 
         $this->run(CreateExamSessionJob::class, [
             'userId' => $user->id,

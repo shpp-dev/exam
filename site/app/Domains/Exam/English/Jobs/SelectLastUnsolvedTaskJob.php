@@ -33,6 +33,10 @@ class SelectLastUnsolvedTaskJob extends Job
             throw new InvalidArgumentException('non-existent task number');
         }
 
-        return $tasks[$nextTaskId];
+        return [
+            'taskNumber' => $nextTaskId,
+            'question' => $tasks[$nextTaskId]['question'],
+            'answers' => $tasks[$nextTaskId]['answers']
+        ];
     }
 }

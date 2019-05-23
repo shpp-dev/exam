@@ -69,7 +69,7 @@ class SubmitCodeToCoderunnerJob extends Job
         if ($response == '' || property_exists(json_decode($response), 'error')) {
             return [
                 'error' => true,
-                'message' => 'Наш кодераннер отключен :( <br>Пожалуйста, свяжитесь с администрацией.',
+                'message' => 'Наш кодераннер отключен. :( Пожалуйста, свяжитесь с администрацией.',
                 'code' => 503
             ];
         }
@@ -83,7 +83,7 @@ class SubmitCodeToCoderunnerJob extends Job
             if (count($stdOut) == 0) {
                 return [
                     'error' => true,
-                    'message' => 'Допущена ошибка запуска скрипта :( <br>Отправьте код на тестирование для получения деталей',
+                    'message' => 'Допущена ошибка запуска скрипта. :( Отправьте код на тестирование для получения деталей',
                     'code' => 500
                 ];
             }
@@ -96,7 +96,7 @@ class SubmitCodeToCoderunnerJob extends Job
         }
 
         $result = [
-            'userFunction' => trim($this->userFunction),
+            'error' => false,
             'resultCases' => $resultCases
         ];
 
