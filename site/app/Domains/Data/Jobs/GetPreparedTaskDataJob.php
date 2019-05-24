@@ -37,9 +37,18 @@ class GetPreparedTaskDataJob extends Job
 
     public function handle()
     {
+        $description = json_decode($this->task->description, true);
+
         return [
             'name' => $this->task->name,
-            'description' => $this->task->description,
+            'description' => [
+                'problem' => $description['problem'],
+                'note' => $description['note'],
+                'example' => [
+                    'input' => $description['example']['input'],
+                    'output' => $description['example']['output'],
+                ]
+            ],
             'number' => $this->task->number,
             'functionStart' => [
                 'js' => $this->task->jsStartFunction,
