@@ -48,7 +48,7 @@ class SendTestCodeToCoderunnerJob extends Job
     public function handle()
     {
         $testCases = explode(',', $this->task->testCases);
-        $testCases = [$testCases[0], $testCases[1]];
+//        $testCases = [$testCases[0], $testCases[1]];
 
         $testPack = [
             'userName' => 'testuser',
@@ -76,12 +76,10 @@ class SendTestCodeToCoderunnerJob extends Job
             ];
         }
 
-        if ($response->response->compilerErrors != '') {
-            $errorLines = explode('\n', $this->escapeJsonString($response->response->compilerErrors));
-            $trimmedErr = implode('\n', array_slice($errorLines, 0, 4));
+        if ($response->response->compilerErrors || $response->response->stderr[0] != '') {
             return [
                 'error' => true,
-                'message' => $trimmedErr,
+                'message' => 'Нерабочее решение. Вам нужно внести какие-то правки в код',
                 'code' => 418
             ];
         }
@@ -94,24 +92,14 @@ class SendTestCodeToCoderunnerJob extends Job
             ];
         }
 
-        if ($response->response->stderr[0] != '') {
-            return [
-                'error' => true,
-                'message' => 'Ваше решение несовместимо с жизнью. :) Вам нужно внести какие-то правки',
-                'code' => 418
-            ];
-        }
-
         $answers = explode('\ ', $this->task->answers);
         $stdOut = $response->response->stdout;
-        $cases = 0;
         $resultCases = [];
-        for ($i = 0; $i < 2; $i++) {
-            if ($answers[$i] == trim(preg_replace('/\s\s+/', ' ', $stdOut[$i]))) {
-                $cases++;
-                $resultCases[$i] = true;
-            }
+
+        for ($i = 0; $i < count($stdOut); $i++) {
+            $resultCases[] = $answers[$i] == trim(preg_replace('/\s\s+/', ' ', $stdOut[$i]));
         }
+
         return [
             'error' => false,
             'resultCases' => $resultCases

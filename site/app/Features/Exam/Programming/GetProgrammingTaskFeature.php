@@ -23,6 +23,13 @@ class GetProgrammingTaskFeature extends Feature
         $user = Auth::getAuthUser();
         $session = $user->activeSession();
 
+        if (!$session) {
+            return $this->run(RespondWithJsonErrorJob::class, [
+                'code' => 420,
+                'message' => ExamSystem::NOT_ACTIVE_SESSION_ERROR
+            ]);
+        }
+
         if ($session->programmingStatus == ExamSystem::PREPARED_STATUS) {
             $this->serve(StartExamFeature::class, [
                 'session' => $session,
@@ -30,6 +37,7 @@ class GetProgrammingTaskFeature extends Feature
             ]);
         } elseif ($session->programmingStatus != ExamSystem::IN_PROGRESS_STATUS) {
             return $this->run(RespondWithJsonErrorJob::class, [
+                'code' => 418,
                 'message' => ExamSystem::NOT_ACTIVE_EXAM_ERROR
             ]);
         }

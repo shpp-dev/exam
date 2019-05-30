@@ -75,23 +75,19 @@ class SubmitCodeToCoderunnerJob extends Job
         }
         $answers = explode('\ ', $this->task->answers);
         $stdOut = json_decode($response)->response->stdout;
-        $cases = 0;
         $resultCases = [];
 
         for ($i = 0; $i < count($answers); $i++) {
             // лечение отсутствия реакции страницы в случае отправки пустого массива при ретурна указателя
             if (count($stdOut) == 0) {
-                return [
-                    'error' => true,
-                    'message' => 'Допущена ошибка запуска скрипта. :( Отправьте код на тестирование для получения деталей',
-                    'code' => 500
-                ];
-            }
-            if ($answers[$i] == trim(preg_replace('/\s\s+/', ' ', $stdOut[$i]))) {
-                $resultCases[$i] = true;
-                $cases++;
+//                return [
+//                    'error' => true,
+//                    'message' => 'Допущена ошибка запуска скрипта. :( Отправьте код на тестирование для получения деталей',
+//                    'code' => 500
+//                ];
+                $resultCases[] = false;
             } else {
-                $resultCases[$i] = false;
+                $resultCases[] = $answers[$i] == trim(preg_replace('/\s\s+/', ' ', $stdOut[$i]));
             }
         }
 

@@ -15,7 +15,7 @@ class ProgrammingController extends Controller
 {
     public function start()
     {
-        $this->serve(StartExamFeature::class, ['examName' => ExamSystem::PROGRAMMING_EXAM_NAME]);
+        return $this->serve(StartExamFeature::class, ['examName' => ExamSystem::PROGRAMMING_EXAM_NAME]);
     }
 
     public function getTask()

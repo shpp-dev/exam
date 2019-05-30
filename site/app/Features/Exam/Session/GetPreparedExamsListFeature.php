@@ -20,6 +20,7 @@ class GetPreparedExamsListFeature extends Feature
 
         if (!$session) {
             return $this->run(RespondWithJsonErrorJob::class, [
+                'code' => 420,
                 'message' => ExamSystem::NOT_ACTIVE_SESSION_ERROR
             ]);
         }

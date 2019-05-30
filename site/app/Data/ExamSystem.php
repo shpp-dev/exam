@@ -18,13 +18,13 @@ class ExamSystem
     const TYPE_SPEED_EXAM_NAME = 'typeSpeed';
 
     // error messages
-    const ENGLISH_QUESTIONS_STORAGE_ERROR = 'english questions storage error';
-    const CONCURRENT_EXAM_ERROR = 'another exam is already running';
-    const EXAM_WAS_FINISHED = 'exam was finished';
-    const NOT_ACTIVE_EXAM_ERROR = 'exam is not active';
-    const NOT_ACTIVE_SESSION_ERROR = 'session is not active';
-    const STATUS_NOT_FOUND = 'status not found';
-    const SESSION_STARTED = 'session has already started';
+    const ENGLISH_QUESTIONS_STORAGE_ERROR = 'English questions storage error';
+    const CONCURRENT_EXAM_ERROR = 'Another exam is already running';
+    const EXAM_WAS_FINISHED = 'Exam was finished';
+    const NOT_ACTIVE_EXAM_ERROR = 'Exam is not active';
+    const NOT_ACTIVE_SESSION_ERROR = 'Session is not active';
+    const STATUS_NOT_FOUND = 'Status not found';
+    const SESSION_STARTED = 'Session has already started';
 
     // file paths
     const ENGLISH_QUESTIONS_PATH = 'storage' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'exam' . DIRECTORY_SEPARATOR . 'englishQuestions.json';

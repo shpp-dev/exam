@@ -13,7 +13,7 @@ class TypeSpeedController extends Controller
 {
     public function start()
     {
-        $this->serve(StartExamFeature::class, ['examName' => ExamSystem::TYPE_SPEED_EXAM_NAME]);
+        return $this->serve(StartExamFeature::class, ['examName' => ExamSystem::TYPE_SPEED_EXAM_NAME]);
     }
 
     public function saveResult()

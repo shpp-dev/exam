@@ -88,7 +88,10 @@ class SaveProgrammingAnswerFeature extends Feature
                     $this->run(CreateProgrammingResultJob::class, [
                         'sessionId' => $session->id,
                         'task' => $task,
-                        'result' => $result
+                        'result' => [
+                            'userFunction' => $userFunction,
+                            'resultCases' => $result['resultCases']
+                        ]
                     ]);
                 }
 

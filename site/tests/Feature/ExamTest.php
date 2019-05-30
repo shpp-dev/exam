@@ -22,7 +22,7 @@ class ExamTest extends TestCase
     const PROGRAMMING_TASKS_NUM = 6;
     const ENGLISH_TASKS_NUM = 25;
     const TASK_KEYS = [4,1,11,15,20,2];
-    const SEEDER = TasksSeederTest::class;
+    const SEEDER = TasksSeederRu::class;
 
     private $examTasks;
     private $testNumber;

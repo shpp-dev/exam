@@ -14,7 +14,7 @@ class EnglishController extends Controller
 {
     public function start()
     {
-        $this->serve(StartExamFeature::class, ['examName' => ExamSystem::ENGLISH_EXAM_NAME]);
+        return $this->serve(StartExamFeature::class, ['examName' => ExamSystem::ENGLISH_EXAM_NAME]);
     }
 
     public function getQuestion()
