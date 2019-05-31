@@ -27,7 +27,7 @@ class SelectLastUnsolvedTaskJob extends Job
             $nextTaskId = $englishResult->answersAmount + 1;
         }
 
-        $tasks = json_decode(file_get_contents(ExamSystem::ENGLISH_QUESTIONS_PATH), true);
+        $tasks = json_decode(file_get_contents(base_path(ExamSystem::ENGLISH_QUESTIONS_PATH)), true);
 
         if (!array_key_exists($nextTaskId, $tasks)) {
             throw new InvalidArgumentException('non-existent task number');
