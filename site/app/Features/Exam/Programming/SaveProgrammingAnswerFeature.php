@@ -85,31 +85,29 @@ class SaveProgrammingAnswerFeature extends Feature
                     'userFunction' => $userFunction
                 ]);
 
-                if (!$result['error']) {
-                    $this->run(CreateProgrammingResultJob::class, [
-                        'sessionId' => $session->id,
-                        'task' => $task,
-                        'result' => [
-                            'userFunction' => $userFunction,
-                            'resultCases' => $result['resultCases']
-                        ]
-                    ]);
-
-                    if ($taskNumber == config('ptp.programmingTasksAmount')) {
-                        $result['finished'] = $this->run(FinishExamFeature::class, [
-                            'session' => $session,
-                            'examName' => ExamSystem::PROGRAMMING_EXAM_NAME
-                        ]);
-                    } else {
-                        $result['finished'] = [
-                            'programming' => false,
-                            'session' => false
-                        ];
-                    }
-                }
+                $this->run(CreateProgrammingResultJob::class, [
+                    'sessionId' => $session->id,
+                    'task' => $task,
+                    'result' => [
+                        'userFunction' => $userFunction,
+                        'resultCases' => $result['resultCases'] ?? []
+                    ]
+                ]);
 
                 Log::info('User '.$user->id.' submit solution for task '.$task->id);
                 break;
+        }
+
+        if ($action == 'submit' && $taskNumber == config('ptp.programmingTasksAmount')) {
+            $result['finished'] = $this->run(FinishExamFeature::class, [
+                'session' => $session,
+                'examName' => ExamSystem::PROGRAMMING_EXAM_NAME
+            ]);
+        } else {
+            $result['finished'] = [
+                'programming' => false,
+                'session' => false
+            ];
         }
 
         return $this->run(RespondWithJsonJob::class, [
