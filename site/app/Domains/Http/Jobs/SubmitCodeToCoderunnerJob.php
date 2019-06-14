@@ -64,6 +64,7 @@ class SubmitCodeToCoderunnerJob extends Job
             'language' => $this->lang,
             'testCases' => $testCases
         ];
+
         $response = $this->sendCodeToCoderunner($this->coderunnerUrl, $testPack);
 
         if ($response == '' || property_exists(json_decode($response), 'error')) {
@@ -80,11 +81,6 @@ class SubmitCodeToCoderunnerJob extends Job
         for ($i = 0; $i < count($answers); $i++) {
             // лечение отсутствия реакции страницы в случае отправки пустого массива при ретурна указателя
             if (count($stdOut) == 0) {
-//                return [
-//                    'error' => true,
-//                    'message' => 'Допущена ошибка запуска скрипта. :( Отправьте код на тестирование для получения деталей',
-//                    'code' => 500
-//                ];
                 $resultCases[] = false;
             } else {
                 $resultCases[] = $answers[$i] == trim(preg_replace('/\s\s+/', ' ', $stdOut[$i]));
