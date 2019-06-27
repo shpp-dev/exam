@@ -12,6 +12,9 @@ class ExamSystem
     const IN_PROGRESS_STATUS = 1;
     const FINISHED_STATUS = 2;
 
+    // coefficient to correct timestamp value for javascript Date class
+    const JAVASCRIPT_TIMESTAMP_COEFFICIENT = 1000;
+
     // exam names
     const PROGRAMMING_EXAM_NAME = 'programming';
     const ENGLISH_EXAM_NAME = 'english';

@@ -3,6 +3,7 @@
 namespace App\Domains\Data\Jobs;
 
 
+use App\Data\ExamSystem;
 use App\ExamSession;
 use App\ProgrammingTask;
 use Carbon\Carbon;
@@ -37,8 +38,8 @@ class GetPreparedUsersResultsListJob extends Job
             $examData = [
                 'sessionId' => $session->id,
                 'timing' => [
-                    'startedAtTs' => Carbon::parse($session->startedAt)->timestamp,
-                    'finishedAtTs' => Carbon::parse($session->finishedAt)->timestamp
+                    'startedAtTs' => Carbon::parse($session->startedAt)->timestamp * ExamSystem::JAVASCRIPT_TIMESTAMP_COEFFICIENT,
+                    'finishedAtTs' => Carbon::parse($session->finishedAt)->timestamp * ExamSystem::JAVASCRIPT_TIMESTAMP_COEFFICIENT
                 ],
                 'passed' => $session->passed,
                 'programming' => [],
