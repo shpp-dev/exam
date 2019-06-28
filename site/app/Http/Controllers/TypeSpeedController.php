@@ -7,6 +7,7 @@ use App\Data\ExamSystem;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Features\Exam\Session\StartExamFeature;
+use App\Features\Exam\TypeSpeed\GetRandomTextFeature;
 use App\Features\Exam\TypeSpeed\SaveTypeSpeedFeature;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Lucid\Foundation\Http\Controller as Controller;
@@ -40,5 +41,10 @@ class TypeSpeedController extends Controller
     public function saveResult()
     {
         return $this->serve(SaveTypeSpeedFeature::class);
+    }
+
+    public function getRandomText()
+    {
+        return $this->serve(GetRandomTextFeature::class);
     }
 }

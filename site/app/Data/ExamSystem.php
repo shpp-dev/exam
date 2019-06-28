@@ -15,6 +15,9 @@ class ExamSystem
     // coefficient to correct timestamp value for javascript Date class
     const JAVASCRIPT_TIMESTAMP_COEFFICIENT = 1000;
 
+    // number of words for random text
+    const WORDS_COUNT = 50;
+
     // exam names
     const PROGRAMMING_EXAM_NAME = 'programming';
     const ENGLISH_EXAM_NAME = 'english';
@@ -31,4 +34,5 @@ class ExamSystem
 
     // file paths
     const ENGLISH_QUESTIONS_PATH = 'resources' . DIRECTORY_SEPARATOR . 'exam' . DIRECTORY_SEPARATOR . 'englishQuestions.json';
+    const ENGLISH_WORDS_PATH = 'resources' . DIRECTORY_SEPARATOR . 'exam' . DIRECTORY_SEPARATOR . 'englishWords.json';
 }
