@@ -13,17 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['middleware' => ['ptp.auth']], function () {
+Route::group(['middleware' => ['ptp.auth', 'ptp.access']], function () {
     Route::get('exam/status', 'ExamSessionController@status')->name('status');
-});
-
-// todo add 'ptp.access' middleware for production
-Route::group(['middleware' => ['ptp.auth']], function () {
     Route::post('exam/start', 'ExamSessionController@start')->name('start');
 });
 
-// todo add 'ptp.current' middleware for production
-Route::group(['middleware' => ['ptp.auth']], function () {
+Route::group(['middleware' => ['ptp.auth', 'ptp.current']], function () {
     Route::get('exam/list', 'ExamSessionController@examsList')->name('examsList');
 
     Route::get('exam/programming/task', 'ProgrammingController@getTask')->name('programmingTask');

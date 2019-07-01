@@ -26,13 +26,14 @@ class CheckExamInProgress
     public function handle($request, Closure $next)
     {
         $user = Auth::getAuthUser();
+
         if ($activeSession = $user->activeSession()) {
             return $next($request);
-        } else {
-            return $this->run(RespondWithJsonErrorJob::class, [
-                'message' => 'You are not on exam now',
-                'code' => 418,
-            ]);
         }
+
+        return $this->run(RespondWithJsonErrorJob::class, [
+            'message' => 'You are not on exam now',
+            'code' => 403,
+        ]);
     }
 }

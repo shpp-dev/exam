@@ -3,7 +3,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Features\Exam\Session\CheckExamAllowedStatusFeature;
+use App\Features\Exam\Session\CheckExamStatusFeature;
 use App\Features\Exam\Session\FinishSessionFeature;
 use App\Features\Exam\Session\GetPreparedExamsListFeature;
 use App\Features\Exam\Session\StartSessionFeature;
@@ -13,7 +13,7 @@ class ExamSessionController extends Controller
 {
     public function status()
     {
-        return $this->serve(CheckExamAllowedStatusFeature::class);
+        return $this->serve(CheckExamStatusFeature::class);
     }
 
     public function start()

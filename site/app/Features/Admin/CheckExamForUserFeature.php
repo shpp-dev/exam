@@ -31,17 +31,16 @@ class CheckExamForUserFeature extends Feature
             ]);
         }
 
-        // todo uncomment for production
-//        $this->run(SendHttpPostRequestJob::class, [
-//            'url' => config('ptp.accountBackUrl').'/user/exam/add',
-//            'data' => [
-//                'eco' => config('auth.eco'),
-//                'email' => $session->user->email,
-//                'examResultsId' => $sessionId,
-//                'passed' => $passed,
-//                'examDateTs' => $session->finishedAt
-//            ]
-//        ]);
+        $this->run(SendHttpPostRequestJob::class, [
+            'url' => config('ptp.accountBackUrl').'/user/exam/add',
+            'data' => [
+                'eco' => config('auth.eco'),
+                'email' => $session->user->email,
+                'examResultsId' => $sessionId,
+                'passed' => $passed,
+                'examDateTs' => $session->finishedAt
+            ]
+        ]);
 
         $this->run(CheckExamSessionJob::class, [
             'session' => $session,
