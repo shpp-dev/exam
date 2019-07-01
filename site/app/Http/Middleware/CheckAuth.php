@@ -66,5 +66,7 @@ class CheckAuth
 //                'redirectTo' => 'accountF'
 //            ]);
 //        }
+
+        return $next($request);
     }
 }
