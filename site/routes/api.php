@@ -36,7 +36,7 @@ Route::group(['middleware' => ['ptp.auth', 'ptp.current']], function () {
 //    Route::post('exam/finish', 'ExamSessionController@finish')->name('finish');
 });
 
-Route::group(['middleware' => ['ptp.auth', 'ptp.admin']], function() {
+Route::group(['middleware' => ['ptp.admin']], function() {
     Route::get('admin/list/{status}', 'AdminController@list');
     Route::post('admin/check', 'AdminController@check');
 });

@@ -57,16 +57,14 @@ class CheckAuth
             ]);
         }
 
-        // authorization user (not admin)
-        if (!$authTokenData['data']->admin) {
-            $user = Auth::authorizeByEmail($authTokenData['data']->userEmail);
-            if (!$user) {
-                return $this->run(RespondWithJsonErrorJob::class, [
-                    'message' => 'It looks like we have not invite you yet',
-                    'code' => 403,
-                    'redirectTo' => 'accountF'
-                ]);
-            }
+        // authorization user
+        $user = Auth::authorizeByEmail($authTokenData['data']->userEmail);
+        if (!$user) {
+            return $this->run(RespondWithJsonErrorJob::class, [
+                'message' => 'It looks like we have not invite you yet',
+                'code' => 403,
+                'redirectTo' => 'accountF'
+            ]);
         }
 
         return $next($request);

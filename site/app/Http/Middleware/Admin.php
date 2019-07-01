@@ -23,14 +23,28 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
-        $authToken = $request->cookie('AT');
+        if (!$authToken = $request->cookie('AT')) {
+            return $this->run(RespondWithJsonErrorJob::class, [
+                'message' => 'Non authorized',
+                'code' => 401
+            ]);
+        }
+
         $authTokenData = $this->run(GetAuthTokenDataJob::class, ['authToken' => $authToken]);
+        if (isset($authTokenData['error'])) {
+            return $this->run(RespondWithJsonErrorJob::class, [
+                'message' => 'Non authorized',
+                'code' => 401
+            ]);
+        }
+
         if (!$authTokenData['data']->admin) {
             return $this->run(RespondWithJsonErrorJob::class, [
                 'message' => 'Denied',
                 'code' => 403
             ]);
         }
+
         return $next($request);
     }
 }
