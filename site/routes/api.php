@@ -41,8 +41,7 @@ Route::group(['middleware' => ['ptp.auth']], function () {
 //    Route::post('exam/finish', 'ExamSessionController@finish')->name('finish');
 });
 
-// todo 'ptp.admin' middleware for production
-Route::group(['middleware' => ['ptp.auth']], function() {
+Route::group(['middleware' => ['ptp.auth', 'ptp.admin']], function() {
     Route::get('admin/list/{status}', 'AdminController@list');
     Route::post('admin/check', 'AdminController@check');
 });

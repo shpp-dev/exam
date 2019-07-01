@@ -26,62 +26,44 @@ class CheckAuth
      */
     public function handle($request, Closure $next)
     {
-        // todo uncommented for production
-//        if (!$authToken = $request->cookie('AT')) {
-//            return $this->run(RespondWithJsonErrorJob::class, [
-//                'message' => 'Non authorized',
-//                'code' => 401,
-//                'redirectTo' => 'accountF'
-//            ]);
-//        }
-//
-//        $authTokenData = $this->run(GetAuthTokenDataJob::class, ['authToken' => $authToken]);
-//        if (isset($authTokenData['error'])) {
-//            return $this->run(RespondWithJsonErrorJob::class, [
-//                'message' => 'Non authorized',
-//                'code' => 401,
-//                'redirectTo' => 'accountF'
-//            ]);
-//        }
-
-//        // check it in redis blacklist
-//        $white = $this->run(CheckAuthTokenInRedisJob::class, [
-//            'authToken' => $authToken,
-//            'authTokenData' => $authTokenData['data']
-//        ]);
-//
-//        if (!$white) {
-//            return $this->run(RespondWithJsonErrorJob::class, [
-//                'message' => 'Token not active',
-//                'code' => 403,
-//                'redirectTo' => 'accountF'
-//            ]);
-//        }
-//
-//        $user = Auth::authorizeByEmail($authTokenData['data']->userEmail);
-//        if (!$user) {
-//            return $this->run(RespondWithJsonErrorJob::class, [
-//                'message' => 'It looks like we have not invite you yet',
-//                'code' => 407,
-//                'redirectTo' => 'accountF'
-//            ]);
-//        }
-
-
-        // todo delete for production
-        session_start();
-
-        if (!isset($_SESSION['email'])) {
-            $lastUser = User::all()->last();
-            $email = $lastUser ? 'user' . ($lastUser->id + 1) : 'user1';
-
-            $newUser = new User(['email' => $email]);
-            $newUser->save();
-            $_SESSION['email'] = $email;
+        if (!$authToken = $request->cookie('AT')) {
+            return $this->run(RespondWithJsonErrorJob::class, [
+                'message' => 'Non authorized',
+                'code' => 401,
+                'redirectTo' => 'accountF'
+            ]);
         }
 
-        Auth::authorizeByEmail($_SESSION['email']);
+        $authTokenData = $this->run(GetAuthTokenDataJob::class, ['authToken' => $authToken]);
+        if (isset($authTokenData['error'])) {
+            return $this->run(RespondWithJsonErrorJob::class, [
+                'message' => 'Non authorized',
+                'code' => 401,
+                'redirectTo' => 'accountF'
+            ]);
+        }
 
-        return $next($request);
+        // check it in redis blacklist
+        $white = $this->run(CheckAuthTokenInRedisJob::class, [
+            'authToken' => $authToken,
+            'authTokenData' => $authTokenData['data']
+        ]);
+
+        if (!$white) {
+            return $this->run(RespondWithJsonErrorJob::class, [
+                'message' => 'Token not active',
+                'code' => 403,
+                'redirectTo' => 'accountF'
+            ]);
+        }
+
+        $user = Auth::authorizeByEmail($authTokenData['data']->userEmail);
+        if (!$user) {
+            return $this->run(RespondWithJsonErrorJob::class, [
+                'message' => 'It looks like we have not invite you yet',
+                'code' => 407,
+                'redirectTo' => 'accountF'
+            ]);
+        }
     }
 }
