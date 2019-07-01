@@ -36,6 +36,7 @@ Route::group(['middleware' => ['ptp.auth']], function () {
 
     Route::post('exam/type/start', 'TypeSpeedController@start')->name('typeStart');
     Route::post('exam/type/speed', 'TypeSpeedController@saveResult')->name('typeSpeed');
+    Route::get('exam/type/text', 'TypeSpeedController@getRandomText')->name('randomText');
 
 //    Route::post('exam/finish', 'ExamSessionController@finish')->name('finish');
 });

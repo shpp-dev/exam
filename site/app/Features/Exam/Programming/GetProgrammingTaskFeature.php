@@ -13,6 +13,7 @@ use App\ProgrammingTask;
 use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 use Lucid\Foundation\ServesFeaturesTrait;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class GetProgrammingTaskFeature extends Feature
 {
@@ -31,10 +32,17 @@ class GetProgrammingTaskFeature extends Feature
         }
 
         if ($session->programmingStatus == ExamSystem::PREPARED_STATUS) {
-            $this->serve(StartExamFeature::class, [
-                'session' => $session,
-                'examName' => ExamSystem::PROGRAMMING_EXAM_NAME
-            ]);
+            try {
+                $this->serve(StartExamFeature::class, [
+                    'session' => $session,
+                    'examName' => ExamSystem::PROGRAMMING_EXAM_NAME
+                ]);
+            } catch (ConflictHttpException $e) {
+                return $this->run(RespondWithJsonErrorJob::class, [
+                    'code' => 409,
+                    'message' => ExamSystem::CONCURRENT_EXAM_ERROR
+                ]);
+            }
         } elseif ($session->programmingStatus != ExamSystem::IN_PROGRESS_STATUS) {
             return $this->run(RespondWithJsonErrorJob::class, [
                 'code' => 418,

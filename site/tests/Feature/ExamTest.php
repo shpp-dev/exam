@@ -32,7 +32,7 @@ class ExamTest extends TestCase
         parent::setUp();
 
         $this->testNumber = 0;
-        $this->examTasks = json_decode(file_get_contents(storage_path('/app/exam/programmingAnswers.json')), true);
+        $this->examTasks = json_decode(file_get_contents(base_path('resources/exam/programmingAnswers.json')), true);
         $this->app->make('config')->set('mail.driver', 'log');
     }
 

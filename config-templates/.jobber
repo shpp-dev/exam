@@ -39,7 +39,7 @@ runLog:
 [jobs]
 ## This section must contain a YAML sequence of maps like the following:
 - name: Artisan schedule run
-  cmd: cd /var/www/html && php artisan schedule:run >> /dev/null 2>&1  # shell command to execute
+  cmd: cd /var/www/html && php artisan schedule:run 
   time: '0 * * * * *'  # SEC MIN HOUR MONTH_DAY MONTH WEEK_DAY.
   onError: Continue  # what to do when the job has an error: Stop, Backoff, or Continue
   notifyOnError: false  # whether to call notifyProgram when the job has an error

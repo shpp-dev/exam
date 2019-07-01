@@ -3,13 +3,9 @@
 namespace App\Domains\Data\Jobs;
 
 
+use App\Data\ExamSystem;
 use App\ExamSession;
-use App\ProgrammingTask;
 use Carbon\Carbon;
-use Firebase\JWT\BeforeValidException;
-use Firebase\JWT\ExpiredException;
-use Firebase\JWT\JWT;
-use Firebase\JWT\SignatureInvalidException;
 use Lucid\Foundation\Job;
 
 class GetPreparedUsersResultsListJob extends Job
@@ -37,8 +33,8 @@ class GetPreparedUsersResultsListJob extends Job
             $examData = [
                 'sessionId' => $session->id,
                 'timing' => [
-                    'startedAtTs' => Carbon::parse($session->startedAt)->timestamp,
-                    'finishedAtTs' => Carbon::parse($session->finishedAt)->timestamp
+                    'startedAtTs' => Carbon::parse($session->startedAt)->timestamp * ExamSystem::JAVASCRIPT_TIMESTAMP_COEFFICIENT,
+                    'finishedAtTs' => Carbon::parse($session->finishedAt)->timestamp * ExamSystem::JAVASCRIPT_TIMESTAMP_COEFFICIENT
                 ],
                 'passed' => $session->passed,
                 'programming' => [],
@@ -54,7 +50,7 @@ class GetPreparedUsersResultsListJob extends Job
                         'id' => $result->taskId,
                         'number' => $result->taskNumber,
                         'name' => $result->task->name,
-                        'description' => $result->task->description
+                        'description' => json_decode($result->task->description, true)
                     ],
                     'solution' => [
                         'userFunction' => $solution['userFunction'],

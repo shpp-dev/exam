@@ -15,6 +15,7 @@ use Exception;
 use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 use Lucid\Foundation\ServesFeaturesTrait;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class GetEnglishQuestionFeature extends Feature
 {
@@ -33,10 +34,17 @@ class GetEnglishQuestionFeature extends Feature
         }
 
         if ($session->englishStatus == ExamSystem::PREPARED_STATUS) {
-            $this->serve(StartExamFeature::class, [
-                'session' => $session,
-                'examName' => ExamSystem::ENGLISH_EXAM_NAME
-            ]);
+            try {
+                $this->serve(StartExamFeature::class, [
+                    'session' => $session,
+                    'examName' => ExamSystem::ENGLISH_EXAM_NAME
+                ]);
+            } catch (ConflictHttpException $e) {
+                return $this->run(RespondWithJsonErrorJob::class, [
+                    'code' => 409,
+                    'message' => ExamSystem::CONCURRENT_EXAM_ERROR
+                ]);
+            }
         } elseif ($session->englishStatus != ExamSystem::IN_PROGRESS_STATUS) {
             return $this->run(RespondWithJsonErrorJob::class, [
                 'code' => 418,

@@ -11,8 +11,10 @@ use App\Domains\Exam\Session\Jobs\StartExamByNameJob;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\ExamSession;
+use Http\Client\Exception\RequestException;
 use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class StartExamFeature extends Feature
 {
@@ -37,9 +39,7 @@ class StartExamFeature extends Feature
         ]);
 
         if ($hasActiveExam) {
-            return $this->run(RespondWithJsonErrorJob::class, [
-                'message' => ExamSystem::CONCURRENT_EXAM_ERROR
-            ]);
+            throw new ConflictHttpException();
         }
 
         $this->run(StartExamByNameJob::class, [
