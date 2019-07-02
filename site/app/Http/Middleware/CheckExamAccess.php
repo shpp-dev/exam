@@ -28,28 +28,24 @@ class CheckExamAccess
     public function handle($request, Closure $next)
     {
         $user = Auth::getAuthUser();
-        if ($activeSession = $user->activeSession()) {
+
+        $response = $this->run(SendHttpPostRequestJob::class, [
+            'url' => config('ptp.accountBackUrl').'/user/exam/allowed',
+            'data' => [
+                'eco' => config('auth.eco'),
+                'email' => $user->email
+            ]
+        ]);
+
+        Log::info(json_encode($response));
+
+        if (json_decode($response->getBody())->data->code != 200) {
             return $this->run(RespondWithJsonErrorJob::class, [
-                'message' => 'Your exam have been already started',
-                'code' => 418,
+                'message' => 'Denied',
+                'code' => 403,
             ]);
-        } else {
-            $response = $this->run(SendHttpPostRequestJob::class, [
-                'url' => config('ptp.accountBackUrl').'/user/exam/allowed',
-                'data' => [
-                    'eco' => config('auth.eco'),
-                    'email' => $user->email
-                ]
-            ]);
-            Log::info(json_encode($response));
-            if (json_decode($response->getBody())->data->code == 200) {
-                return $next($request);
-            } else {
-                return $this->run(RespondWithJsonErrorJob::class, [
-                    'message' => 'Denied',
-                    'code' => 403,
-                ]);
-            }
         }
+
+        return $next($request);
     }
 }

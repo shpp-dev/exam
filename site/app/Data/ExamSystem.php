@@ -11,6 +11,8 @@ class ExamSystem
     const PREPARED_STATUS = 0;
     const IN_PROGRESS_STATUS = 1;
     const FINISHED_STATUS = 2;
+    const STARTED = 'started';
+    const READY_TO_START = 'readyToStart';
 
     // coefficient to correct timestamp value for javascript Date class
     const JAVASCRIPT_TIMESTAMP_COEFFICIENT = 1000;

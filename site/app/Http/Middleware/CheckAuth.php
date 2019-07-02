@@ -57,15 +57,15 @@ class CheckAuth
             ]);
         }
 
-        // todo move to single middleware
-//        $user = Auth::authorizeByEmail($authTokenData['data']->userEmail);
-//        if (!$user) {
-//            return $this->run(RespondWithJsonErrorJob::class, [
-//                'message' => 'It looks like we have not invite you yet',
-//                'code' => 407,
-//                'redirectTo' => 'accountF'
-//            ]);
-//        }
+        // authorization user
+        $user = Auth::authorizeByEmail($authTokenData['data']->userEmail);
+        if (!$user) {
+            return $this->run(RespondWithJsonErrorJob::class, [
+                'message' => 'It looks like we have not invite you yet',
+                'code' => 403,
+                'redirectTo' => 'accountF'
+            ]);
+        }
 
         return $next($request);
     }

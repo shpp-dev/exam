@@ -23,7 +23,8 @@ class StartSessionFeature extends Feature
 
         if ($user->activeSession()) {
             return $this->run(RespondWithJsonErrorJob::class, [
-                'message' => ExamSystem::SESSION_STARTED
+                'message' => ExamSystem::SESSION_STARTED,
+                'code' => 418
             ]);
         }
 

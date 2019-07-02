@@ -28,20 +28,19 @@ class FinishSessionFeature extends Feature
 
         $email = $this->session->user->email;
 
+        $this->run(SendHttpPostRequestJob::class, [
+            'url' => config('ptp.accountBackUrl').'/user/exam/finish',
+            'data' => [
+                'eco' => config('auth.eco'),
+                'email' => $email,
+            ]
+        ]);
+
         $this->run(FinishSessionJob::class, [
             'session' => $this->session
         ]);
 
-        // todo uncommented for production
-//        $this->run(SendHttpPostRequestJob::class, [
-//            'url' => config('ptp.accountBackUrl').'/user/exam/finish',
-//            'data' => [
-//                'eco' => config('auth.eco'),
-//                'email' => $email,
-//            ]
-//        ]);
-
-//        $this->run(SendFinishExamMailToStudentJob::class, ['email' => $email]);
+        $this->run(SendFinishExamMailToStudentJob::class, ['email' => $email]);
 
         Log::info('Exam session was finished for user '. $this->session->user->id);
     }
