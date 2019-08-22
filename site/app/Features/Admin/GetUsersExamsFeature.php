@@ -11,7 +11,7 @@ use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\ExamSession;
 use Lucid\Foundation\Feature;
 
-class GetUsersListFeature extends Feature
+class GetUsersExamsFeature extends Feature
 {
     private $status;
 

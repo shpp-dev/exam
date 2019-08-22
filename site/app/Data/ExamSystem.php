@@ -33,6 +33,7 @@ class ExamSystem
     const NOT_ACTIVE_SESSION_ERROR = 'Session is not active';
     const STATUS_NOT_FOUND = 'Status not found';
     const SESSION_STARTED = 'Session has already started';
+    const CLIENT_NOT_IDENTIFIED = 'Client not identified';
 
     // file paths
     const ENGLISH_QUESTIONS_PATH = 'resources' . DIRECTORY_SEPARATOR . 'exam' . DIRECTORY_SEPARATOR . 'englishQuestions.json';

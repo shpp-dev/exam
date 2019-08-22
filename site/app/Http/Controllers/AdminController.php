@@ -2,19 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Features\Admin\GetUsersListFeature;
+use App\Features\Admin\GetUsersExamsFeature;
+use App\Features\Admin\EverCookieForClientFeature;
 use App\Features\Exam\CheckExamForUserFeature;
 use Lucid\Foundation\Http\Controller as Controller;
 
 class AdminController extends Controller
 {
-    public function list(string $status)
+    public function getUsersExams(string $status)
     {
-        return $this->serve(GetUsersListFeature::class, ['status' => $status]);
+        return $this->serve(GetUsersExamsFeature::class, ['status' => $status]);
     }
 
-    public function check()
+    public function checkExamForUser()
     {
         return $this->serve(CheckExamForUserFeature::class);
+    }
+
+    public function everCookieForClient($action)
+    {
+        return $this->serve(EverCookieForClientFeature::class, ['action' => $action]);
     }
 }

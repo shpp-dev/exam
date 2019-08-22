@@ -6,6 +6,7 @@ use App\Http\Middleware\Admin;
 use App\Http\Middleware\CheckAuth;
 use App\Http\Middleware\CheckExamAccess;
 use App\Http\Middleware\CheckExamInProgress;
+use App\Http\Middleware\ClientIdentification;
 use App\Http\Middleware\Ecosystem;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -70,6 +71,7 @@ class Kernel extends HttpKernel
         'ptp.access' => CheckExamAccess::class,
         'ptp.admin' => Admin::class,
         'ptp.eco' => Ecosystem::class,
+        'ptp.client' => ClientIdentification::class
     ];
 
     /**

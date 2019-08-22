@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['middleware' => ['ptp.auth', 'ptp.access']], function () {
+Route::group(['middleware' => ['ptp.auth', 'ptp.access', 'ptp.client']], function () {
     Route::get('exam/status', 'ExamSessionController@status')->name('status');
     Route::post('exam/start', 'ExamSessionController@start')->name('start');
 });
@@ -36,9 +36,10 @@ Route::group(['middleware' => ['ptp.auth', 'ptp.current']], function () {
 //    Route::post('exam/finish', 'ExamSessionController@finish')->name('finish');
 });
 
-Route::group(['middleware' => ['ptp.admin']], function() {
-    Route::get('admin/list/{status}', 'AdminController@list');
-    Route::post('admin/check', 'AdminController@check');
+Route::group(['prefix' => 'admin', 'middleware' => ['ptp.admin']], function() {
+    Route::get('list/{status}', 'AdminController@getUsersExams');
+    Route::post('check', 'AdminController@checkExamForUser');
+    Route::post('evercookie/{action}', 'AdminController@everCookieForClient');
 });
 
 Route::group(['middleware' => ['ptp.eco']], function() {
