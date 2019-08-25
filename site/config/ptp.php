@@ -13,4 +13,5 @@ return [
     'englishExamDurationMins' => env('ENGLISH_EXAM_DURATION_MINS'),
     'coderunnerUrl' => env('CODERUNNER_URL'),
     'coderunnerKey' => env('CODERUNNER_KEY'),
+    'calendlyUrl' => env('CALENDLY_URL')
 ];

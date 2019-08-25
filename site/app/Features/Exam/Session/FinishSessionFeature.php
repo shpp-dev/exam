@@ -5,7 +5,7 @@ namespace App\Features\Exam\Session;
 use App\Domains\Auth\Auth;
 use App\Domains\Exam\Session\Jobs\FinishSessionJob;
 use App\Domains\Http\Jobs\SendHttpPostRequestJob;
-use App\Domains\Mail\Jobs\SendMailToUserJob;
+use App\Domains\Mail\Jobs\SendMailToUsersJob;
 use App\ExamSession;
 use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
@@ -40,8 +40,8 @@ class FinishSessionFeature extends Feature
             'session' => $this->session
         ]);
 
-        $this->run(SendMailToUserJob::class, [
-            'email' => $email,
+        $this->run(SendMailToUsersJob::class, [
+            'emails' => [$email],
             'view' => 'mails.exam-completed',
             'subject' => 'Экзамен завершен' // todo use local
         ]);

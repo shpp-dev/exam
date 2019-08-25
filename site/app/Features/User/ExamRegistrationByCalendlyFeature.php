@@ -5,7 +5,7 @@ namespace App\Features\User;
 
 
 use App\Domains\Mail\Jobs\SendMailToAdminsJob;
-use App\Domains\Mail\Jobs\SendMailToUserJob;
+use App\Domains\Mail\Jobs\SendMailToUsersJob;
 use App\Domains\User\Jobs\GetExamDataForUserJob;
 use App\Domains\User\Jobs\GetUserByEmailJob;
 use App\Domains\User\Jobs\SetExamDataForUserJob;
@@ -51,11 +51,11 @@ class ExamRegistrationByCalendlyFeature extends Feature
             'subject' => 'Неприглашенный пользователь записался на экзамен' // todo use local
         ]);
 
-        $this->run(SendMailToUserJob::class, [
+        $this->run(SendMailToUsersJob::class, [
             'view' => 'mails.decline-registration-on-exam',
             'subject' => 'Отмена регистрации на экзамен', // todo use local
             'data' => ['name' => $name],
-            'email' => $email
+            'emails' => [$email]
         ]);
     }
 

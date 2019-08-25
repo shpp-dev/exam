@@ -6,12 +6,12 @@ namespace App\Domains\Mail\Jobs;
 use Illuminate\Support\Facades\Mail;
 use Lucid\Foundation\Job;
 
-class SendMailToUserJob extends Job
+class SendMailToUsersJob extends Job
 {
     /**
-     * @var string
+     * @var array
      */
-    private $email;
+    private $emails;
 
     /**
      * @var array
@@ -30,14 +30,14 @@ class SendMailToUserJob extends Job
 
     /**
      * SendMailToStudentJob constructor.
-     * @param string $email
+     * @param array $emails
      * @param string $view
      * @param string $subject
      * @param array $data
      */
-    public function __construct(string $email, string $view, string $subject, array $data = [])
+    public function __construct(array $emails, string $view, string $subject, array $data = [])
     {
-        $this->email = $email;
+        $this->emails = $emails;
         $this->data = $data;
         $this->view = $view;
         $this->subject = $subject;
@@ -46,7 +46,7 @@ class SendMailToUserJob extends Job
     public function handle()
     {
         Mail::send($this->view, $this->data, function ($message) {
-            $message->to($this->email)->subject($this->subject);
+            $message->to($this->emails)->subject($this->subject);
         });
     }
 }
