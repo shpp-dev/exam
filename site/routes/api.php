@@ -13,12 +13,12 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::group(['middleware' => ['ptp.auth', 'ptp.access', 'ptp.client']], function () {
+Route::group(['middleware' => ['ptp.auth', 'ptp.access', 'location']], function () {
     Route::get('exam/status', 'ExamSessionController@status')->name('status');
     Route::post('exam/start', 'ExamSessionController@start')->name('start');
 });
 
-Route::group(['middleware' => ['ptp.auth', 'ptp.current']], function () {
+Route::group(['middleware' => ['ptp.auth', 'ptp.current', 'location']], function () {
     Route::get('exam/list', 'ExamSessionController@examsList')->name('examsList');
 
     Route::get('exam/programming/task', 'ProgrammingController@getTask')->name('programmingTask');
@@ -45,3 +45,5 @@ Route::group(['prefix' => 'admin', 'middleware' => ['ptp.admin']], function() {
 Route::group(['middleware' => ['ptp.eco']], function() {
    Route::post('user/register', 'UserController@createUser');
 });
+
+Route::post('calendly', 'UserController@examRegistrationByCalendly');

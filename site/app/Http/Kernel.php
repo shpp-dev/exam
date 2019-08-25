@@ -6,6 +6,7 @@ use App\Http\Middleware\Admin;
 use App\Http\Middleware\CheckAuth;
 use App\Http\Middleware\CheckExamAccess;
 use App\Http\Middleware\CheckExamInProgress;
+use App\Http\Middleware\CheckLocation;
 use App\Http\Middleware\ClientIdentification;
 use App\Http\Middleware\Ecosystem;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -47,6 +48,11 @@ class Kernel extends HttpKernel
 //            'throttle:60,1',
             'bindings',
         ],
+
+        'location' => [
+//            CheckLocation::class,
+            ClientIdentification::class
+        ]
     ];
 
     /**
@@ -70,8 +76,7 @@ class Kernel extends HttpKernel
         'ptp.current' => CheckExamInProgress::class,
         'ptp.access' => CheckExamAccess::class,
         'ptp.admin' => Admin::class,
-        'ptp.eco' => Ecosystem::class,
-        'ptp.client' => ClientIdentification::class
+        'ptp.eco' => Ecosystem::class
     ];
 
     /**

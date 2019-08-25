@@ -3,14 +3,15 @@
 namespace App\Http\Middleware;
 
 use App\Data\ExamSystem;
-use App\Domains\Auth\Jobs\CheckEverCookieJob;
+use App\Domains\Auth\Auth;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
+use App\Domains\User\Jobs\GetExamDataForUserJob;
 use Closure;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Lucid\Foundation\JobDispatcherTrait;
 use Lucid\Foundation\MarshalTrait;
 
-class ClientIdentification
+class CheckLocation
 {
     use JobDispatcherTrait, MarshalTrait, DispatchesJobs;
 
@@ -23,11 +24,13 @@ class ClientIdentification
      */
     public function handle($request, Closure $next)
     {
-        $clientIdentified = $this->run(CheckEverCookieJob::class, [
-            'clientId' => $request->cookie('clientId')
+        $clientLocation = $request->cookie('clientLocation');
+
+        $examData = $this->run(GetExamDataForUserJob::class, [
+            'user' => Auth::getAuthUser()
         ]);
 
-        if (!$clientIdentified) {
+        if (!$clientLocation || strcmp($clientLocation, $examData['location']) !== 0) {
             return $this->run(RespondWithJsonErrorJob::class, [
                 'message' => ExamSystem::CLIENT_NOT_IDENTIFIED,
                 'code' => 423

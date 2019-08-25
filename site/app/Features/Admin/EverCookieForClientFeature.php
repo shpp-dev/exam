@@ -10,7 +10,6 @@ use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
-use Exception;
 
 class EverCookieForClientFeature extends Feature
 {
@@ -26,18 +25,16 @@ class EverCookieForClientFeature extends Feature
 
     public function handle(Request $request)
     {
-        Log::info($request->clientIdentifier);
-
         switch ($this->action) {
             case 'save':
                 $this->run(UpdateEverCookieJob::class, [
-                    'newClientIdentifier' => $request->clientIdentifier,
-                    'oldClientIdentifier' => $request->cookie('examClientIdentifier')
+                    'newClientId' => $request->clientId,
+                    'oldClientId' => $request->cookie('clientId')
                 ]);
                 break;
             case 'remove':
                 $this->run(RemoveEverCookieJob::class, [
-                    'clientIdentifier' => $request->cookie('examClientIdentifier')
+                    'clientId' => $request->cookie('clientId')
                 ]);
                 break;
             default:
