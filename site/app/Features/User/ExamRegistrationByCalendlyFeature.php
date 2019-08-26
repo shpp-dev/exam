@@ -10,6 +10,7 @@ use App\Domains\User\Jobs\GetExamDataForUserJob;
 use App\Domains\User\Jobs\GetUserByEmailJob;
 use App\Domains\User\Jobs\SetExamDataForUserJob;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 
 class ExamRegistrationByCalendlyFeature extends Feature
@@ -18,29 +19,31 @@ class ExamRegistrationByCalendlyFeature extends Feature
     {
         $data = json_decode($request->getContent(), true);
 
-        $inviteeEmail = $data['payload']['invitee']['email'];
-        $name = $data['payload']['invitee']['name'];
-        $examDatetime = $data['payload']['event']['start_time'];
-        $location = $data['payload']['event']['location'];
+        Log::info('Calendly test request: ' . json_encode($data));
 
-        $user = $this->run(GetUserByEmailJob::class, ['email' => $inviteeEmail]);
-
-        if (!$user) {
-            $this->sendMailsAboutDeclineRegistration($inviteeEmail, $examDatetime, $name);
-            return;
-        }
-
-        $oldExamData = $this->run(GetExamDataForUserJob::class, ['user' => $user]);
-
-        if ($oldExamData['datetime']) {
-            $this->sendMailAboutReRegistration($inviteeEmail, $examDatetime, $location);
-        }
-
-        $this->run(SetExamDataForUserJob::class, [
-            'user' => $user,
-            'datetime' => $examDatetime,
-            'location' => $location
-        ]);
+//        $inviteeEmail = $data['payload']['invitee']['email'];
+//        $name = $data['payload']['invitee']['name'];
+//        $examDatetime = $data['payload']['event']['start_time'];
+//        $location = $data['payload']['event']['location'];
+//
+//        $user = $this->run(GetUserByEmailJob::class, ['email' => $inviteeEmail]);
+//
+//        if (!$user) {
+//            $this->sendMailsAboutDeclineRegistration($inviteeEmail, $examDatetime, $name);
+//            return;
+//        }
+//
+//        $oldExamData = $this->run(GetExamDataForUserJob::class, ['user' => $user]);
+//
+//        if ($oldExamData['datetime']) {
+//            $this->sendMailAboutReRegistration($inviteeEmail, $examDatetime, $location);
+//        }
+//
+//        $this->run(SetExamDataForUserJob::class, [
+//            'user' => $user,
+//            'datetime' => $examDatetime,
+//            'location' => $location
+//        ]);
     }
 
     private function sendMailsAboutDeclineRegistration(string $email, string $datetime, string $name)
