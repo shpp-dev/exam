@@ -5,6 +5,7 @@ namespace App\Features\Exam;
 use App\Domains\Exam\Session\Jobs\CheckExamSessionJob;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use App\Domains\Http\Jobs\SendHttpPostRequestJob;
+use App\Domains\Mail\Jobs\SendMailToUsersJob;
 use App\ExamSession;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -18,12 +19,14 @@ class CheckExamForUserFeature extends Feature
         $sessionId = $request->sessionId;
 
         $session = ExamSession::find($sessionId);
+
         if (!$session) {
             return $this->run(RespondWithJsonErrorJob::class, [
                 'message' => 'Exam session not found',
                 'code' => 404
             ]);
         }
+
         if ($session->passed != null) {
             return $this->run(RespondWithJsonErrorJob::class, [
                 'message' => 'Exam has been already checked',
@@ -31,11 +34,13 @@ class CheckExamForUserFeature extends Feature
             ]);
         }
 
+        $email = $session->user->email;
+
         $this->run(SendHttpPostRequestJob::class, [
             'url' => config('ptp.accountBackUrl').'/user/exam/add',
             'data' => [
                 'eco' => config('auth.eco'),
-                'email' => $session->user->email,
+                'email' => $email,
                 'examResultsId' => $sessionId,
                 'passed' => $passed,
                 'examDateTs' => $session->finishedAt
@@ -45,6 +50,12 @@ class CheckExamForUserFeature extends Feature
         $this->run(CheckExamSessionJob::class, [
             'session' => $session,
             'passed' => $passed
+        ]);
+
+        $this->run(SendMailToUsersJob::class, [
+            'emails' => [$email],
+            'view' => $passed ? 'mails.exam-passed' : 'mails.exam-failed',
+            'subject' => 'Экзамен проверен' // todo use local
         ]);
 
         Log::info('Exam was checked for user '.$session->user->id.'. Passed: '.$passed);

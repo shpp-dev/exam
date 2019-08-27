@@ -23,6 +23,8 @@ class ExamRegistrationByCalendlyFeature extends Feature
         $examDatetime = $data['payload']['event']['start_time'];
         $location = $data['payload']['event']['location'];
 
+        // todo check event_type
+
         $user = $this->run(GetUserByEmailJob::class, ['email' => $inviteeEmail]);
 
         if (!$user) {
