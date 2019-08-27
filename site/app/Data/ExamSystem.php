@@ -14,6 +14,16 @@ class ExamSystem
     const STARTED = 'started';
     const READY_TO_START = 'readyToStart';
 
+    // statuses for user
+    const EXAM_AVAILABLE = 'examAvailable';
+    const EXAM_NOT_AVAILABLE = 'examNotAvailable';
+    const EXAM_REGISTRATION_AVAILABLE = 'examRegistrationAvailable';
+    const EXAM_PENDING = 'examPending';
+    const EXAM_PROGRESS = 'examProgress';
+    const EXAM_CHECKING = 'examChecking';
+    const EXAM_PASSED = 'examPassed';
+    const EXAM_FAILED = 'examFailed';
+
     // coefficient to correct timestamp value for javascript Date class
     const JAVASCRIPT_TIMESTAMP_COEFFICIENT = 1000;
 
@@ -34,6 +44,7 @@ class ExamSystem
     const STATUS_NOT_FOUND = 'Status not found';
     const SESSION_STARTED = 'Session has already started';
     const CLIENT_NOT_IDENTIFIED = 'Client not identified';
+    const USER_NOT_FOUND = 'User not found';
 
     // file paths
     const ENGLISH_QUESTIONS_PATH = 'resources' . DIRECTORY_SEPARATOR . 'exam' . DIRECTORY_SEPARATOR . 'englishQuestions.json';

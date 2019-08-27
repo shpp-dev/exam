@@ -25,4 +25,9 @@ class User extends BaseModel
     {
         return $this->examSessions()->where('finished_at', null)->first();
     }
+
+    public function lastFinishedExamSession()
+    {
+        return $this->examSessions()->latest('finished_at')->first();
+    }
 }
