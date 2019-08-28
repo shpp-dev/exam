@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class TasksSeederRU extends Seeder
 {
@@ -1722,7 +1723,11 @@ int main(int argc, char const *argv[])
         ];
 
         foreach ($names as $key => $name) {
-            \Illuminate\Support\Facades\DB::table('programming_tasks')->insert([
+            if (DB::table('programming_tasks')->find($key + 1)) {
+                continue;
+            }
+
+            DB::table('programming_tasks')->insert([
                 "id" => $key + 1,
                 "name" => $names[$key],
                 "description" => json_encode($descriptions[$key], JSON_UNESCAPED_UNICODE),
