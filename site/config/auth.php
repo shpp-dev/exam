@@ -105,5 +105,5 @@ return [
 
     'eco' => env('PTP_ECO_KEY'),
 
-    'domain' => 'if.shpp.me'
+    'domain' => env('DOMAIN')
 ];
