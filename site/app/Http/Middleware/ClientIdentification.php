@@ -24,7 +24,7 @@ class ClientIdentification
      */
     public function handle($request, Closure $next)
     {
-        Log::info(json_encode('Cookies: ' . $request->cookies()));
+        Log::info(json_encode('Cookies: ' . $request->cookie()));
         Log::info($request->cookie('clientId'));
 
         $clientIdentified = $this->run(CheckEverCookieJob::class, [
