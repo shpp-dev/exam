@@ -6,6 +6,7 @@ namespace App\Features\User;
 
 use App\Domains\Mail\Jobs\SendMailToAdminsJob;
 use App\Domains\Mail\Jobs\SendMailToUsersJob;
+use App\Domains\User\Jobs\ClearExamDataForUserJob;
 use App\Domains\User\Jobs\GetExamDataForUserJob;
 use App\Domains\User\Jobs\GetUserByEmailJob;
 use App\Domains\User\Jobs\SetExamDataForUserJob;
@@ -25,6 +26,7 @@ class ExamRegistrationByCalendlyFeature extends Feature
         $name = $data['payload']['invitee']['name'];
         $examDatetime = $data['payload']['event']['start_time'];
         $location = $data['payload']['event']['location'];
+        $canceled = $data['payload']['event']['canceled'];
 
         // todo check event_type
 
@@ -35,17 +37,23 @@ class ExamRegistrationByCalendlyFeature extends Feature
             return;
         }
 
-        $oldExamData = $this->run(GetExamDataForUserJob::class, ['user' => $user]);
+        if ($canceled) {
+            $this->run(ClearExamDataForUserJob::class, [
+                'user' => $user
+            ]);
+        } else {
+            $oldExamData = $this->run(GetExamDataForUserJob::class, ['user' => $user]);
 
-        if ($oldExamData['datetime']) {
-            $this->sendMailAboutReRegistration($inviteeEmail, $examDatetime, $location);
+            if ($oldExamData['datetime']) {
+                $this->sendMailAboutReRegistration($inviteeEmail, $examDatetime, $location);
+            }
+
+            $this->run(SetExamDataForUserJob::class, [
+                'user' => $user,
+                'datetime' => $examDatetime,
+                'location' => $location
+            ]);
         }
-
-        $this->run(SetExamDataForUserJob::class, [
-            'user' => $user,
-            'datetime' => $examDatetime,
-            'location' => $location
-        ]);
     }
 
     private function sendMailsAboutDeclineRegistration(string $email, string $datetime, string $name)
