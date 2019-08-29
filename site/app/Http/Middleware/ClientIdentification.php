@@ -7,6 +7,7 @@ use App\Domains\Auth\Jobs\CheckEverCookieJob;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use Closure;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\JobDispatcherTrait;
 use Lucid\Foundation\MarshalTrait;
 
@@ -23,6 +24,9 @@ class ClientIdentification
      */
     public function handle($request, Closure $next)
     {
+        Log::info(json_encode('Cookies: ' . $request->cookies()));
+        Log::info($request->cookie('clientId'));
+
         $clientIdentified = $this->run(CheckEverCookieJob::class, [
             'clientId' => $request->cookie('clientId')
         ]);
