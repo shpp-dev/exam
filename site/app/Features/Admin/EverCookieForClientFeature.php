@@ -4,6 +4,7 @@
 namespace App\Features\Admin;
 
 
+use App\Data\ExamSystem;
 use App\Domains\Auth\Jobs\RemoveEverCookieJob;
 use App\Domains\Auth\Jobs\UpdateEverCookieJob;
 use App\Domains\Http\Jobs\RespondWithJsonAndCookieJob;
@@ -35,7 +36,7 @@ class EverCookieForClientFeature extends Feature
                     'cookie' => [
                         'name' => 'clientId',
                         'value' => $request->clientId,
-                        'expiration' => 60 * 24 * 7, // todo change expiration
+                        'expiration' => ExamSystem::FIVE_YEARS_IN_SECONDS,
                         'path' => '/',
                         'domain' => config('auth.domain')
                     ]

@@ -27,6 +27,8 @@ class ExamSystem
     // coefficient to correct timestamp value for javascript Date class
     const JAVASCRIPT_TIMESTAMP_COEFFICIENT = 1000;
 
+    const FIVE_YEARS_IN_SECONDS = 157680000;
+
     // number of words for random text
     const WORDS_COUNT = 50;
 
