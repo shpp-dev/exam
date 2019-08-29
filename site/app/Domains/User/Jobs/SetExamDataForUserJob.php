@@ -5,6 +5,7 @@ namespace App\Domains\User\Jobs;
 
 
 use App\User;
+use Carbon\Carbon;
 use Lucid\Foundation\Job;
 
 class SetExamDataForUserJob extends Job
@@ -34,7 +35,7 @@ class SetExamDataForUserJob extends Job
     public function handle()
     {
         $this->user->exam_location = $this->location;
-        $this->user->exam_datetime = $this->datetime;
+        $this->user->exam_datetime = Carbon::parse($this->datetime);
 
         $this->user->save();
     }
