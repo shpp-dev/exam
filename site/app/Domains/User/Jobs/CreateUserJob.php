@@ -32,6 +32,7 @@ class CreateUserJob extends Job
             $user->email = $this->email;
             $user->save();
         }
+
         return $user;
     }
 }

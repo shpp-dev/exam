@@ -6,6 +6,7 @@ namespace App\Features\User;
 
 use App\Domains\Mail\Jobs\CreateUserJob;
 use App\Domains\Mail\Jobs\SendMailToUsersJob;
+use App\Domains\User\Jobs\ClearExamDataForUserJob;
 use Illuminate\Http\Request;
 use Lucid\Foundation\Feature;
 use Lucid\Foundation\ServesFeaturesTrait;
@@ -20,7 +21,8 @@ class CreateUserFeature extends Feature
         $emails = $data['emails'];
 
         foreach ($emails as $email) {
-            $this->run(CreateUserJob::class, ['email' => $email]);
+            $user = $this->run(CreateUserJob::class, ['email' => $email]);
+            $this->run(ClearExamDataForUserJob::class, ['user' => $user]);
         }
 
         $this->run(SendMailToUsersJob::class, [
