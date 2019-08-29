@@ -32,7 +32,7 @@ class GetExamStatusForUserJob extends Job
         }
 
         $examDate = Carbon::parse($this->user->exam_datetime)->startOfDay();
-        $today = Carbon::now()->addDay()->startOfDay();
+        $today = Carbon::now()->startOfDay();
         $activeSession = $this->user->activeSession();
         $lastFinishedExamSession = $this->user->lastFinishedExamSession();
         $lastExamFinishDate = null;
