@@ -10,6 +10,7 @@ use App\Domains\User\Jobs\GetExamDataForUserJob;
 use App\Domains\User\Jobs\GetUserByEmailJob;
 use App\Domains\User\Jobs\SetExamDataForUserJob;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 
 class ExamRegistrationByCalendlyFeature extends Feature
@@ -17,6 +18,8 @@ class ExamRegistrationByCalendlyFeature extends Feature
     public function handle(Request $request)
     {
         $data = json_decode($request->getContent(), true);
+
+        Log::info(json_encode($data));
 
         $inviteeEmail = $data['payload']['invitee']['email'];
         $name = $data['payload']['invitee']['name'];
