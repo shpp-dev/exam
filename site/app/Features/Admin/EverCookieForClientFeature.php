@@ -8,6 +8,7 @@ use App\Domains\Auth\Jobs\RemoveEverCookieJob;
 use App\Domains\Auth\Jobs\UpdateEverCookieJob;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use App\Domains\Http\Jobs\RespondWithJsonJob;
+use http\Client\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Log;
@@ -25,7 +26,7 @@ class EverCookieForClientFeature extends Feature
         $this->action = $action;
     }
 
-    public function handle(Request $request)
+    public function handle(Request $request, Response $response)
     {
         switch ($this->action) {
             case 'save':
@@ -33,8 +34,7 @@ class EverCookieForClientFeature extends Feature
                     'newClientId' => $request->clientId,
                     'oldClientId' => $request->cookie('clientId')
                 ]);
-                Cookie::forever('clientId', $request->clientId);
-                break;
+                return $response->withCookie(cookie()->forever('clientId', $request->clientId, null, 'if.shpp.me'));
             case 'remove':
                 $this->run(RemoveEverCookieJob::class, [
                     'clientId' => $request->cookie('clientId')
