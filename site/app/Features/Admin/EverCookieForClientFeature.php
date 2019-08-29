@@ -25,9 +25,6 @@ class EverCookieForClientFeature extends Feature
 
     public function handle(Request $request)
     {
-        Log::info('Request client id: ' . $request->clientId);
-        Log::info(json_encode($request));
-
         switch ($this->action) {
             case 'save':
                 $this->run(UpdateEverCookieJob::class, [
