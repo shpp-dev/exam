@@ -6,6 +6,7 @@ use App\Domains\Exam\Session\Jobs\CheckExamSessionJob;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use App\Domains\Http\Jobs\SendHttpPostRequestJob;
 use App\Domains\Mail\Jobs\SendMailToUsersJob;
+use App\Domains\User\Jobs\ClearExamDataForUserJob;
 use App\ExamSession;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -51,6 +52,12 @@ class CheckExamForUserFeature extends Feature
             'session' => $session,
             'passed' => $passed
         ]);
+
+        if (!$passed) {
+            $this->run(ClearExamDataForUserJob::class, [
+                'user' => $session->user
+            ]);
+        }
 
         $this->run(SendMailToUsersJob::class, [
             'emails' => [$email],

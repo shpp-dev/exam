@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Foundation\BaseModel;
-use Illuminate\Notifications\Notifiable;
 
 class User extends BaseModel
 {
@@ -23,11 +22,25 @@ class User extends BaseModel
 
     public function activeSession()
     {
-        return $this->examSessions()->where('finished_at', null)->first();
+        return $this->examSessions()
+            ->where('finished_at', null)
+            ->first();
     }
 
     public function lastFinishedExamSession()
     {
-        return $this->examSessions()->latest('finished_at')->first();
+        return $this->examSessions()
+            ->whereNotNull('finished_at')
+            ->latest('finished_at')
+            ->first();
+    }
+
+    public function lastFailedExamSession()
+    {
+        return $this->examSessions()
+            ->whereNotNull('finished_at')
+            ->where('passed', 0)
+            ->latest('finished_at')
+            ->first();
     }
 }

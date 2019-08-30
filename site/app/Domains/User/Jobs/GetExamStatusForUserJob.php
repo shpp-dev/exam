@@ -5,12 +5,15 @@ namespace App\Domains\User\Jobs;
 
 
 use App\Data\ExamSystem;
+use App\Domains\User\Traits\CheckRetryExamAccessForUserTrait;
 use App\User;
 use Carbon\Carbon;
 use Lucid\Foundation\Job;
 
 class GetExamStatusForUserJob extends Job
 {
+    use CheckRetryExamAccessForUserTrait;
+
     /**
      * @var User|null
      */
@@ -23,7 +26,7 @@ class GetExamStatusForUserJob extends Job
 
     public function handle()
     {
-        if ($this->user === null) {
+        if ($this->user === null || !$this->checkRetryExamAccessForUser($this->user)) {
             return ExamSystem::EXAM_NOT_AVAILABLE;
         }
 

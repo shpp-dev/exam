@@ -11,6 +11,7 @@ return [
     'englishQuestionsAmount' => env('ENGLISH_QUESTIONS_AMOUNT'),
     'programmingExamDurationMins' => env('PROGRAMMING_EXAM_DURATION_MINS'),
     'englishExamDurationMins' => env('ENGLISH_EXAM_DURATION_MINS'),
+    'retryTestingAfterDays' => env('RETRY_TESTING_AFTER_DAYS', 30),
     'coderunnerUrl' => env('CODERUNNER_URL'),
     'coderunnerKey' => env('CODERUNNER_KEY'),
     'calendlyUrl' => env('CALENDLY_URL')

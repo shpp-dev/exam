@@ -3,26 +3,24 @@
 namespace App\Http\Middleware;
 
 use App\Domains\Auth\Auth;
-use App\Domains\Helpers\Jobs\CheckAuthTokenInRedisJob;
-use App\Domains\Helpers\Jobs\GetAuthTokenDataJob;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
-use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Domains\Http\Jobs\SendHttpPostRequestJob;
+use App\Domains\User\Traits\CheckRetryExamAccessForUserTrait;
 use Closure;
 use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 use Lucid\Foundation\JobDispatcherTrait;
 use Lucid\Foundation\MarshalTrait;
 
 class CheckExamAccess
 {
-    use JobDispatcherTrait, MarshalTrait, DispatchesJobs;
+    use JobDispatcherTrait, MarshalTrait, DispatchesJobs, CheckRetryExamAccessForUserTrait;
 
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  Request  $request
+     * @param Closure $next
      * @return mixed
      */
     public function handle($request, Closure $next)
@@ -37,9 +35,7 @@ class CheckExamAccess
             ]
         ]);
 
-        Log::info(json_encode($response));
-
-        if (json_decode($response->getBody())->data->code != 200) {
+        if (json_decode($response->getBody())->data->code != 200 || !$this->checkRetryExamAccessForUser($user)) {
             return $this->run(RespondWithJsonErrorJob::class, [
                 'message' => 'Denied',
                 'code' => 403,
