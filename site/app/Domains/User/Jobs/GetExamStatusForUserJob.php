@@ -26,11 +26,11 @@ class GetExamStatusForUserJob extends Job
 
     public function handle()
     {
-        if ($this->user === null || !$this->checkRetryExamAccessForUser($this->user)) {
+        if ($this->user === null) {
             return ExamSystem::EXAM_NOT_AVAILABLE;
         }
 
-        if ($this->user->exam_datetime === null) {
+        if ($this->user->exam_datetime === null && $this->checkRetryExamAccessForUser($this->user)) {
             return ExamSystem::EXAM_REGISTRATION_AVAILABLE;
         }
 
