@@ -4,12 +4,15 @@ namespace App\Http\Middleware;
 
 use App\Data\ExamSystem;
 use App\Domains\Auth\Auth;
+use App\Domains\Auth\Jobs\CheckEverCookieJob;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use App\Domains\User\Jobs\GetExamDataForUserJob;
+use App\Operations\Auth\CheckLocationOperation;
 use Closure;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Lucid\Foundation\JobDispatcherTrait;
 use Lucid\Foundation\MarshalTrait;
+use Lucid\Foundation\ServesFeaturesTrait;
 
 class CheckLocation
 {
@@ -24,13 +27,16 @@ class CheckLocation
      */
     public function handle($request, Closure $next)
     {
-        $clientLocation = $request->cookie('clientLocation');
+        $clientForExam = json_decode($request->cookie('clientForExam'), true);
 
-        $examData = $this->run(GetExamDataForUserJob::class, [
-            'user' => Auth::getAuthUser()
+        $locationIdentified = $this->run(CheckLocationOperation::class, [
+            'user' => Auth::getAuthUser(),
+            'clientLocation' => $clientForExam['clientLocation'] ?? null,
+            'clientId' => $clientForExam['clientId'] ?? null,
+            'token' => $clientForExam['token'] ?? null
         ]);
 
-        if (!$clientLocation || strcmp($clientLocation, $examData['location']) !== 0) {
+        if (!$locationIdentified) {
             return $this->run(RespondWithJsonErrorJob::class, [
                 'message' => ExamSystem::CLIENT_NOT_IDENTIFIED,
                 'code' => 423

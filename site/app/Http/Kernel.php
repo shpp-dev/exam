@@ -47,11 +47,6 @@ class Kernel extends HttpKernel
         'api' => [
 //            'throttle:60,1',
             'bindings',
-        ],
-
-        'location' => [
-//            CheckLocation::class,
-            ClientIdentification::class
         ]
     ];
 
@@ -76,7 +71,8 @@ class Kernel extends HttpKernel
         'ptp.current' => CheckExamInProgress::class,
         'ptp.access' => CheckExamAccess::class,
         'ptp.admin' => Admin::class,
-        'ptp.eco' => Ecosystem::class
+        'ptp.eco' => Ecosystem::class,
+        'ptp.location' => CheckLocation::class
     ];
 
     /**

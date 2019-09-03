@@ -12,15 +12,23 @@ class RemoveEverCookieJob extends Job
     /**
      * @var string
      */
+    private $clientLocation;
+
+    /**
+     * @var string
+     */
     private $clientId;
 
-    public function __construct(string $clientId)
+    public function __construct(string $clientLocation, string $clientId)
     {
+        $this->clientLocation = $clientLocation;
         $this->clientId = $clientId;
     }
 
     public function handle()
     {
-        return EverCookie::where('cookie', $this->clientId)->delete();
+        return EverCookie::where('location', $this->clientLocation)
+            ->where('client', $this->clientId)
+            ->delete();
     }
 }

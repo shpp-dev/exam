@@ -16,6 +16,7 @@ class ExamSystem
 
     // statuses for user
     const EXAM_AVAILABLE = 'examAvailable';
+    const EXAM_TODAY = 'examToday';
     const EXAM_NOT_AVAILABLE = 'examNotAvailable';
     const EXAM_REGISTRATION_AVAILABLE = 'examRegistrationAvailable';
     const EXAM_PENDING = 'examPending';

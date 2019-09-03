@@ -10,6 +10,7 @@ use App\Domains\Auth\Jobs\UpdateEverCookieJob;
 use App\Domains\Http\Jobs\RespondWithJsonAndCookieJob;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 
 class EverCookieForClientFeature extends Feature
@@ -26,16 +27,23 @@ class EverCookieForClientFeature extends Feature
 
     public function handle(Request $request)
     {
+        $clientForExamData = json_decode($request->cookie('clientForExam'), true);
+
         switch ($this->action) {
             case 'save':
                 $this->run(UpdateEverCookieJob::class, [
-                    'newClientId' => $request->clientId,
-                    'oldClientId' => $request->cookie('clientId')
+                    'clientLocation' => $request->clientLocation,
+                    'clientId' => $request->clientId,
+                    'token' => $request->token,
                 ]);
                 return $this->run(RespondWithJsonAndCookieJob::class, [
                     'cookie' => [
-                        'name' => 'clientId',
-                        'value' => $request->clientId,
+                        'name' => 'clientForExam',
+                        'value' => json_encode([
+                            'clientId' => $request->clientId,
+                            'clientLocation' => $request->clientLocation,
+                            'token' => $request->token
+                        ]),
                         'expiration' => ExamSystem::FIVE_YEARS_IN_SECONDS,
                         'path' => '/',
                         'domain' => config('auth.domain')
@@ -43,7 +51,8 @@ class EverCookieForClientFeature extends Feature
                 ]);
             case 'remove':
                 $this->run(RemoveEverCookieJob::class, [
-                    'clientId' => $request->cookie('clientId')
+                    'clientLocation' => $clientForExamData['clientLocation'],
+                    'clientId' => $clientForExamData['clientId']
                 ]);
                 break;
             default:

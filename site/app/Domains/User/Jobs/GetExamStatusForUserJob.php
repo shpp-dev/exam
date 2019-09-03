@@ -19,9 +19,15 @@ class GetExamStatusForUserJob extends Job
      */
     private $user;
 
-    public function __construct(?User $user)
+    /**
+     * @var bool
+     */
+    private $locationIdentified;
+
+    public function __construct(?User $user, bool $locationIdentified)
     {
         $this->user = $user;
+        $this->locationIdentified = $locationIdentified;
     }
 
     public function handle()
@@ -47,7 +53,7 @@ class GetExamStatusForUserJob extends Job
         if ($today < $examDate) {
             return ExamSystem::EXAM_PENDING;
         } elseif ($today->equalTo($examDate) && !$activeSession && $today->notEqualTo($lastExamFinishDate)) {
-            return ExamSystem::EXAM_AVAILABLE;
+            return $this->locationIdentified ? ExamSystem::EXAM_AVAILABLE : ExamSystem::EXAM_TODAY;
         } elseif ($activeSession) {
             return ExamSystem::EXAM_PROGRESS;
         }

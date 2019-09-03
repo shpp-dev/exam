@@ -12,24 +12,42 @@ class UpdateEverCookieJob extends Job
     /**
      * @var string
      */
-    private $newClientId;
+    private $clientLocation;
 
     /**
-     * @var string|null
+     * @var string
      */
-    private $oldClientId;
+    private $clientId;
 
-    public function __construct(string $newClientId, ?string $oldClientId)
+    /**
+     * @var string
+     */
+    private $token;
+
+    public function __construct(string $clientLocation, string $clientId, string $token)
     {
-        $this->newClientId = $newClientId;
-        $this->oldClientId = $oldClientId;
+        $this->clientLocation = $clientLocation;
+        $this->clientId = $clientId;
+        $this->token = $token;
     }
 
     public function handle()
     {
-        return EverCookie::updateOrCreate(
-            ['cookie' => $this->oldClientId],
-            ['cookie' => $this->newClientId]
-        );
+        $everCookie = EverCookie::where('location', $this->clientLocation)
+            ->where('client', $this->clientId)
+            ->first();
+
+        if ($everCookie) {
+            $everCookie->token = $this->token;
+        } else {
+            $everCookie = new EverCookie();
+            $everCookie->location = $this->clientLocation;
+            $everCookie->client = $this->clientId;
+            $everCookie->token = $this->token;
+        }
+
+        $everCookie->save();
+
+        return $everCookie;
     }
 }

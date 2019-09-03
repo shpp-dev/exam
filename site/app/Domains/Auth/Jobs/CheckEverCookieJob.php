@@ -10,25 +10,34 @@ use Lucid\Foundation\Job;
 class CheckEverCookieJob extends Job
 {
     /**
-     * @var string|null
+     * @var string
+     */
+    private $clientLocation;
+
+    /**
+     * @var string
      */
     private $clientId;
 
-    private $identified = false;
+    /**
+     * @var string
+     */
+    private $token;
 
-    public function __construct(?string $clientId)
+    public function __construct(string $clientLocation, string $clientId, string $token)
     {
+        $this->clientLocation = $clientLocation;
         $this->clientId = $clientId;
+        $this->token = $token;
     }
 
     public function handle()
     {
-        if ($this->clientId) {
-            $everCookie = EverCookie::where('cookie', $this->clientId)->first();
+        $everCookie = EverCookie::where('location', $this->clientLocation)
+            ->where('client', $this->clientId)
+            ->where('token', $this->token)
+            ->first();
 
-            $this->identified = $everCookie !== null;
-        }
-
-        return $this->identified;
+        return $everCookie !== null;
     }
 }
