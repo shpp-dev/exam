@@ -37,6 +37,6 @@ class CreateProgrammingTasksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tasks');
+        Schema::dropIfExists('programming_tasks');
     }
 }

@@ -11,6 +11,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(TasksSeederRU::class);
+        switch (config('app.locale')) {
+            case 'ru':
+                $this->call(TasksSeederRU::class);
+                break;
+            case 'en':
+            case 'ua':
+                $this->call(TasksSeederUA::class);
+                break;
+        }
     }
 }
