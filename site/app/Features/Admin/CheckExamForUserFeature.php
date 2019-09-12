@@ -62,7 +62,7 @@ class CheckExamForUserFeature extends Feature
         $this->run(SendMailToUsersJob::class, [
             'emails' => [$email],
             'view' => $passed ? 'mails.exam-passed' : 'mails.exam-failed',
-            'subject' => 'Экзамен проверен' // todo use local
+            'subject' => __('email_subjects.examChecked')
         ]);
 
         Log::info('Exam was checked for user '.$session->user->id.'. Passed: '.$passed);

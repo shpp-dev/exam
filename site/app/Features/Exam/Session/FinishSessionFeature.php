@@ -43,7 +43,7 @@ class FinishSessionFeature extends Feature
         $this->run(SendMailToUsersJob::class, [
             'emails' => [$email],
             'view' => 'mails.exam-completed',
-            'subject' => 'Экзамен завершен' // todo use local
+            'subject' => __('email_subjects.examFinished')
         ]);
 
         Log::info('Exam session was finished for user '. $this->session->user->id);

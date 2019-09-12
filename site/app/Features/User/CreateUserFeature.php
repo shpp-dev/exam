@@ -28,7 +28,7 @@ class CreateUserFeature extends Feature
         $this->run(SendMailToUsersJob::class, [
             'emails' => $emails,
             'view' => 'mails.invite-to-exam-registration',
-            'subject' => 'Запись на экзамен' // todo use local
+            'subject' => __('email_subjects.registrationToExam')
         ]);
     }
 }

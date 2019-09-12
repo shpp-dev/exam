@@ -1,6 +1,6 @@
-<h4>На экзамен повторно записался пользователь</h4>
+<p>{{ __('email_messages.reRegistrationOnExam') }}</p>
 <b>Email: </b>{{ $email }}<br>
-<b>Дата экзамена: </b>{{ $datetime }}<br>
-<b>Локация: </b>{{ $location }}<br>
+<b>{{ __('email_messages.examDate') }}: </b>{{ $datetime }}<br>
+<b>{{ __('email_messages.examLocation') }}: </b>{{ $location }}<br>
 
-<p>Администрация calendly.com</p>
+<p>{{ __('email_messages.calendlyAdministration') }}</p>

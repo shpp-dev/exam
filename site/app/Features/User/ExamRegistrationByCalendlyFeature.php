@@ -61,12 +61,12 @@ class ExamRegistrationByCalendlyFeature extends Feature
         $this->run(SendMailToAdminsJob::class, [
             'view' => 'mails.uninvited-user',
             'data' => ['email' => $email, 'datetime' => $datetime],
-            'subject' => 'Неприглашенный пользователь записался на экзамен' // todo use local
+            'subject' => __('email_subjects.uninvitedUserForExam')
         ]);
 
         $this->run(SendMailToUsersJob::class, [
             'view' => 'mails.decline-registration-on-exam',
-            'subject' => 'Отмена регистрации на экзамен', // todo use local
+            'subject' => __('email_subjects.declineRegistrationOnExam'),
             'data' => ['name' => $name],
             'emails' => [$email]
         ]);
@@ -76,7 +76,7 @@ class ExamRegistrationByCalendlyFeature extends Feature
     {
         $this->run(SendMailToAdminsJob::class, [
             'view' => 'mails.re-registration-on-exam',
-            'subject' => 'Повторная регистрация на экзамен', // todo user local
+            'subject' => __('email_subjects.reRegistrationOnExam'),
             'data' => [
                 'email' => $email,
                 'datetime' => $datetime,

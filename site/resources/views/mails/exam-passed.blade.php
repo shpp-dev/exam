@@ -1,4 +1,4 @@
-<h3>Поздравляем!</h3>
-<p>Вы успешно прошли вступительное тестирование и теперь мы готовы пригласить вас на наше обучение.</p>
-<p>Следите за информацией в своем аккаунте.</p>
-С уважением, администрация школы.
+<p>{{ __('email_messages.congratulation') }}!</p>
+<p>{{ __('email_messages.examPassed.p1') }}</p>
+<p>{{ __('email_messages.examPassed.p2') }}</p>
+{{ __('email_messages.schoolAdministration') }}

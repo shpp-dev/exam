@@ -1,6 +1,6 @@
-<h4>На экзамен записался неприглашенный пользователь</h4>
-<b>Email: </b>{{ $email }}
-<b>Дата экзамена: </b>{{ $datetime }}<br>
+<p>{{ __('email_messages.strangerOnExam') }}</p>
+<b>Email: </b>{{ $email }}<br>
+<b>{{ __('email_messages.examDate') }}: </b>{{ $datetime }}
 
-<p>Нужно отменить его регистрацию <a href="https://calendly.com">здесь</a></p>
-Администрирование calendly.com
+<p>{{ __('email_messages.needExamRegistrationDecline') }} <a href="https://calendly.com">calendly.com</a></p>
+{{ __('email_messages.calendlyAdministration') }}
