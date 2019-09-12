@@ -11,9 +11,9 @@ trait CheckRetryExamAccessForUserTrait
 {
     public function checkRetryExamAccessForUser(User $user)
     {
-        $lastFailedExam = $user->lastFailedExamSession();
+        $lastFinishedExam = $user->lastFinishedExamSession();
 
-        if ($lastFailedExam && Carbon::now()->diffInDays(Carbon::parse($lastFailedExam->finished_at)) < config('ptp.retryTestingAfterDays')) {
+        if ($lastFinishedExam && Carbon::now()->diffInDays(Carbon::parse($lastFinishedExam->finished_at)) < config('ptp.retryTestingAfterDays')) {
             return false;
         }
 
