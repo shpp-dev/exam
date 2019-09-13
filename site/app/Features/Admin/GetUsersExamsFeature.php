@@ -24,16 +24,16 @@ class GetUsersExamsFeature extends Feature
     {
         switch ($this->status) {
             case 'all':
-                $sessions = ExamSession::all();
+                $sessions = ExamSession::whereNotNull('finished_at')->get();
                 break;
             case 'unchecked':
-                $sessions = ExamSession::where('passed', null)->get();
+                $sessions = ExamSession::where('passed', null)->whereNotNull('finished_at')->get();
                 break;
             case 'passed':
-                $sessions = ExamSession::where('passed', true)-> get();
+                $sessions = ExamSession::where('passed', true)->whereNotNull('finished_at')->get();
                 break;
             case 'failed':
-                $sessions = ExamSession::where('passed', false)->get();
+                $sessions = ExamSession::where('passed', false)->whereNotNull('finished_at')->get();
                 break;
             default:
                 return $this->run(RespondWithJsonErrorJob::class, [
