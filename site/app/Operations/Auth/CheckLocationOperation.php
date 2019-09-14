@@ -7,6 +7,7 @@ namespace App\Operations\Auth;
 use App\Domains\Auth\Jobs\CheckEverCookieJob;
 use App\Domains\User\Jobs\GetExamDataForUserJob;
 use App\User;
+use Carbon\Carbon;
 use Lucid\Foundation\Operation;
 
 class CheckLocationOperation extends Operation
@@ -30,22 +31,36 @@ class CheckLocationOperation extends Operation
             return false;
         }
 
-        $locationIsCorrect = $this->checkLocationForUser();
-        $clientIdentified = $this->clientIdentification();
-
-        return $locationIsCorrect && $clientIdentified;
-    }
-
-    private function checkLocationForUser()
-    {
         $examData = $this->run(GetExamDataForUserJob::class, [
             'user' => $this->user
         ]);
 
-        return strcmp($this->clientLocation, $examData['location']) === 0;
+        if (!$this->checkExamTodayForUser($examData['datetime'])) {
+            return false;
+        }
+
+        if (!$this->checkLocationForUser($examData['location'])) {
+            return false;
+        }
+
+        if (!$this->checkClientIdentification()) {
+            return false;
+        }
+
+        return true;
     }
 
-    private function clientIdentification()
+    private function checkLocationForUser(?string $location)
+    {
+        return strcmp($this->clientLocation, $location) === 0;
+    }
+
+    private function checkExamTodayForUser(?Carbon $examDate)
+    {
+        return $examDate && Carbon::now()->startOfDay()->equalTo($examDate->startOfDay());
+    }
+
+    private function checkClientIdentification()
     {
         return $this->run(CheckEverCookieJob::class, [
             'clientLocation' => $this->clientLocation,

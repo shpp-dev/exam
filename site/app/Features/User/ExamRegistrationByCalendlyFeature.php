@@ -10,12 +10,15 @@ use App\Domains\User\Jobs\ClearExamDataForUserJob;
 use App\Domains\User\Jobs\GetExamDataForUserJob;
 use App\Domains\User\Jobs\GetUserByEmailJob;
 use App\Domains\User\Jobs\SetExamDataForUserJob;
+use App\Domains\User\Traits\CheckRetryExamAccessForUserTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 
 class ExamRegistrationByCalendlyFeature extends Feature
 {
+    use CheckRetryExamAccessForUserTrait;
+
     public function handle(Request $request)
     {
         $data = json_decode($request->getContent(), true);
@@ -32,7 +35,7 @@ class ExamRegistrationByCalendlyFeature extends Feature
 
         $user = $this->run(GetUserByEmailJob::class, ['email' => $inviteeEmail]);
 
-        if (!$user) {
+        if (!$user || !$this->checkRetryExamAccessForUser($user)) {
             $this->sendMailsAboutDeclineRegistration($inviteeEmail, $examDatetime, $name);
             return;
         }
