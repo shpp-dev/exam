@@ -8,6 +8,7 @@ use App\Data\ExamSystem;
 use App\Domains\Auth\Auth;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use App\Domains\Http\Jobs\RespondWithJsonJob;
+use App\Domains\User\Jobs\GetExamRetryFromDateJob;
 use App\Domains\User\Jobs\GetUserByEmailJob;
 use App\Domains\User\Jobs\GetExamStatusForUserJob;
 use App\Operations\Auth\CheckLocationOperation;
@@ -37,6 +38,9 @@ class GetExamStatusForUserFeature extends Feature
         ]);
 
         $examData['location'] = $examData['status'] === ExamSystem::EXAM_TODAY ? $user->exam_location : null;
+        $examData['examRetryFrom'] = $examData['status'] === ExamSystem::EXAM_FAILED
+            ? $this->run(GetExamRetryFromDateJob::class, ['user' => $user])
+            : null;
 
         return $this->run(RespondWithJsonJob::class, [
             'content' => $examData
