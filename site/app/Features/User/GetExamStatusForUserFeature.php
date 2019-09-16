@@ -38,7 +38,7 @@ class GetExamStatusForUserFeature extends Feature
         ]);
 
         $examData['location'] = $examData['status'] === ExamSystem::EXAM_TODAY ? $user->exam_location : null;
-        $examData['examRetryFrom'] = $examData['status'] === ExamSystem::EXAM_FAILED
+        $examData['retryFrom'] = $examData['status'] === ExamSystem::EXAM_FAILED
             ? $this->run(GetExamRetryFromDateJob::class, ['user' => $user])
             : null;
 
