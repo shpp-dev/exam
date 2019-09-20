@@ -11,6 +11,7 @@ use App\Domains\User\Jobs\GetExamDataForUserJob;
 use App\Domains\User\Jobs\GetUserByEmailJob;
 use App\Domains\User\Jobs\SetExamDataForUserJob;
 use App\Domains\User\Traits\CheckRetryExamAccessForUserTrait;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
@@ -40,14 +41,16 @@ class ExamRegistrationByCalendlyFeature extends Feature
             return;
         }
 
-        if ($canceled) {
-            $this->run(ClearExamDataForUserJob::class, [
-                'user' => $user
-            ]);
-        } else {
-            $oldExamData = $this->run(GetExamDataForUserJob::class, ['user' => $user]);
+        $examData = $this->run(GetExamDataForUserJob::class, ['user' => $user]);
 
-            if ($oldExamData['datetime']) {
+        if ($canceled) {
+            if (Carbon::parse($examDatetime)->equalTo($examData['datetime'])) {
+                $this->run(ClearExamDataForUserJob::class, [
+                    'user' => $user
+                ]);
+            }
+        } else {
+            if ($examData['datetime']) {
                 $this->sendMailAboutReRegistration($inviteeEmail, $examDatetime, $location);
             }
 
