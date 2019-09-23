@@ -1,1 +1,1 @@
-{{ __('email_messages.examFinishedAndNeedsChecking', ['examAdminUrl' => config('examAdminFrontUrl')]) }}
+{{ __('email_messages.examFinishedAndNeedsChecking', ['examAdminUrl' => config('ptp.examAdminFrontUrl')]) }}
