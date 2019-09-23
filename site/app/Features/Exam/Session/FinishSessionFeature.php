@@ -5,6 +5,7 @@ namespace App\Features\Exam\Session;
 use App\Domains\Auth\Auth;
 use App\Domains\Exam\Session\Jobs\FinishSessionJob;
 use App\Domains\Http\Jobs\SendHttpPostRequestJob;
+use App\Domains\Mail\Jobs\SendMailToAdminsJob;
 use App\Domains\Mail\Jobs\SendMailToUsersJob;
 use App\ExamSession;
 use Illuminate\Support\Facades\Log;
@@ -44,6 +45,11 @@ class FinishSessionFeature extends Feature
             'emails' => [$email],
             'view' => 'mails.exam-completed',
             'subject' => __('email_subjects.examFinished')
+        ]);
+
+        $this->run(SendMailToAdminsJob::class, [
+            'subject' => __('email_subjects.examFinished'),
+            'view' => 'mails.admin.exam-finished'
         ]);
 
         Log::info('Exam session was finished for user '. $this->session->user->id);

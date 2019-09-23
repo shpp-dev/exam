@@ -41,6 +41,8 @@ return [
 
     'strangerOnExam' => 'На экзамен записался неприглашенный пользователь.',
 
-    'needExamRegistrationDecline' => 'Нужно отменить его регистрацию на'
+    'needExamRegistrationDecline' => 'Нужно отменить его регистрацию на',
+
+    'examFinishedAndNeedsChecking' => 'Завершен очередной экзамен. Нужно проверить на :examAdminUrl'
 ];
 

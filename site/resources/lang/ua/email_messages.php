@@ -41,5 +41,7 @@ return [
 
     'strangerOnExam' => 'На іспит записався незапрошений користувач.',
 
-    'needExamRegistrationDecline' => 'Потрібно скасувати його реєстрацію на'
+    'needExamRegistrationDecline' => 'Потрібно скасувати його реєстрацію на',
+
+    'examFinishedAndNeedsChecking' => 'Завершено черговий іспит. Потрібно перевірити на :examAdminUrl'
 ];
