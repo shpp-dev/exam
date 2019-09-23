@@ -4,7 +4,7 @@ return [
     'accountFrontUrl' => env('ACCOUNT_FRONT_URL'),
     'accountBackUrl' => env('ACCOUNT_BACK_URL'),
     'examFrontUrl' => env('EXAM_FRONT_URL'),
-    'examAdminFrontUrl' => 'https://http://admin.exam.scs.if.shpp.me/', //env('EXAM_ADMIN_FRONT_URL'),
+    'examAdminFrontUrl' => env('EXAM_ADMIN_FRONT_URL'),
     'programmingExam' => env('PROGRAMMING_EXAM_ON'),
     'englishExam' => env('ENGLISH_EXAM_ON'),
     'typeSpeedExam' => env('TYPE_SPEED_EXAM_ON'),
