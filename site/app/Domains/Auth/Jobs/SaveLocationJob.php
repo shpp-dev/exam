@@ -20,18 +20,6 @@ class SaveLocationJob extends Job
 
     public function handle()
     {
-        $location = Location::where('name', $this->name)->first();
-
-        if ($location) {
-            $location->address = $this->address;
-        } else {
-            $location = new Location();
-            $location->name = $this->name;
-            $location->address = $this->address;
-        }
-
-        $location->save();
-
-        return $location;
+        return Location::updateOrCreate(['name' => $this->name], ['address' => $this->address]);
     }
 }
