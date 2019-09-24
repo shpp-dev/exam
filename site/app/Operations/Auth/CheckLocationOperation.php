@@ -39,7 +39,7 @@ class CheckLocationOperation extends Operation
             return false;
         }
 
-        if (!$this->checkLocationForUser($examData['location'])) {
+        if (!$this->checkLocationForUser($examData['locationName'])) {
             return false;
         }
 
