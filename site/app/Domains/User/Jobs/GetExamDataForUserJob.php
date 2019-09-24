@@ -27,8 +27,8 @@ class GetExamDataForUserJob extends Job
 
         return [
             'datetime' => $this->user->exam_datetime ? Carbon::parse($this->user->exam_datetime) : null,
-            'locationAddress' => $location->address,
-            'locationName' => $location->name
+            'locationAddress' => $this->user->exam_location,
+            'locationName' => $location ? $location->name : null
         ];
     }
 }
