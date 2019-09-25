@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Data\ExamSystem;
 use App\ExamSession;
 use App\Features\Exam\Session\FinishExamFeature;
-use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Lucid\Foundation\ServesFeaturesTrait;
 
@@ -18,14 +17,14 @@ class FinishExamSession extends Command
      *
      * @var string
      */
-    protected $signature = 'exam:finish';
+    protected $signature = 'exam:finish-session';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Forced finish exam session after deadline';
+    protected $description = 'Command description';
 
     /**
      * Create a new command instance.
@@ -40,30 +39,27 @@ class FinishExamSession extends Command
     /**
      * Execute the console command.
      *
-     * @return void
+     * @return mixed
      */
     public function handle()
     {
         $notClosedSessions = ExamSession::where('finished_at', null)->get();
 
         foreach ($notClosedSessions as $session) {
-            // check programming exam duration
-            if ($session->programmingStatus == ExamSystem::IN_PROGRESS_STATUS
-                && Carbon::parse($session->programmingStartedAt) < Carbon::now()->subMinutes(config('ptp.programmingExamDurationMins'))) {
-                $this->serve(FinishExamFeature::class, [
-                    'examName' => ExamSystem::PROGRAMMING_EXAM_NAME,
-                    'session' => $session
-                ]);
-            }
+            $this->serve(FinishExamFeature::class, [
+                'examName' => ExamSystem::PROGRAMMING_EXAM_NAME,
+                'session' => $session
+            ]);
 
-            // check english exam duration
-            if ($session->englishStatus == ExamSystem::IN_PROGRESS_STATUS
-                && Carbon::parse($session->englishStartedAt) < Carbon::now()->subMinutes(config('ptp.englishExamDurationMins'))) {
-                $this->serve(FinishExamFeature::class, [
-                    'examName' => ExamSystem::ENGLISH_EXAM_NAME,
-                    'session' => $session
-                ]);
-            }
+            $this->serve(FinishExamFeature::class, [
+                'examName' => ExamSystem::ENGLISH_EXAM_NAME,
+                'session' => $session
+            ]);
+
+            $this->serve(FinishExamFeature::class, [
+                'examName' => ExamSystem::TYPE_SPEED_EXAM_NAME,
+                'session' => $session
+            ]);
         }
     }
 }
