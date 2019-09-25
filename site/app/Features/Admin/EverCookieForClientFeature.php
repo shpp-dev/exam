@@ -10,6 +10,7 @@ use App\Domains\Auth\Jobs\SaveLocationJob;
 use App\Domains\Auth\Jobs\UpdateEverCookieJob;
 use App\Domains\Http\Jobs\RespondWithJsonAndCookieJob;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Lucid\Foundation\Feature;
 
@@ -55,7 +56,7 @@ class EverCookieForClientFeature extends Feature
                             'clientLocation' => $locationId,
                             'token' => $token
                         ]),
-                        'expiration' => ExamSystem::FIVE_YEARS_IN_SECONDS,
+                        'expiration' => Carbon::now()->addSecond(ExamSystem::FIVE_YEARS_IN_SECONDS)->timestamp,
                         'path' => '/',
                         'domain' => config('auth.domain')
                     ]
