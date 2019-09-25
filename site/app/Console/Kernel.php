@@ -28,9 +28,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
          $schedule->command('exam:finish')->everyMinute();
-         $schedule->command('exam:finish-session')->everyFiveMinutes();
-         $schedule->command('backup:clean')->daily()->at('01:00');
-         $schedule->command('backup:run')->daily()->at('02:00');
+         $schedule->command('exam:finish-session')->dailyAt('01:00');
+         $schedule->command('backup:clean')->dailyAt('01:00');
+         $schedule->command('backup:run')->dailyAt('02:00');
     }
 
     /**
