@@ -39,7 +39,8 @@ class GetPreparedUsersResultsListJob extends Job
                 'passed' => $session->passed,
                 'programming' => [],
                 'english' => [],
-                'typeSpeed' => []
+                'typeSpeed' => [],
+                'feedback' => $session->feedback
             ];
 
             $programmingResults = $session->programmingResults()->get();

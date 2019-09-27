@@ -33,6 +33,8 @@ Route::group(['middleware' => ['ptp.auth', 'ptp.current', 'ptp.location']], func
     Route::post('exam/type/speed', 'TypeSpeedController@saveResult')->name('typeSpeed');
     Route::get('exam/type/text', 'TypeSpeedController@getRandomText')->name('randomText');
 
+    Route::post('exam/feedback', 'ExamSessionController@saveFeedback');
+
 //    Route::post('exam/finish', 'ExamSessionController@finish')->name('finish');
 });
 

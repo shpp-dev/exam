@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Foundation\BaseModel;
+use Carbon\Carbon;
 
 class User extends BaseModel
 {
@@ -41,6 +42,14 @@ class User extends BaseModel
             ->whereNotNull('finished_at')
             ->where('passed', 0)
             ->latest('finished_at')
+            ->first();
+    }
+
+    public function sessionForSpecificDate(Carbon $date)
+    {
+        return $this->examSessions()
+            ->where('created_at', '>', $date->copy()->startOfDay())
+            ->where('created_at', '<', $date->copy()->endOfDay())
             ->first();
     }
 }

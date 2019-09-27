@@ -40,7 +40,12 @@ class GetExamStatusForUserJob extends Job
             return ExamSystem::EXAM_REGISTRATION_AVAILABLE;
         }
 
+        if ($this->user->exam_datetime === null) {
+            return ExamSystem::EXAM_FAILED;
+        }
+
         $examDate = Carbon::parse($this->user->exam_datetime)->startOfDay();
+
         $today = Carbon::now()->startOfDay();
         $activeSession = $this->user->activeSession();
         $lastFinishedExamSession = $this->user->lastFinishedExamSession();
@@ -52,10 +57,18 @@ class GetExamStatusForUserJob extends Job
 
         if ($today < $examDate) {
             return ExamSystem::EXAM_PENDING;
-        } elseif ($today->equalTo($examDate) && !$activeSession && $today->notEqualTo($lastExamFinishDate)) {
+        }
+
+        if ($today->equalTo($examDate) && !$activeSession && $today->notEqualTo($lastExamFinishDate)) {
             return $this->locationIdentified ? ExamSystem::EXAM_AVAILABLE : ExamSystem::EXAM_TODAY;
-        } elseif ($activeSession) {
+        }
+
+        if ($activeSession) {
             return ExamSystem::EXAM_PROGRESS;
+        }
+
+        if ($today > $examDate && $examDate->notEqualTo($lastExamFinishDate)) {
+            return ExamSystem::EXAM_FAILED;
         }
 
         if ($lastFinishedExamSession->passed === null) {
