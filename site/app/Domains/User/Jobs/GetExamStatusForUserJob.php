@@ -52,7 +52,7 @@ class GetExamStatusForUserJob extends Job
         $lastExamFinishDate = null;
 
         if ($lastFinishedExamSession) {
-            $lastExamFinishDate = Carbon::parse($lastFinishedExamSession->finished_at)->startOfDay();
+            $lastExamFinishDate = Carbon::parse($lastFinishedExamSession->created_at)->startOfDay();
         }
 
         if ($today < $examDate) {

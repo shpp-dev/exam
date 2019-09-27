@@ -23,8 +23,9 @@ class GetExamRetryFromDateJob extends Job
     public function handle()
     {
         $lastFinishedExamSession = $this->user->lastFinishedExamSession();
+        $examDate = $lastFinishedExamSession ? $lastFinishedExamSession->created_at : $this->user->exam_datetime;
 
-        return Carbon::parse($lastFinishedExamSession->finished_at)
+        return Carbon::parse($examDate)
             ->addDays(config('ptp.retryTestingAfterDays'))
             ->toDateString();
     }
