@@ -18,11 +18,13 @@ class CreateUserFeature extends Feature
     public function handle(Request $request)
     {
         $data = json_decode($request->getContent(), true);
-        $emails = $data['emails'];
+        $users = $data['users'];
+        $emails = [];
 
-        foreach ($emails as $email) {
-            $user = $this->run(CreateUserJob::class, ['email' => $email]);
+        foreach ($users as $user) {
+            $user = $this->run(CreateUserJob::class, ['accountId' => $user['accountId'], 'email' => $user['email']]);
             $this->run(ClearExamDataForUserJob::class, ['user' => $user]);
+            $emails[] = $user['email'];
         }
 
         $this->run(SendMailToUsersJob::class, [

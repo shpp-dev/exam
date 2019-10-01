@@ -12,16 +12,23 @@ use Lucid\Foundation\Job;
 class CreateUserJob extends Job
 {
     /**
-     * @var array
+     * @var int
+     */
+    private $accountId;
+
+    /**
+     * @var string
      */
     private $email;
 
     /**
      * SendFinishExamMailToStudentJob constructor.
+     * @param int $accountId
      * @param string $email
      */
-    public function __construct(string $email)
+    public function __construct(int $accountId, string $email)
     {
+        $this->accountId = $accountId;
         $this->email = $email;
     }
 
@@ -29,6 +36,7 @@ class CreateUserJob extends Job
     {
         if (!$user = User::where('email', $this->email)->first()) {
             $user = new User();
+            $user->account_id = $this->accountId;
             $user->email = $this->email;
             $user->save();
         }
