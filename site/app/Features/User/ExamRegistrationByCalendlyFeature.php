@@ -44,7 +44,7 @@ class ExamRegistrationByCalendlyFeature extends Feature
         $examData = $this->run(GetExamDataForUserJob::class, ['user' => $user]);
 
         if ($canceled) {
-            if (Carbon::parse($examDatetime)->equalTo($examData['datetime'])) {
+            if (Carbon::createFromTimeString($examDatetime)->equalTo($examData['datetime'])) {
                 $this->run(ClearExamDataForUserJob::class, [
                     'user' => $user
                 ]);
