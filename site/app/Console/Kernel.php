@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ClearExamRegistration;
 use App\Console\Commands\FinishExam;
 use App\Console\Commands\FinishExamSession;
 use Illuminate\Console\Scheduling\Schedule;
@@ -16,7 +17,8 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         FinishExam::class,
-        FinishExamSession::class
+        FinishExamSession::class,
+        ClearExamRegistration::class
     ];
 
     /**
@@ -29,6 +31,7 @@ class Kernel extends ConsoleKernel
     {
          $schedule->command('exam:finish')->everyMinute();
          $schedule->command('exam:finish-session')->dailyAt('01:00');
+         $schedule->command('exam:registration-clear')->dailyAt('01:00');
          $schedule->command('backup:clean')->dailyAt('01:00');
          $schedule->command('backup:run')->dailyAt('02:00');
     }

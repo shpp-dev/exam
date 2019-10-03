@@ -20,7 +20,9 @@ class GetUsersWhoMissedExamAndAllowedToRegisterJob extends Job
             $examDate = Carbon::parse($user->exam_datetime);
             $session = $user->sessionForSpecificDate($examDate);
 
-            if (!$session && Carbon::now()->greaterThanOrEqualTo($examDate->addDays(config('ptp.retryTestingAfterDays')))) {
+            if (!$session && Carbon::now()->startOfDay()
+                    ->greaterThanOrEqualTo($examDate->startOfDay()->addDays(config('ptp.retryTestingAfterDays')))) {
+
                 $usersWhoMissedExamAndAllowedToRegister[] = $user;
             }
         }
