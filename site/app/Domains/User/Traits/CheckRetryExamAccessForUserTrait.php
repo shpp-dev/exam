@@ -13,7 +13,10 @@ trait CheckRetryExamAccessForUserTrait
     {
         $lastFinishedExam = $user->lastFinishedExamSession();
 
-        if ($lastFinishedExam && Carbon::now()->diffInDays(Carbon::parse($lastFinishedExam->finished_at)) < config('ptp.retryTestingAfterDays')) {
+        if ($lastFinishedExam && Carbon::now()->startOfDay()
+                ->diffInDays(Carbon::parse($lastFinishedExam->finished_at)->startOfDay())
+            < config('ptp.retryTestingAfterDays')) {
+
             return false;
         }
 
