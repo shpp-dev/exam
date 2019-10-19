@@ -27,25 +27,25 @@ class CheckLocationOperation extends Operation
 
     public function handle()
     {
-        if (!$this->user || !$this->clientLocation || !$this->clientId || !$this->token) {
-            return false;
-        }
-
-        $examData = $this->run(GetExamDataForUserJob::class, [
-            'user' => $this->user
-        ]);
-
-        if (!$this->checkExamTodayForUser($examData['datetime'])) {
-            return false;
-        }
-
-        if (!$this->checkLocationForUser($examData['locationName'])) {
-            return false;
-        }
-
-        if (!$this->checkClientIdentification()) {
-            return false;
-        }
+//        if (!$this->user || !$this->clientLocation || !$this->clientId || !$this->token) {
+//            return false;
+//        }
+//
+//        $examData = $this->run(GetExamDataForUserJob::class, [
+//            'user' => $this->user
+//        ]);
+//
+//        if (!$this->checkExamTodayForUser($examData['datetime'])) {
+//            return false;
+//        }
+//
+//        if (!$this->checkLocationForUser($examData['locationName'])) {
+//            return false;
+//        }
+//
+//        if (!$this->checkClientIdentification()) {
+//            return false;
+//        }
 
         return true;
     }

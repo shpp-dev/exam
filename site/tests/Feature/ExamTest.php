@@ -11,6 +11,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Facades\Storage;
 use TasksSeederRU;
 use TasksSeederTest;
+use TasksSeederUA;
 use Tests\TestCase;
 
 class ExamTest extends TestCase
