@@ -22,5 +22,6 @@ class DisableCheckingLocationForUserJob extends Job
     public function handle()
     {
         $this->user->check_location = false;
+        $this->user->save();
     }
 }
