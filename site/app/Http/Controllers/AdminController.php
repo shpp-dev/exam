@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Features\Admin\DisableCheckingLocationFeature;
 use App\Features\Admin\GetUsersExamsFeature;
 use App\Features\Admin\EverCookieForClientFeature;
 use App\Features\Exam\CheckExamForUserFeature;
@@ -22,5 +23,10 @@ class AdminController extends Controller
     public function everCookieForClient($action)
     {
         return $this->serve(EverCookieForClientFeature::class, ['action' => $action]);
+    }
+
+    public function disableCheckingLocation()
+    {
+        return $this->serve(DisableCheckingLocationFeature::class);
     }
 }

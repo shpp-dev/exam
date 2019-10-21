@@ -42,6 +42,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['ptp.admin']], function() {
     Route::get('list/{status}', 'AdminController@getUsersExams');
     Route::post('check', 'AdminController@checkExamForUser');
     Route::post('evercookie/{action}', 'AdminController@everCookieForClient');
+    Route::post('location/disable', 'AdminController@disableCheckingLocation');
 });
 
 Route::group(['middleware' => ['ptp.eco']], function() {
