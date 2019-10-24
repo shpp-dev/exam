@@ -27,12 +27,12 @@ class CheckLocationOperation extends Operation
 
     public function handle()
     {
-        if (!$this->user || !$this->clientLocation || !$this->clientId || !$this->token) {
-            return false;
+        if ($this->user && !$this->user->check_location) {
+            return true;
         }
 
-        if (!$this->user->check_location) {
-            return true;
+        if (!$this->user || !$this->clientLocation || !$this->clientId || !$this->token) {
+            return false;
         }
 
         $examData = $this->run(GetExamDataForUserJob::class, [
