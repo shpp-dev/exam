@@ -51,7 +51,7 @@ class ExamRegistrationByCalendlyFeature extends Feature
             }
         } else {
             if ($examData['datetime']) {
-                $this->sendMailAboutReRegistration($inviteeEmail, $examDatetime, $location);
+                $this->sendMailAboutReRegistration($inviteeEmail, $location, $examDatetime, $examData['datetime']);
             }
 
             $this->run(SetExamDataForUserJob::class, [
@@ -78,14 +78,15 @@ class ExamRegistrationByCalendlyFeature extends Feature
         ]);
     }
 
-    private function sendMailAboutReRegistration(string $email, string $datetime, string $location)
+    private function sendMailAboutReRegistration(string $email, string $location, string $newExamDatetime, ?Carbon $oldExamDatetime)
     {
         $this->run(SendMailToAdminsJob::class, [
             'view' => 'mails.re-registration-on-exam',
             'subject' => __('email_subjects.reRegistrationOnExam'),
             'data' => [
                 'email' => $email,
-                'datetime' => $datetime,
+                'newDatetime' => Carbon::parse($newExamDatetime)->toDateTimeString(),
+                'oldDatetime' => $oldExamDatetime ? $oldExamDatetime->toDateTimeString() : null,
                 'location' => $location
             ]
         ]);
