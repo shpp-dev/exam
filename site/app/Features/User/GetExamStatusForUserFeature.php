@@ -32,15 +32,24 @@ class GetExamStatusForUserFeature extends Feature
             'token' => $requestData['clientForExam']['token'] ?? null
         ]);
 
-        $examData['status'] = $this->run(GetExamStatusForUserJob::class, [
-            'user' => $user,
-            'locationIdentified' => $locationIdentified
-        ]);
+        $examData = [
+            'status' => $this->run(GetExamStatusForUserJob::class, [
+                'user' => $user,
+                'locationIdentified' => $locationIdentified
+            ]),
+            'location' => null,
+            'datetime' => null,
+            'retryFrom' => null
+        ];
 
-        $examData['location'] = $examData['status'] === ExamSystem::EXAM_TODAY ? $user->exam_location : null;
-        $examData['retryFrom'] = $examData['status'] === ExamSystem::EXAM_FAILED
-            ? $this->run(GetExamRetryFromDateJob::class, ['user' => $user])
-            : null;
+        if ($examData['status'] === ExamSystem::EXAM_TODAY || $examData['status'] === ExamSystem::EXAM_PENDING) {
+            $examData['location'] = $user->exam_location;
+            $examData['datetime'] = $user->exam_datetime;
+        }
+
+        if ($examData['status'] === ExamSystem::EXAM_FAILED) {
+            $examData['retryFrom'] = $this->run(GetExamRetryFromDateJob::class, ['user' => $user]);
+        }
 
         return $this->run(RespondWithJsonJob::class, [
             'content' => $examData
