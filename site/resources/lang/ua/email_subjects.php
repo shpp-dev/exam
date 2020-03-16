@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'examChecked' => 'Іспит перевірений',
+    'examChecked' => 'Іспит перевірено',
     'examFinished' => 'Іспит завершено',
     'registrationToExam' => 'Запис на іспит',
     'uninvitedUserForExam' => 'Незапрошений користувач записався на іспит',

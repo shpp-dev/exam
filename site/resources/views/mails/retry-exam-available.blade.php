@@ -1,5 +1,15 @@
-<p>{{ __('email_messages.hello') }}!</p>
-<p>{{ __('email_messages.retryExamAvailable', ['calendlyUrl' => config('ptp.calendlyUrl')]) }}</p>
-<p>{{ __('email_messages.schoolAdministration') }}</p>
+@extends('layouts.email')
+@section('title')
+    @lang('email_subjects.retryExamAvailable')
+@endsection
+@section('subtitle')
+    @lang('email_messages.hello')!
+@endsection
+@section('content')
+    <p>@lang('email_messages.retryExamAvailable', ['calendlyUrl' => config('ptp.calendlyUrl')])</p>
+@endsection
+
+
+
 
 
