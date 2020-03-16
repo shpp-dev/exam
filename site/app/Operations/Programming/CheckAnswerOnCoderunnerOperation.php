@@ -4,14 +4,14 @@
 namespace App\Operations;
 
 
-use App\Domains\Exam\Programming\Jobs\CreateProgrammingResultJob;
+use App\Domains\Exam\Programming\Jobs\CreateOrUpdateProgrammingResultJob;
 use App\Domains\Http\Jobs\SubmitCodeToCoderunnerJob;
 use App\ProgrammingTask;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Operation;
 
-class SaveProgrammingAnswerOperation extends Operation implements ShouldQueue
+class CheckAnswerOnCoderunnerOperation extends Operation implements ShouldQueue
 {
     /**
      * @var int
@@ -77,7 +77,7 @@ class SaveProgrammingAnswerOperation extends Operation implements ShouldQueue
             'userFunction' => $this->userFunction
         ]);
 
-        $this->run(CreateProgrammingResultJob::class, [
+        $this->run(CreateOrUpdateProgrammingResultJob::class, [
             'sessionId' => $this->sessionId,
             'task' => $this->task,
             'result' => [

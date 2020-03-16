@@ -7,7 +7,7 @@ use App\ProgrammingResult;
 use App\ProgrammingTask;
 use Lucid\Foundation\Job;
 
-class CreateProgrammingResultJob extends Job
+class CreateOrUpdateProgrammingResultJob extends Job
 {
     /**
      * @var int
@@ -39,11 +39,18 @@ class CreateProgrammingResultJob extends Job
 
     public function handle()
     {
-        $examResult = new ProgrammingResult();
-        $examResult->sessionId = $this->sessionId;
-        $examResult->taskNumber = $this->task->number;
-        $examResult->taskId = $this->task->id;
-        $examResult->result = json_encode($this->result);
-        $examResult->save();
+        $programmingResult = ProgrammingResult::where('session_id', $this->sessionId)
+            ->where('task_number', $this->task->number)
+            ->first();
+
+        if (!$programmingResult) {
+            $programmingResult = new ProgrammingResult();
+        }
+
+        $programmingResult->sessionId = $this->sessionId;
+        $programmingResult->taskNumber = $this->task->number;
+        $programmingResult->taskId = $this->task->id;
+        $programmingResult->result = json_encode($this->result);
+        $programmingResult->save();
     }
 }

@@ -4,7 +4,7 @@ namespace App\Features\Exam\Programming;
 
 use App\Data\ExamSystem;
 use App\Domains\Auth\Auth;
-use App\Domains\Exam\Programming\Jobs\CreateProgrammingResultJob;
+use App\Domains\Exam\Programming\Jobs\CreateOrUpdateProgrammingResultJob;
 use App\Domains\Exam\Session\Jobs\CheckFinishedExamJob;
 use App\Domains\Helpers\Traits\JsonTrait;
 use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
@@ -12,7 +12,7 @@ use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Domains\Http\Jobs\SendTestCodeToCoderunnerJob;
 use App\Domains\Http\Jobs\SubmitCodeToCoderunnerJob;
 use App\Features\Exam\Session\FinishExamFeature;
-use App\Operations\SaveProgrammingAnswerOperation;
+use App\Operations\CheckAnswerOnCoderunnerOperation;
 use App\ProgrammingTask;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -68,7 +68,11 @@ class SaveProgrammingAnswerFeature extends Feature
                 break;
         }
 
-        $result = [];
+        $result = [
+            'error' => false,
+            'resultCases' => []
+        ];
+
         switch ($action) {
             case 'test':
                 $result = $this->run(SendTestCodeToCoderunnerJob::class, [
@@ -80,7 +84,16 @@ class SaveProgrammingAnswerFeature extends Feature
                 Log::info('User '.$user->id.' sent for testing solution for task '.$task->id);
                 break;
             case 'submit':
-                $this->run(SaveProgrammingAnswerOperation::class, [
+                $this->run(CreateOrUpdateProgrammingResultJob::class, [
+                    'sessionId' => $session->id,
+                    'task' => $task,
+                    'result' => [
+                        'userFunction' => $userFunction,
+                        'resultCases' => []
+                    ]
+                ]);
+
+                $this->run(CheckAnswerOnCoderunnerOperation::class, [
                     'userId' => $user->id,
                     'sessionId' => $session->id,
                     'task' => $task,
@@ -88,11 +101,6 @@ class SaveProgrammingAnswerFeature extends Feature
                     'lang' => $lang,
                     'userFunction' => $userFunction
                 ]);
-
-                $result = [
-                    'error' => false,
-                    'resultCases' => []
-                ];
 
                 break;
         }
