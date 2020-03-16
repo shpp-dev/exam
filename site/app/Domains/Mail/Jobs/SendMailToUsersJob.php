@@ -3,10 +3,11 @@
 namespace App\Domains\Mail\Jobs;
 
 
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Mail;
 use Lucid\Foundation\Job;
 
-class SendMailToUsersJob extends Job
+class SendMailToUsersJob extends Job implements ShouldQueue
 {
     /**
      * @var array

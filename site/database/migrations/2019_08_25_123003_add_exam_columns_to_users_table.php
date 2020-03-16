@@ -14,8 +14,8 @@ class AddExamColumnsToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dateTime('exam_datetime')->nullable();
-            $table->string('exam_location')->nullable();
+            $table->dateTime('exam_datetime')->after('id')->nullable();
+            $table->string('exam_location')->after('exam_datetime')->nullable();
         });
     }
 

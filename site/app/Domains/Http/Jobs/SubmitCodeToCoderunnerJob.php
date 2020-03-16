@@ -4,8 +4,10 @@ namespace App\Domains\Http\Jobs;
 use App\Domains\Helpers\Traits\JsonTrait;
 use App\Domains\Http\Traits\SendRequestTrait;
 use App\ProgrammingTask;
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
+use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Job;
 
 class SubmitCodeToCoderunnerJob extends Job
@@ -65,33 +67,31 @@ class SubmitCodeToCoderunnerJob extends Job
             'testCases' => $testCases
         ];
 
-        $response = $this->sendCodeToCoderunner($this->coderunnerUrl, $testPack);
+        try {
+            $response = $this->sendCodeToCoderunner($this->coderunnerUrl, $testPack);
 
-        if ($response == '' || property_exists(json_decode($response), 'error')) {
-            return [
-                'error' => true,
-                'message' => 'Наш кодераннер отключен. :( Пожалуйста, свяжитесь с администрацией.',
-                'code' => 503
-            ];
-        }
-        $answers = explode('\ ', $this->task->answers);
-        $stdOut = json_decode($response)->response->stdout;
-        $resultCases = [];
-
-        for ($i = 0; $i < count($answers); $i++) {
-            // лечение отсутствия реакции страницы в случае отправки пустого массива при ретурна указателя
-            if (count($stdOut) == 0) {
-                $resultCases[] = false;
-            } else {
-                $resultCases[] = $answers[$i] == trim(preg_replace('/\s\s+/', ' ', $stdOut[$i]));
+            if ($response == '' || property_exists(json_decode($response), 'error')) {
+                Log::error('Coderunner not responding');
+                return [];
             }
+
+            $answers = explode('\ ', $this->task->answers);
+            $stdOut = json_decode($response)->response->stdout;
+            $resultCases = [];
+
+            for ($i = 0; $i < count($answers); $i++) {
+                // лечение отсутствия реакции страницы в случае отправки пустого массива при ретурна указателя
+                if (count($stdOut) == 0) {
+                    $resultCases[] = false;
+                } else {
+                    $resultCases[] = $answers[$i] == trim(preg_replace('/\s\s+/', ' ', $stdOut[$i]));
+                }
+            }
+
+            return $resultCases;
+        } catch (Exception $e) {
+            Log::error($e);
+            return [];
         }
-
-        $result = [
-            'error' => false,
-            'resultCases' => $resultCases
-        ];
-
-        return $result;
     }
 }

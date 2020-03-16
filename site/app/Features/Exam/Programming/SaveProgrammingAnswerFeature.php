@@ -12,11 +12,13 @@ use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Domains\Http\Jobs\SendTestCodeToCoderunnerJob;
 use App\Domains\Http\Jobs\SubmitCodeToCoderunnerJob;
 use App\Features\Exam\Session\FinishExamFeature;
+use App\Operations\SaveProgrammingAnswerOperation;
 use App\ProgrammingTask;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 use Lucid\Foundation\ServesFeaturesTrait;
+use function parallel\run;
 
 class SaveProgrammingAnswerFeature extends Feature
 {
@@ -78,23 +80,20 @@ class SaveProgrammingAnswerFeature extends Feature
                 Log::info('User '.$user->id.' sent for testing solution for task '.$task->id);
                 break;
             case 'submit':
-                $result = $this->run(SubmitCodeToCoderunnerJob::class, [
+                $this->run(SaveProgrammingAnswerOperation::class, [
+                    'userId' => $user->id,
+                    'sessionId' => $session->id,
                     'task' => $task,
                     'program' => $program,
                     'lang' => $lang,
                     'userFunction' => $userFunction
                 ]);
 
-                $this->run(CreateProgrammingResultJob::class, [
-                    'sessionId' => $session->id,
-                    'task' => $task,
-                    'result' => [
-                        'userFunction' => $userFunction,
-                        'resultCases' => $result['resultCases'] ?? []
-                    ]
-                ]);
+                $result = [
+                    'error' => false,
+                    'resultCases' => []
+                ];
 
-                Log::info('User '.$user->id.' submit solution for task '.$task->id);
                 break;
         }
 
