@@ -48,8 +48,9 @@ class FinishSessionFeature extends Feature
         ]);
 
         $this->run(SendMailToAdminsJob::class, [
-            'subject' => __('email_subjects.examFinished'),
-            'view' => 'mails.admin.exam-finished'
+            'subject' => __('email_subjects.examFinishedForAdmin'),
+            'view' => 'mails.admin.exam-finished',
+            'data' => ['email' => $email]
         ]);
 
         Log::info('Exam session was finished for user '. $this->session->user->id);
