@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'examChecked' => 'Іспит перевірено',
-    'examFinished' => 'Іспит завершено',
+    'examChecked' => 'Екзамен перевірено',
+    'examFinished' => 'Екзамен завершено',
     'examFinishedForAdmin' => 'Вступне тестування завершено',
-    'registrationToExam' => 'Запис на іспит',
-    'uninvitedUserForExam' => 'Незапрошений користувач записався на іспит',
-    'declineRegistrationOnExam' => 'Скасування реєстрації на іспит',
-    'reRegistrationOnExam' => 'Повторна реєстрація на іспит',
-    'retryExamAvailable' => 'Доступна реєстрація для перескладання іспиту'
+    'registrationToExam' => 'Запис на екзамен',
+    'uninvitedUserForExam' => 'Незапрошений користувач записався на екзамен',
+    'declineRegistrationOnExam' => 'Скасування реєстрації на екзамен',
+    'reRegistrationOnExam' => 'Повторна реєстрація на екзамен',
+    'retryExamAvailable' => 'Доступна реєстрація для перескладання екзамену'
 ];
