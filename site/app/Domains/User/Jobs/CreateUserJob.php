@@ -38,6 +38,7 @@ class CreateUserJob extends Job
             $user = new User();
             $user->account_id = $this->accountId;
             $user->email = $this->email;
+            $user->check_location = !config('ptp.examOnline');
             $user->save();
         }
 

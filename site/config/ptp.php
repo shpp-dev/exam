@@ -16,5 +16,6 @@ return [
     'coderunnerUrl' => env('CODERUNNER_URL'),
     'coderunnerKey' => env('CODERUNNER_KEY'),
     'calendlyUrl' => env('CALENDLY_URL'),
-    'p2pZeroUrl' => env('P2P_ZERO_URL')
+    'p2pZeroUrl' => env('P2P_ZERO_URL'),
+    'examOnline' => env('EXAM_ONLINE')
 ];

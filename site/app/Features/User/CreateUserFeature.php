@@ -27,10 +27,23 @@ class CreateUserFeature extends Feature
             $emails[] = $user['email'];
         }
 
+        $this->sendMailToUsers($emails);
+    }
+    
+    private function sendMailToUsers(array $emails)
+    {
+        if (config('ptp.examOnline')) {
+            $view = 'mails.invite-to-exam';
+            $subject = __('email_subjects.inviteToExam');
+        } else {
+            $view = 'mails.invite-to-exam-registration';
+            $subject = __('email_subjects.registrationToExam');
+        }
+
         $this->run(SendMailToUsersJob::class, [
             'emails' => $emails,
-            'view' => 'mails.invite-to-exam-registration',
-            'subject' => __('email_subjects.registrationToExam')
+            'view' => $view,
+            'subject' => $subject
         ]);
     }
 }
