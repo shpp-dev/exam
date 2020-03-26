@@ -29,7 +29,7 @@ class CreateUserFeature extends Feature
 
         $this->sendMailToUsers($emails);
     }
-    
+
     private function sendMailToUsers(array $emails)
     {
         if (config('ptp.examOnline')) {
