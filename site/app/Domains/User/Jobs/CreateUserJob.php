@@ -38,8 +38,8 @@ class CreateUserJob extends Job
             $user = new User();
             $user->account_id = $this->accountId;
             $user->email = $this->email;
-            $user->exam_datetime = config('ptp.examOnline') ? Carbon::now() : null;
-            $user->exam_location = config('ptp.examOnline') ? 'online' : null;
+            $user->exam_datetime = null;
+            $user->exam_location = null;
             $user->check_location = !config('ptp.examOnline');
             $user->save();
         }

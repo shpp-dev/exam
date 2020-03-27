@@ -5,12 +5,11 @@ namespace App\Features\User;
 
 
 use App\Data\ExamSystem;
-use App\Domains\Auth\Auth;
-use App\Domains\Http\Jobs\RespondWithJsonErrorJob;
 use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Domains\User\Jobs\GetExamRetryFromDateJob;
+use App\Domains\User\Jobs\GetOnlineExamStatusForUserJob;
 use App\Domains\User\Jobs\GetUserByEmailJob;
-use App\Domains\User\Jobs\GetExamStatusForUserJob;
+use App\Domains\User\Jobs\GetOfflineExamStatusForUserJob;
 use App\Operations\Auth\CheckLocationOperation;
 use Illuminate\Http\Request;
 use Lucid\Foundation\Feature;
@@ -32,11 +31,15 @@ class GetExamStatusForUserFeature extends Feature
             'token' => $requestData['clientForExam']['token'] ?? null
         ]);
 
-        $examData = [
-            'status' => $this->run(GetExamStatusForUserJob::class, [
+        $status = config('ptp.examOnline')
+            ? $this->run(GetOnlineExamStatusForUserJob::class, ['user' => $user])
+            : $this->run(GetOfflineExamStatusForUserJob::class, [
                 'user' => $user,
                 'locationIdentified' => $locationIdentified
-            ]),
+            ]);
+
+        $examData = [
+            'status' => $status,
             'location' => null,
             'datetime' => null,
             'retryFrom' => null

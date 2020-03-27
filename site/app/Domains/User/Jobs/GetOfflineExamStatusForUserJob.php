@@ -10,7 +10,7 @@ use App\User;
 use Carbon\Carbon;
 use Lucid\Foundation\Job;
 
-class GetExamStatusForUserJob extends Job
+class GetOfflineExamStatusForUserJob extends Job
 {
     use CheckRetryExamAccessForUserTrait;
 
