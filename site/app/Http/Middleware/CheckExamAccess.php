@@ -26,6 +26,14 @@ class CheckExamAccess
     public function handle($request, Closure $next)
     {
         $user = Auth::getAuthUser();
+        $lastFinishedExamSession = $user->lastFinishedExamSession();
+
+        if ($lastFinishedExamSession && $lastFinishedExamSession->passed) {
+            return $this->run(RespondWithJsonErrorJob::class, [
+                'message' => 'Denied',
+                'code' => 403,
+            ]);
+        }
 
         $response = $this->run(SendHttpPostRequestJob::class, [
             'url' => config('ptp.accountBackUrl').'/user/exam/allowed',
