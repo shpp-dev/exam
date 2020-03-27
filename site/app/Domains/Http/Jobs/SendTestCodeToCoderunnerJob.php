@@ -48,7 +48,6 @@ class SendTestCodeToCoderunnerJob extends Job
     public function handle()
     {
         $testCases = explode(',', $this->task->testCases);
-//        $testCases = [$testCases[0], $testCases[1]];
 
         $testPack = [
             'userName' => 'testuser',
@@ -57,52 +56,62 @@ class SendTestCodeToCoderunnerJob extends Job
             'language' => $this->lang,
             'testCases' => $testCases
         ];
-        $response = json_decode($this->sendCodeToCoderunner($this->coderunnerUrl, $testPack));
 
-        if ($response == '' || property_exists($response, 'error')) {
+        try {
+            $response = json_decode($this->sendCodeToCoderunner($this->coderunnerUrl, $testPack));
+
+            if ($response == '' || property_exists($response, 'error')) {
+                return [
+                    'error' => true,
+                    'message' => 'Тестування коду поки недоступне. Але ви все одно можете завантажити своє рішення',
+                    'code' => 500
+                ];
+            }
+
+            if ($response->code != 200) {
+                Log::error(json_encode($response));
+                return [
+                    'error' => true,
+                    'message' => 'Тестування коду поки недоступне. Але ви все одно можете завантажити своє рішення',
+                    'code' => 500
+                ];
+            }
+
+            if ($response->response->compilerErrors || $response->response->stderr[0] != '') {
+                return [
+                    'error' => true,
+                    'message' => 'Помилка при тестуванні. Вам потрібно внести якісь зміни у свій код',
+                    'code' => 418
+                ];
+            }
+
+            if (empty($response->response->stdout) && empty($response->response->stderr)) {
+                return [
+                    'error' => true,
+                    'message' => 'Тестування коду поки недоступне. Але ви все одно можете завантажити своє рішення',
+                    'code' => 500
+                ];
+            }
+
+            $answers = explode('\ ', $this->task->answers);
+            $stdOut = $response->response->stdout;
+            $resultCases = [];
+
+            for ($i = 0; $i < count($stdOut); $i++) {
+                $resultCases[] = $answers[$i] == trim(preg_replace('/\s\s+/', ' ', $stdOut[$i]));
+            }
+
             return [
-                'error' => true,
-                'message' => 'Наш кодераннер отключен. :( Пожалуйста, свяжитесь с администрацией.',
-                'code' => 503
+                'error' => false,
+                'resultCases' => $resultCases
             ];
-        }
-
-        if ($response->code != 200) {
-            Log::error(json_encode($response));
+        } catch (\Exception $e) {
+            Log::error($e);
             return [
                 'error' => true,
-                'message' => 'Проблемы с кодраннером. :( Пожалуйста, свяжитесь с администрацией.',
+                'message' => 'Тестування коду поки недоступне. Але ви все одно можете завантажити своє рішення',
                 'code' => 500
             ];
         }
-
-        if ($response->response->compilerErrors || $response->response->stderr[0] != '') {
-            return [
-                'error' => true,
-                'message' => 'Нерабочее решение. Вам нужно внести какие-то правки в код',
-                'code' => 418
-            ];
-        }
-
-        if (empty($response->response->stdout) && empty($response->response->stderr)) {
-            return [
-                'error' => true,
-                'message' => 'Проблемы с кодраннером. :( Пожалуйста, свяжитесь с администрацией.',
-                'code' => 500
-            ];
-        }
-
-        $answers = explode('\ ', $this->task->answers);
-        $stdOut = $response->response->stdout;
-        $resultCases = [];
-
-        for ($i = 0; $i < count($stdOut); $i++) {
-            $resultCases[] = $answers[$i] == trim(preg_replace('/\s\s+/', ' ', $stdOut[$i]));
-        }
-
-        return [
-            'error' => false,
-            'resultCases' => $resultCases
-        ];
     }
 }

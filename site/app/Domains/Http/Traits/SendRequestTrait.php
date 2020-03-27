@@ -12,7 +12,7 @@ trait SendRequestTrait
         $client = new Client();
         $response = $client->post($coderunnerUrl, [
             RequestOptions::JSON => $data,
-            RequestOptions::TIMEOUT => 10
+            RequestOptions::TIMEOUT => 20
         ]);
         $responseContent = $response->getBody();
 
