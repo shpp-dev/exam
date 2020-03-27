@@ -2,7 +2,7 @@
 namespace App\Domains\Mail\Jobs;
 
 use App\User;
-use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
 use Lucid\Foundation\Job;
 
 /**
@@ -38,6 +38,8 @@ class CreateUserJob extends Job
             $user = new User();
             $user->account_id = $this->accountId;
             $user->email = $this->email;
+            $user->exam_datetime = config('ptp.examOnline') ? Carbon::now() : null;
+            $user->exam_location = config('ptp.examOnline') ? 'online' : null;
             $user->check_location = !config('ptp.examOnline');
             $user->save();
         }
