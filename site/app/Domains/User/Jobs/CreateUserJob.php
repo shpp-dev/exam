@@ -40,7 +40,7 @@ class CreateUserJob extends Job
             $user->email = $this->email;
             $user->exam_datetime = null;
             $user->exam_location = null;
-            $user->check_location = !config('ptp.examOnline');
+            $user->check_location = true;
             $user->save();
         }
 

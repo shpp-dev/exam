@@ -27,6 +27,10 @@ class CheckLocation
      */
     public function handle($request, Closure $next)
     {
+        if (config('ptp.examOnline')) {
+            return $next($request);
+        }
+
         $clientForExam = json_decode($request->cookie('clientForExam'), true);
 
         $locationIdentified = $this->run(CheckLocationOperation::class, [
