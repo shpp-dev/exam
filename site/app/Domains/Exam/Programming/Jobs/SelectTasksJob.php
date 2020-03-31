@@ -33,11 +33,17 @@ class SelectTasksJob extends Job
      */
     public function handle()
     {
+        if (config('ptp.examOnline')) {
+            return [4, 1, 11, 15, 20, 6];
+        }
+
         $tasks = [];
+
         for ($i= 0; $i <= $this->amount; $i++ ) {
             $task = ProgrammingTask::where('number', $i )->orderByRaw("RAND()")->first();
             $tasks[] = $task->id;
         }
+
         return $tasks;
     }
 }
