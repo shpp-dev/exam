@@ -2,8 +2,11 @@
 
 namespace App\Exceptions;
 
+use App\Domains\Auth\Auth;
+use App\Domains\Mail\Jobs\SendMailToDevelopersJob;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
 
 class Handler extends ExceptionHandler
 {
@@ -34,9 +37,14 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
-        if (app()->environment('production') && app()->bound('sentry') && $this->shouldReport($exception)) {
-            app('sentry')->captureException($exception);
+        if ($this->shouldReport($exception)) {
+            try {
+                (new SendMailToDevelopersJob('UserId: ' . Auth::getAuthUserId() . "\n" . $exception->getMessage() . "\n" . $exception->getTraceAsString()))->handle();
+            } catch (Exception $e) {
+                Log::error($e);
+            }
         }
+
         parent::report($exception);
     }
 

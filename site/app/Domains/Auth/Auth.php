@@ -47,7 +47,7 @@ class Auth
 
     public static function getAuthUserId()
     {
-        return self::$user ? self::$user->getId() : null ;
+        return self::$user ? self::$user->id : null;
     }
 
     public static function deleteAuthUser()

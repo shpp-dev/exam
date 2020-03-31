@@ -42,7 +42,7 @@ class TasksSeederUA extends Seeder
 
         $descriptions = [
             [
-                'problem' => 'Порахувати кількість кутів в N трикутників і К ромбів.',
+                'problem' => 'Порахувати кількість кутів в N трикутниках і К ромбах.',
                 'note' => 'N і K передаються параметрами функції і 0 < N, K < 10000. Функція повертає сумарну кількість кутів.',
                 'example' => [
                     'input' => '1, 1',
@@ -74,7 +74,7 @@ class TasksSeederUA extends Seeder
                 ]
             ],
             [
-                'problem' => 'Основна частина державного реєстраційного номера складається з 6 символів: трьох літер і трьох цифр. Спочатку йде літера, потім 3 цифри і ще 2 літери закінчують запис. Можуть використовуватися будь-які цифри від 0 до 9, а в якості літер лише наступні символи: A, B, C, E, H, K, M, O, P, T, X, Y. Наприклад, «P204BT» - правильний номер, а «X182YZ» і «ABC216» - ні. Ваше завдання - визначити, які з номерів відповідають прийнятому стандарту, а які ні.',
+                'problem' => 'Основна частина державного реєстраційного номера складається з 6 символів: 3-x літер і 3-x цифр. Спочатку йде літера, потім 3 цифри і ще 2 літери закінчують запис. Можуть використовуватися будь-які цифри від 0 до 9, а в якості літер лише наступні символи: A, B, C, E, H, K, M, O, P, T, X, Y. Наприклад, «P204BT» - правильний номер, а «X182YZ» і «ABC216» - ні. Ваше завдання - визначити, які з номерів відповідають прийнятому стандарту, а які ні.',
                 'note' => 'Функція приймає рядок - автомобільний номер. Функція повертає 100, якщо номер правильний, або кількість літер в номері, якщо він не відповідає стандарту.',
                 'example' => [
                     'input' => 'P204BT',
@@ -82,7 +82,7 @@ class TasksSeederUA extends Seeder
                 ]
             ],
             [
-                'problem' => 'Задана послідовність, що складається тільки з символів ">", "<" та "-". Потрібно знайти кількість стріл, які заховані в цій послідовності. Стріла - це рядок, який має вигляд ">>->" або "<-<<".',
+                'problem' => 'Задана послідовність, що складається тільки з символів ">", "<" та "-". Потрібно знайти кількість стріл, які заховані в цій послідовності. Стріла - це рядок, який має вигляд ">>-->" або "<--<<".',
                 'note' => 'Для функції параметром передається рядок, що складається з символів ">", "<" та "-" (без пробілів). Рядок складається не більше ніж з 250 символів. Функція повертає кількість знайдених стріл.',
                 'example' => [
                     'input' => '<<<<>>--><--<<',
@@ -106,7 +106,7 @@ class TasksSeederUA extends Seeder
                 ]
             ],
             [
-                'problem' => 'Порахувати кількість кутів у N трикутників і К п\'ятикутників.',
+                'problem' => 'Порахувати кількість кутів у N трикутниках і К п\'ятикутниках.',
                 'note' => ' N і K передаються параметрами функції і 0 < N, K < 10000. Функція повертає сумарну кількість кутів.',
                 'example' => [
                     'input' => '1, 1',
@@ -194,7 +194,7 @@ class TasksSeederUA extends Seeder
                 ]
             ],
             [
-                'problem' => 'На вхід функції приходить масив цілих чисел, а другим параметром - його розмір. Знайдіть в масиві перше число, яке оточене нулями. Якщо таке число не знайдено - поверніть -1, інакше поверніть індекс такого елемента.',
+                'problem' => 'На вхід функції приходить масив цілих чисел, а другим параметром - його розмір. Знайдіть в масиві перше число, яке оточене нулями. Якщо таке число не знайдено, поверніть \'-1\', інакше поверніть індекс такого елемента.',
                 'note' => '',
                 'example' => [
                     'input' => '[0, 4, 0, 8], 4',
@@ -251,16 +251,16 @@ var stdin = \"\";
 process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
- 
+
 process.stdin.on('end', function() {
     var array = stdin.split(' ');
- 
+
     var triangleN = parseInt(array[0]);
     var rhombK = parseInt(array[1]);
- 
+
     process.stdout.write(resolve(triangleN, rhombK).toString());
 });
- 
+
 {{code}}",
             "process.stdin.resume();
 var stdin = \"\";
@@ -270,33 +270,33 @@ process.stdin.on('data', function(chunk) {
 process.stdin.on('end', function() {
     process.stdout.write(isBracketsPlacedCorrectly(stdin).toString());
 });
- 
+
 {{code}}",
             "process.stdin.resume();
 var stdin = \"\";
 process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
- 
+
 process.stdin.on('end', function() {
     var array = stdin.split(' ');
     var arraySize = array.splice(0, 1);
     for (var i = 0; i < arraySize; i++) {
         array[i] = parseInt(array[i]);
-    }    
+    }
     separateAndSort(array);
     process.stdout.write('['+separateAndSort(array).toString()+']');
 });
- 
+
 {{code}}
  ",
             "process.stdin.resume();
             var stdin = '';
             process.stdin.on('data', function(chunk){stdin += chunk;});
-            process.stdin.on('end', function() { var array=stdin.split(' ');    
-            var a = parseInt(array[0]);    
-            var b = parseInt(array[1]);   
-            {{code}}    
+            process.stdin.on('end', function() { var array=stdin.split(' ');
+            var a = parseInt(array[0]);
+            var b = parseInt(array[1]);
+            {{code}}
             console.log(sum(a,b));});",
             "process.stdin.resume();
 var stdin = \"\";
@@ -307,7 +307,7 @@ process.stdin.on('end', function() {
     var array = stdin.split(' ');
     process.stdout.write(resolve(array[1]).toString());
 });
- 
+
 {{code}}",
             "process.stdin.resume();
 var stdin = \"\";
@@ -318,7 +318,7 @@ process.stdin.on('end', function() {
     var array = stdin.split(' ');
     process.stdout.write(resolve(array[1]).toString());
 });
- 
+
 {{code}}",
             "process.stdin.resume();
 var stdin = \"\";
@@ -329,202 +329,202 @@ process.stdin.on('end', function() {
     var array = stdin.split(' ');
     process.stdout.write(resolve(array[1].replace('\\n', '')).toString());
 });
- 
+
 {{code}}",
             "process.stdin.resume();
 var stdin = \"\";
 process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
-process.stdin.on('end', function() {
-    var array = stdin.split(' '); 
-    process.stdout.write(resolve(array[1].replace('\\n', '')).toString());
-});
- 
-{{code}}",
-            "process.stdin.resume();
-var stdin = \"\";
-process.stdin.on('data', function(chunk) {
-    stdin += chunk;
-});
- 
 process.stdin.on('end', function() {
     var array = stdin.split(' ');
- 
+    process.stdout.write(resolve(array[1].replace('\\n', '')).toString());
+});
+
+{{code}}",
+            "process.stdin.resume();
+var stdin = \"\";
+process.stdin.on('data', function(chunk) {
+    stdin += chunk;
+});
+
+process.stdin.on('end', function() {
+    var array = stdin.split(' ');
+
     var triangleN = parseInt(array[0]);
     var pentagonN = parseInt(array[1]);
- 
+
     process.stdout.write(resolve(triangleN, pentagonN).toString());
 });
- 
+
 {{code}}",
             "process.stdin.resume();
 var stdin = \"\";
 process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
- 
+
 process.stdin.on('end', function() {
     var array = stdin.split(' ');
- 
+
     var peopleN = parseInt(array[0]);
     var catsK = parseInt(array[1]);
- 
+
     process.stdout.write(resolve(peopleN, catsK).toString());
 });
- 
+
 {{code}}",
             "process.stdin.resume();
 var stdin = \"\";
 process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
- 
+
 process.stdin.on('end', function() {
     var array = stdin.split(' ');
- 
+
     var first = parseInt(array[0]);
     var second = parseInt(array[1]);
     var third = parseInt(array[2]);
- 
+
     process.stdout.write(resolve(first, second, third).toString());
 });
- 
+
 {{code}}",
             "process.stdin.resume();
 var stdin = \"\";
 process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
- 
+
 process.stdin.on('end', function() {
     var array = stdin.split(' ');
- 
+
     var first = parseInt(array[0]);
     var second = parseInt(array[1]);
     var third = parseInt(array[2]);
- 
+
     process.stdout.write(resolve(first, second, third).toString());
 });
- 
+
 {{code}}",
             "process.stdin.resume();
 var stdin = \"\";
 process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
- 
+
 process.stdin.on('end', function() {
     var array = stdin.split(' ');
- 
+
     var first = parseInt(array[0]);
     var second = parseInt(array[1]);
         process.stdout.write(resolve(first, second).toString());
 });
- 
+
 {{code}}",
             "process.stdin.resume();
 var stdin = \"\";
 process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
- 
+
 process.stdin.on('end', function() {
     var array = stdin.split(' ');
- 
+
     var first = parseInt(array[0]);
     var second = parseInt(array[1]);
     var third = parseInt(array[2]);
- 
+
     process.stdout.write(resolve(first, second, third).toString());
 });
- 
+
 {{code}}",
             "process.stdin.resume();
 var stdin = \"\";
 process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
- 
+
 process.stdin.on('end', function() {
     var array = stdin.split(' ');
- 
+
     var first = parseInt(array[0]);
     var second = parseInt(array[1]);
     var third = parseInt(array[2]);
- 
+
     process.stdout.write(resolve(first, second, third).toString());
 });
- 
+
 {{code}}",
             "process.stdin.resume();
 var stdin = \"\";
 process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
- 
+
 process.stdin.on('end', function() {
     var array = stdin.split(' ');
- 
+
     var first = parseInt(array[0]);
     var second = parseInt(array[1]);
         process.stdout.write(resolve(first, second).toString());
 });
- 
+
 {{code}}",
             "process.stdin.resume();
 var stdin = \"\";
 process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
- 
+
 process.stdin.on('end', function() {
     var array = stdin.split(' ');
- 
+
     var first = parseInt(array[0]);
             process.stdout.write(resolve(first).toString());
 });
- 
+
 {{code}}",
             "process.stdin.resume();
 var stdin = \"\";
 process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
- 
+
 process.stdin.on('end', function() {
     var array = stdin.split(' ');
- 
+
     var first = parseInt(array[0]);
     var second = parseInt(array[1]);
     var third = parseInt(array[2]);
- 
+
     process.stdout.write(resolve(first, second, third).toString());
 });
- 
+
 {{code}}",
             "process.stdin.resume();
 var stdin = \"\";
 process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
- 
+
 process.stdin.on('end', function() {
     var array = stdin.split(' ');
- 
+
     var first = parseInt(array[0]);
     var second = parseInt(array[1]);
         process.stdout.write(resolve(first, second).toString());
 });
- 
+
 {{code}}",
             "process.stdin.resume();
 var stdin = \"\";
 process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
- 
- 
+
+
 process.stdin.on('end', function() {
     var array = stdin.split(' ');
     var arraySize = array.splice(0, 1);
@@ -533,7 +533,7 @@ process.stdin.on('end', function() {
     }
 
 process.stdout.write(resolve(array, arraySize).toString());
-});    
+});
 
 
 {{code}}",
@@ -542,8 +542,8 @@ var stdin = \"\";
 process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
- 
- 
+
+
 process.stdin.on('end', function() {
     var array = stdin.split(' ');
     var arraySize = array.splice(0, 1);
@@ -552,7 +552,7 @@ process.stdin.on('end', function() {
     }
 
 process.stdout.write(resolve(array, arraySize).toString());
-});    
+});
 
 
 {{code}}",
@@ -561,8 +561,8 @@ var stdin = \"\";
 process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
- 
- 
+
+
 process.stdin.on('end', function() {
     var array = stdin.split(' ');
     var arraySize = array.splice(0, 1);
@@ -571,7 +571,7 @@ process.stdin.on('end', function() {
     }
 
 process.stdout.write(resolve(array, arraySize).toString());
-});    
+});
 
 
 {{code}}",
@@ -580,8 +580,8 @@ var stdin = \"\";
 process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
- 
- 
+
+
 process.stdin.on('end', function() {
     var array = stdin.split(' ');
     var arraySize = array.splice(0, 1);
@@ -590,7 +590,7 @@ process.stdin.on('end', function() {
     }
 
 process.stdout.write(resolve(array, arraySize).toString());
-});    
+});
 
 
 {{code}}",
@@ -599,8 +599,8 @@ var stdin = \"\";
 process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
- 
- 
+
+
 process.stdin.on('end', function() {
     var array = stdin.split(' ');
     var arraySize = array.splice(0, 1);
@@ -617,8 +617,8 @@ var stdin = \"\";
 process.stdin.on('data', function(chunk) {
     stdin += chunk;
 });
- 
- 
+
+
 process.stdin.on('end', function() {
     var array = stdin.split(' ');
     var arraySize = array.splice(0, 1);
@@ -634,16 +634,16 @@ process.stdin.on('end', function() {
 
         $javaWraps = [
             "import java.util.Scanner;
- 
- 
+
+
 public class TrianglesAndRhombus {
- 
+
    {{code}}
- 
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int triangleN = 0, rhombK = 0;
-       
+
         triangleN = scanner.nextInt();
         rhombK = scanner.nextInt();
         System.out.print(resolve(triangleN, rhombK));
@@ -651,11 +651,11 @@ public class TrianglesAndRhombus {
 }",
             "import java.lang.String;
 import java.util.Scanner;
- 
+
 public class Brackets {
 {{code}}
- 
- 
+
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String stdin = scanner.nextLine();
@@ -664,7 +664,7 @@ public class Brackets {
 }",
             "import java.util.Scanner;
 import java.lang.Math;
- 
+
 public class Sorting {
 
 
@@ -678,7 +678,7 @@ public class Sorting {
         arraySize = scanner.nextInt();
 
         int[] array = new int[arraySize];
-        
+
         for (int i = 0; i < arraySize; i++) {
             array[i] = scanner.nextInt();
         }
@@ -695,7 +695,7 @@ public class Sorting {
 }",
             "import java.util.Scanner;
 public class test {
-    
+
 {{code}}
 
     public static void main(String[] args) {
@@ -707,11 +707,11 @@ public class test {
 }",
             "import java.lang.String;
 import java.util.Scanner;
- 
+
 public class Numbers {
 {{code}}
- 
- 
+
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String number = scanner.nextLine().split(\" \")[1];
@@ -720,11 +720,11 @@ public class Numbers {
 }",
             "import java.lang.String;
 import java.util.Scanner;
- 
+
 public class Sparrow {
 {{code}}
- 
- 
+
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String stdin = scanner.nextLine().split(\" \")[1];
@@ -733,11 +733,11 @@ public class Sparrow {
 }",
             "import java.lang.String;
 import java.util.Scanner;
- 
+
 public class Pangramms {
 {{code}}
- 
- 
+
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String stdin = scanner.nextLine().split(\" \")[1];
@@ -746,11 +746,11 @@ public class Pangramms {
 }",
             "import java.lang.String;
 import java.util.Scanner;
- 
+
 public class Mars {
 {{code}}
- 
- 
+
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         String stdin = scanner.nextLine().split(\" \")[1];
@@ -758,16 +758,16 @@ public class Mars {
     }
 }",
             "import java.util.Scanner;
- 
- 
+
+
 public class TrianglesAndRhombus {
- 
+
    {{code}}
- 
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int triangleN = 0, pentagonN = 0;
-       
+
         triangleN = scanner.nextInt();
         pentagonN = scanner.nextInt();
         System.out.print(resolve(triangleN, pentagonN));
@@ -775,32 +775,32 @@ public class TrianglesAndRhombus {
 }",
 
             "import java.util.Scanner;
- 
- 
+
+
 public class PeopleAndCats {
- 
+
    {{code}}
- 
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int peopleN = 0, catsK = 0;
-       
+
         peopleN = scanner.nextInt();
         catsK = scanner.nextInt();
         System.out.print(resolve(peopleN, catsK));
     }
 }",
             "import java.util.Scanner;
- 
- 
+
+
 public class Numbers {
 
     {{code}}
- 
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int first = 0, second = 0, third = 0;
-       
+
         first = scanner.nextInt();
         second = scanner.nextInt();
         third = scanner.nextInt();
@@ -808,16 +808,16 @@ public class Numbers {
     }
 }",
             "import java.util.Scanner;
- 
- 
+
+
 public class Numbers {
 
     {{code}}
- 
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int first = 0, second = 0, third = 0;
-       
+
         first = scanner.nextInt();
         second = scanner.nextInt();
         third = scanner.nextInt();
@@ -825,32 +825,32 @@ public class Numbers {
     }
 }",
             "import java.util.Scanner;
- 
- 
+
+
 public class Numbers {
 
     {{code}}
- 
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int first = 0, second = 0;
-       
+
         first = scanner.nextInt();
         second = scanner.nextInt();
                 System.out.print(resolve(first, second));
     }
 }",
             "import java.util.Scanner;
- 
- 
+
+
 public class Numbers {
 
     {{code}}
- 
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int first = 0, second = 0, third = 0;
-       
+
         first = scanner.nextInt();
         second = scanner.nextInt();
         third = scanner.nextInt();
@@ -858,16 +858,16 @@ public class Numbers {
     }
 }",
             "import java.util.Scanner;
- 
- 
+
+
 public class Numbers {
 
     {{code}}
- 
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int first = 0, second = 0, third = 0;
-       
+
         first = scanner.nextInt();
         second = scanner.nextInt();
         third = scanner.nextInt();
@@ -876,16 +876,16 @@ public class Numbers {
 }",
             "
 import java.util.Scanner;
- 
- 
+
+
 public class Numbers {
 
     {{code}}
- 
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int first = 0, second = 0;
-       
+
         first = scanner.nextInt();
         second = scanner.nextInt();
                 System.out.print(resolve(first, second));
@@ -893,32 +893,32 @@ public class Numbers {
 }",
             "
 import java.util.Scanner;
- 
- 
+
+
 public class Numbers {
 
     {{code}}
- 
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int first = 0;
-       
+
         first = scanner.nextInt();
                        System.out.print(resolve(first));
     }
 }",
             "
 import java.util.Scanner;
- 
- 
+
+
 public class Numbers {
 
     {{code}}
- 
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int first = 0, second = 0, third = 0;
-       
+
         first = scanner.nextInt();
         second = scanner.nextInt();
         third = scanner.nextInt();
@@ -927,16 +927,16 @@ public class Numbers {
 }",
             "
 import java.util.Scanner;
- 
- 
+
+
 public class Numbers {
 
     {{code}}
- 
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int first = 0, second = 0;
-       
+
         first = scanner.nextInt();
         second = scanner.nextInt();
                 System.out.print(resolve(first, second));
@@ -945,7 +945,7 @@ public class Numbers {
             "
 import java.util.Scanner;
 import java.lang.Math;
- 
+
 public class Sorting {
 
 
@@ -959,7 +959,7 @@ public class Sorting {
         arraySize = scanner.nextInt();
 
         int[] array = new int[arraySize];
-        
+
         for (int i = 0; i < arraySize; i++) {
             array[i] = scanner.nextInt();
         }
@@ -969,7 +969,7 @@ System.out.print(resolve(array, arraySize));
             "
 import java.util.Scanner;
 import java.lang.Math;
- 
+
 public class Sorting {
 
 
@@ -983,7 +983,7 @@ public class Sorting {
         arraySize = scanner.nextInt();
 
         int[] array = new int[arraySize];
-        
+
         for (int i = 0; i < arraySize; i++) {
             array[i] = scanner.nextInt();
         }
@@ -993,7 +993,7 @@ System.out.print(resolve(array, arraySize));
             "
 import java.util.Scanner;
 import java.lang.Math;
- 
+
 public class Sorting {
 
 
@@ -1007,7 +1007,7 @@ public class Sorting {
         arraySize = scanner.nextInt();
 
         int[] array = new int[arraySize];
-        
+
         for (int i = 0; i < arraySize; i++) {
             array[i] = scanner.nextInt();
         }
@@ -1017,7 +1017,7 @@ System.out.print(resolve(array, arraySize));
             "
 import java.util.Scanner;
 import java.lang.Math;
- 
+
 public class Sorting {
 
 
@@ -1031,7 +1031,7 @@ public class Sorting {
         arraySize = scanner.nextInt();
 
         int[] array = new int[arraySize];
-        
+
         for (int i = 0; i < arraySize; i++) {
             array[i] = scanner.nextInt();
         }
@@ -1096,33 +1096,33 @@ public class Sorting {
 
         $cppWraps = [
             "#include <iostream>
- 
+
 using namespace std;
- 
+
 {{code}}
- 
- 
+
+
 int main(int argc, char const *argv[])
 {
     int triangleN = 0, rhombK = 0;
     cin >> triangleN;
     cin >> rhombK;
-       
+
     cout << resolve(triangleN, rhombK);
     return 0;
 }",
             "#include <iostream>
 #include <string>
- 
+
 using namespace std;
- 
+
 {{code}}
- 
+
 int main() {
 int arraySize = 0;
 cin >> arraySize;
 char *line = new char[arraySize];
-cin >> line;    
+cin >> line;
         cout << isBracketsPlacedCorrectly(line);
     return 0;
 }",
@@ -1142,7 +1142,7 @@ int main(int argc, char const *argv[])
 
  cin >> arraySize;
  array = new int[arraySize];
- 
+
  for (int i = 0; i < arraySize; i++) {
  cin >> array[i];
  }
@@ -1172,241 +1172,241 @@ int main() {
 }",
             "#include <iostream>
 #include <string>
- 
+
 using namespace std;
- 
+
 {{code}}
- 
+
 int main() {
 int arraySize = 0;
 cin >> arraySize;
 char *line = new char[arraySize];
-cin >> line;    
+cin >> line;
         cout << resolve(line);
     return 0;
 }",
             "#include <iostream>
 #include <string>
- 
+
 using namespace std;
- 
+
 {{code}}
- 
+
 int main() {
 int arraySize = 0;
 cin >> arraySize;
 char *line = new char[arraySize];
-cin >> line;            
+cin >> line;
 cout << resolve(line);
     return 0;
 }",
             "#include <iostream>
 #include <string>
- 
+
 using namespace std;
- 
+
 {{code}}
- 
+
 int main() {
 int arraySize = 0;
 cin >> arraySize;
 char *line = new char[arraySize];
-cin >> line;         
+cin >> line;
 cout << isPangramm(line);
     return 0;
 }",
             "#include <iostream>
 #include <string>
- 
+
 using namespace std;
- 
+
 {{code}}
- 
+
 int main() {
 int arraySize = 0;
 cin >> arraySize;
 char *line = new char[arraySize];
-cin >> line;        
+cin >> line;
 cout << resolve(line);
     return 0;
 }",
             "#include <iostream>
- 
+
 using namespace std;
- 
+
 {{code}}
- 
- 
+
+
 int main(int argc, char const *argv[])
 {
     int triangleN = 0, pentagonN = 0;
     cin >> triangleN;
     cin >> pentagonN;
-       
+
     cout << resolve(triangleN, pentagonN);
     return 0;
 }",
             "#include <iostream>
- 
+
 using namespace std;
- 
+
 {{code}}
- 
- 
+
+
 int main(int argc, char const *argv[])
 {
     int peopleN = 0, catsK = 0;
     cin >> peopleN;
     cin >> catsK;
-       
+
     cout << resolve(peopleN, catsK);
     return 0;
 }",
             "#include <iostream>
- 
+
 using namespace std;
- 
+
 {{code}}
- 
- 
+
+
 int main(int argc, char const *argv[])
 {
     int first = 0, second = 0, third = 0;
     cin >> first;
     cin >> second;
     cin >> third;
-       
+
     cout << resolve(first, second, third);
     return 0;
 }",
             "#include <iostream>
- 
+
 using namespace std;
- 
+
 {{code}}
- 
- 
+
+
 int main(int argc, char const *argv[])
 {
     int first = 0, second = 0, third = 0;
     cin >> first;
     cin >> second;
     cin >> third;
-       
+
     cout << resolve(first, second, third);
     return 0;
 }",
             "#include <iostream>
- 
+
 using namespace std;
- 
+
 {{code}}
- 
- 
+
+
 int main(int argc, char const *argv[])
 {
     int first = 0, second = 0;
     cin >> first;
     cin >> second;
-           
+
     cout << resolve(first, second);
     return 0;
 }",
             "#include <iostream>
- 
+
 using namespace std;
- 
+
 {{code}}
- 
- 
+
+
 int main(int argc, char const *argv[])
 {
     int first = 0, second = 0, third = 0;
     cin >> first;
     cin >> second;
     cin >> third;
-       
+
     cout << resolve(first, second, third);
     return 0;
 }",
             "#include <iostream>
- 
+
 using namespace std;
- 
+
 {{code}}
- 
- 
+
+
 int main(int argc, char const *argv[])
 {
     int first = 0, second = 0, third = 0;
     cin >> first;
     cin >> second;
     cin >> third;
-       
+
     cout << resolve(first, second, third);
     return 0;
 }",
             "#include <iostream>
- 
+
 using namespace std;
- 
+
 {{code}}
- 
- 
+
+
 int main(int argc, char const *argv[])
 {
     int first = 0, second = 0;
     cin >> first;
     cin >> second;
-           
+
     cout << resolve(first, second);
     return 0;
 }",
             "#include <iostream>
- 
+
 using namespace std;
- 
+
 {{code}}
- 
- 
+
+
 int main(int argc, char const *argv[])
 {
     int first = 0;
     cin >> first;
-               
+
     cout << resolve(first);
     return 0;
 }",
             "#include <iostream>
- 
+
 using namespace std;
- 
+
 {{code}}
- 
- 
+
+
 int main(int argc, char const *argv[])
 {
     int first = 0, second = 0, third = 0;
     cin >> first;
     cin >> second;
     cin >> third;
-       
+
     cout << resolve(first, second, third);
     return 0;
 }",
             "#include <iostream>
- 
+
 using namespace std;
- 
+
 {{code}}
- 
- 
+
+
 int main(int argc, char const *argv[])
 {
     int first = 0, second = 0;
     cin >> first;
     cin >> second;
-           
+
     cout << resolve(first, second);
     return 0;
 }",
@@ -1426,7 +1426,7 @@ int main(int argc, char const *argv[])
 
  cin >> arraySize;
  array = new int[arraySize];
- 
+
  for (int i = 0; i < arraySize; i++) {
  cin >> array[i];
  }
@@ -1453,7 +1453,7 @@ int main(int argc, char const *argv[])
 
  cin >> arraySize;
  array = new int[arraySize];
- 
+
  for (int i = 0; i < arraySize; i++) {
  cin >> array[i];
  }
@@ -1480,7 +1480,7 @@ int main(int argc, char const *argv[])
 
  cin >> arraySize;
  array = new int[arraySize];
- 
+
  for (int i = 0; i < arraySize; i++) {
  cin >> array[i];
  }
@@ -1507,7 +1507,7 @@ int main(int argc, char const *argv[])
 
  cin >> arraySize;
  array = new int[arraySize];
- 
+
  for (int i = 0; i < arraySize; i++) {
  cin >> array[i];
  }

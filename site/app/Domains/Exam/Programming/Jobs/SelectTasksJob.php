@@ -34,7 +34,7 @@ class SelectTasksJob extends Job
     public function handle()
     {
         if (config('ptp.examOnline')) {
-            return [4, 1, 11, 15, 20, 6];
+            return [4, 1, 11, 15, 20, 5];
         }
 
         $tasks = [];
