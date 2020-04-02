@@ -80,7 +80,7 @@ class SendTestCodeToCoderunnerJob extends Job
             if ($response->response->compilerErrors || $response->response->stderr[0] != '') {
                 return [
                     'error' => true,
-                    'message' => 'При тестуванні коду щось пішло не так. Вам потрібно внести якісь зміни у свій код',
+                    'message' => 'Помилка при тестуванні. Вам потрібно внести якісь зміни у свій код',
                     'code' => 418
                 ];
             }
