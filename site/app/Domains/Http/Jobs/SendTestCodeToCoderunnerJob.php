@@ -63,7 +63,7 @@ class SendTestCodeToCoderunnerJob extends Job
             if ($response == '' || property_exists($response, 'error')) {
                 return [
                     'error' => true,
-                    'message' => 'Тестування коду поки недоступне. Але ви все одно можете завантажити своє рішення',
+                    'message' => 'При тестуванні коду щось пішло не так. Але ви все одно можете завантажити своє рішення',
                     'code' => 500
                 ];
             }
@@ -72,7 +72,7 @@ class SendTestCodeToCoderunnerJob extends Job
                 Log::error(json_encode($response));
                 return [
                     'error' => true,
-                    'message' => 'Тестування коду поки недоступне. Але ви все одно можете завантажити своє рішення',
+                    'message' => 'При тестуванні коду щось пішло не так. Але ви все одно можете завантажити своє рішення',
                     'code' => 500
                 ];
             }
@@ -80,7 +80,7 @@ class SendTestCodeToCoderunnerJob extends Job
             if ($response->response->compilerErrors || $response->response->stderr[0] != '') {
                 return [
                     'error' => true,
-                    'message' => 'Помилка при тестуванні. Вам потрібно внести якісь зміни у свій код',
+                    'message' => 'При тестуванні коду щось пішло не так. Вам потрібно внести якісь зміни у свій код',
                     'code' => 418
                 ];
             }
@@ -88,7 +88,7 @@ class SendTestCodeToCoderunnerJob extends Job
             if (empty($response->response->stdout) && empty($response->response->stderr)) {
                 return [
                     'error' => true,
-                    'message' => 'Тестування коду поки недоступне. Але ви все одно можете завантажити своє рішення',
+                    'message' => 'При тестуванні коду щось пішло не так. Але ви все одно можете завантажити своє рішення',
                     'code' => 500
                 ];
             }
