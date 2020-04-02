@@ -12,4 +12,5 @@
     <p>@lang('email_messages.examPassed.p4')</p>
     <p>@lang('email_messages.examPassed.p5', ['accountUrl' => config('ptp.accountFrontUrl')])</p>
     <p>@lang('email_messages.examPassed.p6')</p>
+    <p>@lang('email_messages.examPassed.p7')</p>
 @endsection
