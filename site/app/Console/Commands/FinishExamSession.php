@@ -54,23 +54,29 @@ class FinishExamSession extends Command
 
             Log::info('Forced exam finish for user ' . $session->user_id);
 
-            $this->serve(FinishExamFeature::class, [
-                'examName' => ExamSystem::PROGRAMMING_EXAM_NAME,
-                'session' => $session,
-                'forced' => true
-            ]);
+            if ($session->programming_status !== ExamSystem::FINISHED_STATUS) {
+                $this->serve(FinishExamFeature::class, [
+                    'examName' => ExamSystem::PROGRAMMING_EXAM_NAME,
+                    'session' => $session,
+                    'forced' => true
+                ]);
+            }
 
-            $this->serve(FinishExamFeature::class, [
-                'examName' => ExamSystem::ENGLISH_EXAM_NAME,
-                'session' => $session,
-                'forced' => true
-            ]);
+            if ($session->english_status !== ExamSystem::FINISHED_STATUS) {
+                $this->serve(FinishExamFeature::class, [
+                    'examName' => ExamSystem::ENGLISH_EXAM_NAME,
+                    'session' => $session,
+                    'forced' => true
+                ]);
+            }
 
-            $this->serve(FinishExamFeature::class, [
-                'examName' => ExamSystem::TYPE_SPEED_EXAM_NAME,
-                'session' => $session,
-                'forced' => true
-            ]);
+            if ($session->type_speed_status !== ExamSystem::FINISHED_STATUS) {
+                $this->serve(FinishExamFeature::class, [
+                    'examName' => ExamSystem::TYPE_SPEED_EXAM_NAME,
+                    'session' => $session,
+                    'forced' => true
+                ]);
+            }
         }
     }
 }
