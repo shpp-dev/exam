@@ -45,7 +45,7 @@ class FinishSessionFeature extends Feature
 
         $this->run(SendMailToUsersJob::class, [
             'emails' => [$email],
-            'view' => $this->forced ? 'mail.exam-completed-forced' : 'mails.exam-completed',
+            'view' => $this->forced ? 'mails.exam-completed-forced' : 'mails.exam-completed',
             'subject' => __('email_subjects.examFinished')
         ]);
 
