@@ -55,5 +55,6 @@ return [
 
     'needExamRegistrationDecline' => 'Потрібно скасувати його реєстрацію на',
 
-    'examFinishedAndNeedsChecking' => 'Завершено вступний іспит для :email. Потрібно перевірити на :examAdminUrl'
+    'examFinishedAndNeedsChecking' => 'Завершено вступний екзамен для :email. Потрібно перевірити на :examAdminUrl',
+    'forcedExamFinish' => 'Користувач :email не завершив свій вступний екзамен, тому система зробила це примусово. Потрібно перевірити на :examAdminUrl'
 ];

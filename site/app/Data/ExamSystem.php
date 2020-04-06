@@ -52,4 +52,6 @@ class ExamSystem
     // file paths
     const ENGLISH_QUESTIONS_PATH = 'resources' . DIRECTORY_SEPARATOR . 'exam' . DIRECTORY_SEPARATOR . 'englishQuestions.json';
     const ENGLISH_WORDS_PATH = 'resources' . DIRECTORY_SEPARATOR . 'exam' . DIRECTORY_SEPARATOR . 'englishWords.json';
+
+    const MAX_DURATION_FOR_EXAM_IN_HOURS = 3;
 }

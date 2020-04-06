@@ -14,10 +14,12 @@ use Lucid\Foundation\Feature;
 class FinishSessionFeature extends Feature
 {
     private $session;
+    private $forced;
 
-    public function __construct(ExamSession $session = null)
+    public function __construct(ExamSession $session = null, bool $forced = false)
     {
         $this->session = $session;
+        $this->forced = $forced;
     }
 
     public function handle()
@@ -48,8 +50,8 @@ class FinishSessionFeature extends Feature
         ]);
 
         $this->run(SendMailToAdminsJob::class, [
-            'subject' => __('email_subjects.examFinishedForAdmin'),
-            'view' => 'mails.admin.exam-finished',
+            'subject' => $this->forced ? __('email_subjects.forcedExamFinish') : __('email_subjects.examFinishedForAdmin'),
+            'view' => $this->forced ? 'mails.admin.forced-exam-finish' : 'mails.admin.exam-finished',
             'data' => ['email' => $email]
         ]);
 

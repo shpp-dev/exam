@@ -18,11 +18,13 @@ class FinishExamFeature extends Feature
 
     private $examName;
     private $session;
+    private $forced;
 
-    public function __construct(string $examName, ExamSession $session = null)
+    public function __construct(string $examName, ExamSession $session = null, bool $forced = false)
     {
         $this->session = $session;
         $this->examName = $examName;
+        $this->forced = $forced;
     }
 
     public function handle()
@@ -43,7 +45,7 @@ class FinishExamFeature extends Feature
         ];
 
         if ($this->run(CheckAllExamsFinishedJob::class, ['session' => $this->session])) {
-            $this->serve(FinishSessionFeature::class, ['session' => $this->session]);
+            $this->serve(FinishSessionFeature::class, ['session' => $this->session, 'forced' => $this->forced]);
             $finished['session'] = true;
         }
 
