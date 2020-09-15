@@ -10,6 +10,6 @@ return [
     'uninvitedUserForExam' => 'Незапрошений користувач записався на екзамен',
     'declineRegistrationOnExam' => 'Скасування реєстрації на екзамен',
     'reRegistrationOnExam' => 'Повторна реєстрація на екзамен',
-    'retryExamAvailable' => 'Доступна реєстрація для перескладання екзамену',
+    'retryExamAvailable' => 'Доступне перескладання екзамену',
     'error' => 'Помилка на екзамені'
 ];

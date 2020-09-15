@@ -6,7 +6,7 @@
     @lang('email_messages.hello')!
 @endsection
 @section('content')
-    <p>@lang('email_messages.retryExamAvailable', ['calendlyUrl' => config('ptp.calendlyUrl')])</p>
+    <p>@lang('email_messages.retryExamAvailable', ['portalUrl' => config('ptp.accountFrontUrl')])</p>
 @endsection
 
 
