@@ -7,6 +7,7 @@ use App\Data\ExamSystem;
 use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Features\Exam\Programming\GetProgrammingTaskFeature;
 use App\Features\Exam\Programming\SaveProgrammingAnswerFeature;
+use App\Features\Exam\Session\GetRestOfExamTimeFeature;
 use App\Features\Exam\Session\StartExamFeature;
 use App\Features\Exam\Session\FinishExamFeature;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -45,5 +46,10 @@ class ProgrammingController extends Controller
                 'finished' => $finished
             ]
         ]);
+    }
+
+    public function restOfTime()
+    {
+        return $this->serve(GetRestOfExamTimeFeature::class, ['examType' => ExamSystem::PROGRAMMING_EXAM_NAME]);
     }
 }

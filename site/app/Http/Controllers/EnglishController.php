@@ -8,6 +8,7 @@ use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Features\Exam\English\GetEnglishQuestionFeature;
 use App\Features\Exam\English\SaveEnglishAnswerFeature;
 use App\Features\Exam\Session\FinishExamFeature;
+use App\Features\Exam\Session\GetRestOfExamTimeFeature;
 use App\Features\Exam\Session\StartExamFeature;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Lucid\Foundation\Http\Controller as Controller;
@@ -44,5 +45,10 @@ class EnglishController extends Controller
                 'finished' => $finished
             ]
         ]);
+    }
+
+    public function restOfTime()
+    {
+        return $this->serve(GetRestOfExamTimeFeature::class, ['examType' => ExamSystem::ENGLISH_EXAM_NAME]);
     }
 }
