@@ -32,9 +32,11 @@ class GetRestOfExamTimeJob extends Job
         switch ($this->examType) {
             case ExamSystem::PROGRAMMING_EXAM_NAME:
                 $startExamInSeconds = Carbon::parse($this->examSession->programming_started_at)->timestamp;
+                $durationInMinutes = config('ptp.programmingExamDurationMins');
                 break;
             case ExamSystem::ENGLISH_EXAM_NAME:
                 $startExamInSeconds = Carbon::parse($this->examSession->english_started_at)->timestamp;
+                $durationInMinutes = config('ptp.englishExamDurationMins');
                 break;
             default:
                 throw new \Exception('Unknown exam type');
@@ -42,7 +44,7 @@ class GetRestOfExamTimeJob extends Job
 
         $nowInSeconds = Carbon::now()->timestamp;
         $subInSeconds = $nowInSeconds - $startExamInSeconds;
-        $restInSeconds = config('ptp.programmingExamDurationMins') * 60 - $subInSeconds;
+        $restInSeconds = $durationInMinutes * 60 - $subInSeconds;
 
         return $restInSeconds > 0 ? $restInSeconds : 0;
     }
