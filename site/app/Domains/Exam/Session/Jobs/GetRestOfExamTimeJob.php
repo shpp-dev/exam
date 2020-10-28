@@ -31,10 +31,10 @@ class GetRestOfExamTimeJob extends Job
     {
         switch ($this->examType) {
             case ExamSystem::PROGRAMMING_EXAM_NAME:
-                $startExamInSeconds = Carbon::instance($this->examSession->programming_started_at)->timestamp;
+                $startExamInSeconds = Carbon::parse($this->examSession->programming_started_at)->timestamp;
                 break;
             case ExamSystem::ENGLISH_EXAM_NAME:
-                $startExamInSeconds = Carbon::instance($this->examSession->english_started_at)->timestamp;
+                $startExamInSeconds = Carbon::parse($this->examSession->english_started_at)->timestamp;
                 break;
             default:
                 throw new \Exception('Unknown exam type');
