@@ -32,14 +32,14 @@ class GetRestOfExamTimeFeature extends Feature
             ]);
         }
 
-        $restOfSeconds = $this->run(GetRestOfExamTimeJob::class, [
+        $remainingTime = $this->run(GetRestOfExamTimeJob::class, [
             'examSession' => $session,
             'examType' => $this->examType
         ]);
 
         return $this->run(RespondWithJsonJob::class, [
             'content' => [
-                'restOfSeconds' => $restOfSeconds
+                'remainingTime' => $remainingTime
             ]
         ]);
     }

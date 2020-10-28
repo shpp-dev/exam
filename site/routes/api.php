@@ -24,12 +24,12 @@ Route::group(['middleware' => ['ptp.auth', 'ptp.current', 'ptp.location']], func
     Route::get('exam/programming/task', 'ProgrammingController@getTask')->name('programmingTask');
     Route::post('exam/programming/answer', 'ProgrammingController@saveAnswer')->name('programmingAnswer');
     Route::post('exam/programming/finish', 'ProgrammingController@finish')->name('programmingFinish');
-    Route::get('exam/programming/rest-of-time', 'ProgrammingController@restOfTime');
+    Route::get('exam/programming/remaining-time', 'ProgrammingController@remainingTime');
 
     Route::get('exam/english/question', 'EnglishController@getQuestion')->name('englishQuestion');
     Route::post('exam/english/answer', 'EnglishController@saveAnswer')->name('englishAnswer');
     Route::post('exam/english/finish', 'EnglishController@finish')->name('englishFinish');
-    Route::get('exam/english/rest-of-time', 'EnglishController@restOfTime');
+    Route::get('exam/english/remaining-time', 'EnglishController@remainingTime');
 
     Route::post('exam/type/start', 'TypeSpeedController@start')->name('typeStart');
     Route::post('exam/type/speed', 'TypeSpeedController@saveResult')->name('typeSpeed');

@@ -48,7 +48,7 @@ class ProgrammingController extends Controller
         ]);
     }
 
-    public function restOfTime()
+    public function remainingTime()
     {
         return $this->serve(GetRestOfExamTimeFeature::class, ['examType' => ExamSystem::PROGRAMMING_EXAM_NAME]);
     }

@@ -44,8 +44,8 @@ class GetRestOfExamTimeJob extends Job
 
         $nowInSeconds = Carbon::now()->timestamp;
         $subInSeconds = $nowInSeconds - $startExamInSeconds;
-        $restInSeconds = $durationInMinutes * 60 - $subInSeconds;
+        $restInMinutes = $durationInMinutes - floor($subInSeconds / 60);
 
-        return $restInSeconds > 0 ? $restInSeconds : 0;
+        return $restInMinutes > 0 ? $restInMinutes : 0;
     }
 }
