@@ -1,5 +1,5 @@
 @switch(config('app.domain'))
-    @case('programming.kr.ua')
+    @case('programming.org.ua')
     @case('2.shpp.me')
         @include('layouts.emails.kr-email')
         @break

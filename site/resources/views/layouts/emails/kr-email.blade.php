@@ -327,7 +327,7 @@
                                                             <tr style="border-collapse:collapse;">
                                                                 <td align="center" style="padding:0;Margin:0;"><a
                                                                             target="_blank"
-                                                                            href="https://programming.kr.ua/"
+                                                                            href="https://programming.org.ua/"
                                                                             style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:roboto, 'helvetica neue', helvetica, arial, sans-serif;font-size:14px;text-decoration:underline;color:#1376C8;"><img
                                                                                 src="https://fimkf.stripocdn.email/content/guids/CABINET_90ff79527d9a3389cdc7652ef57b3a4e/images/72071581672371989.png"
                                                                                 alt=""
