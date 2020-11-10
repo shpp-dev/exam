@@ -32,7 +32,7 @@ class GetPreparedUsersResultsListJob extends Job
         foreach ($this->sessions as $session) {
             $examData = [
                 'sessionId' => $session->id,
-                'accountId' => isset($session->passed) ? $session->user->account_id : null,
+                'accountId' => $session->user->account_id,
                 'timing' => [
                     'startedAtTs' => Carbon::parse($session->startedAt)->timestamp * ExamSystem::JAVASCRIPT_TIMESTAMP_COEFFICIENT,
                     'finishedAtTs' => Carbon::parse($session->finishedAt)->timestamp * ExamSystem::JAVASCRIPT_TIMESTAMP_COEFFICIENT
