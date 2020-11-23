@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Features\Admin\GetExamDataForUsersFeature;
 use App\Features\User\CreateUserFeature;
 use App\Features\User\ExamRegistrationByCalendlyFeature;
 use App\Features\User\GetExamStatusForUserFeature;
@@ -22,5 +23,10 @@ class UserController extends Controller
     public function examRegistrationByCalendly()
     {
         return $this->serve(ExamRegistrationByCalendlyFeature::class);
+    }
+
+    public function getExamDataForUsers()
+    {
+        return $this->serve(GetExamDataForUsersFeature::class);
     }
 }

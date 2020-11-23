@@ -50,6 +50,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['ptp.admin']], function() {
 Route::group(['middleware' => ['ptp.eco']], function() {
    Route::post('user/register', 'UserController@createUser');
    Route::post('user/exam/status', 'UserController@examStatusForUser');
+   Route::post('users/exam-data', 'UserController@getExamDataForUsers');
 });
 
 Route::post('calendly', 'UserController@examRegistrationByCalendly');
