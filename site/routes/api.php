@@ -16,6 +16,9 @@ use Illuminate\Http\Request;
 Route::group(['middleware' => ['ptp.auth', 'ptp.access', 'ptp.location']], function () {
     Route::get('exam/status', 'ExamSessionController@status')->name('status');
     Route::post('exam/start', 'ExamSessionController@start')->name('start');
+});
+
+Route::group(['middleware' => ['ptp.auth']], function () {
     Route::post('exam/zero-status/save', 'ExamSessionController@saveZeroStatus');
 });
 
