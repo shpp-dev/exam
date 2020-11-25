@@ -26,9 +26,7 @@ class SaveFeedbackAboutExamJob extends Job
 
     public function handle()
     {
-        $this->user->feedback = $this->feedback;
+        $this->user->lastFinishedExamSession()->feedback = $this->feedback;
         $this->user->save();
-
-        return $this->user;
     }
 }
