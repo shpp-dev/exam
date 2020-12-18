@@ -50,14 +50,42 @@ class UpdateConfigFromGoogleSpreadSheet extends Command
 
     private function updateConfig(array $config)
     {
-        $environments = file_get_contents(base_path('.env'));
+        $envMap = $this->getEnvironmentsMap();
 
         foreach ($config as $field) {
-            if (strpos($environments, $field['key']) === false) {
-                file_put_contents(base_path('.env'), "\n" .  $field['key'] . '=' . $field['value'], FILE_APPEND);
+            $envMap[$field['key']] = $field['value'];
+        }
+
+        $this->saveEnvironmentsMap($envMap);
+
+        Artisan::call('config:cache');
+    }
+
+    private function getEnvironmentsMap(): array
+    {
+        $environments = file_get_contents(base_path('.env'));
+        $envAsArray = explode("\n", $environments);
+        $envMap = [];
+
+        foreach ($envAsArray as $field) {
+            if ($field) {
+                $keyValue = explode('=', $field);
+                $key = array_shift($keyValue);
+                $envMap[$key] = implode('=', $keyValue);
             }
         }
 
-        Artisan::call('config:cache');
+        return $envMap;
+    }
+
+    private function saveEnvironmentsMap(array $envMap)
+    {
+        $preparedEnvironments = [];
+
+        foreach ($envMap as $key => $value) {
+            $preparedEnvironments[] = $key . '=' . $value;
+        }
+
+        file_put_contents(base_path('.env'), implode("\n", $preparedEnvironments));
     }
 }
