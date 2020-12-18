@@ -6,6 +6,7 @@ use App\Console\Commands\ClearExamRegistration;
 use App\Console\Commands\FinishExam;
 use App\Console\Commands\FinishExamSession;
 use App\Console\Commands\RetryExamNotification;
+use App\Console\Commands\UpdateConfigFromGoogleSpreadSheet;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -20,7 +21,8 @@ class Kernel extends ConsoleKernel
         FinishExam::class,
         FinishExamSession::class,
         ClearExamRegistration::class,
-        RetryExamNotification::class
+        RetryExamNotification::class,
+        UpdateConfigFromGoogleSpreadSheet::class
     ];
 
     /**

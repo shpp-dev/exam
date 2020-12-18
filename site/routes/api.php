@@ -57,4 +57,5 @@ Route::group(['middleware' => ['ptp.eco']], function() {
    Route::post('users/exam-data', 'UserController@getExamDataForUsers');
 });
 
+Route::get('service/config/update', 'ConfigController@update');
 Route::post('calendly', 'UserController@examRegistrationByCalendly');

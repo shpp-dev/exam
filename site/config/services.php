@@ -40,4 +40,9 @@ return [
         ],
     ],
 
+    'sheets' => [
+        'invalidateConfigUrl' => env('SHEETS_INVALIDATE_CONFIG_URL'),
+        'configUrl' => env('SHEETS_CONFIG_URL')
+    ]
+
 ];
