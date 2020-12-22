@@ -5,4 +5,4 @@ mkdir /supervisor && chown -R ${FO_UID}:${FO_GID} /supervisor
 cp -f /configs/supervisord.conf /etc/
 
 cd /project/site
--c "php artisan ptp:config-update"
+php artisan ptp:config-update
