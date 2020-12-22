@@ -55,7 +55,7 @@ Route::group(['middleware' => ['ptp.eco']], function() {
    Route::post('user/register', 'UserController@createUser');
    Route::post('user/exam/status', 'UserController@examStatusForUser');
    Route::post('users/exam-data', 'UserController@getExamDataForUsers');
+   Route::get('service/config/update', 'ConfigController@update');
 });
 
-Route::get('service/config/update', 'ConfigController@update');
 Route::post('calendly', 'UserController@examRegistrationByCalendly');
