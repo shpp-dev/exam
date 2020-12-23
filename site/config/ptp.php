@@ -3,6 +3,7 @@
 return [
     'accountFrontUrl' => env('ACCOUNT_FRONT_URL'),
     'accountBackUrl' => env('ACCOUNT_BACK_URL'),
+    'ptpStartDatesUrl' => env('PTP_START_DATES_URL'),
     'examFrontUrl' => env('EXAM_FRONT_URL'),
     'examAdminFrontUrl' => env('EXAM_ADMIN_FRONT_URL'),
     'programmingExam' => env('PROGRAMMING_EXAM_ON'),
