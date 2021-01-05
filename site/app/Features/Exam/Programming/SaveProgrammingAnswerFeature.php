@@ -12,13 +12,12 @@ use App\Domains\Http\Jobs\RespondWithJsonJob;
 use App\Domains\Http\Jobs\SendTestCodeToCoderunnerJob;
 use App\Domains\Http\Jobs\SubmitCodeToCoderunnerJob;
 use App\Features\Exam\Session\FinishExamFeature;
-use App\Operations\CheckAnswerOnCoderunnerOperation;
+use App\Operations\Exam\Programming\CheckAnswerOnCoderunnerOperation;
 use App\ProgrammingTask;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Lucid\Foundation\Feature;
 use Lucid\Foundation\ServesFeaturesTrait;
-use function parallel\run;
 
 class SaveProgrammingAnswerFeature extends Feature
 {

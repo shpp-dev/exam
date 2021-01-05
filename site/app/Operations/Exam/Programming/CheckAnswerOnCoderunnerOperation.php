@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Operations;
+namespace App\Operations\Exam\Programming;
 
 
 use App\Domains\Exam\Programming\Jobs\CreateOrUpdateProgrammingResultJob;
