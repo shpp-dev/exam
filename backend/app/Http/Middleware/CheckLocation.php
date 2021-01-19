@@ -27,7 +27,7 @@ class CheckLocation
      */
     public function handle($request, Closure $next)
     {
-        if (config('ptp.examOnline')) {
+        if (config('ptp.examOnline') || config('app.env') === 'development') {
             return $next($request);
         }
 

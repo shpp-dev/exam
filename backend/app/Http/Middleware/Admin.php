@@ -23,6 +23,10 @@ class Admin
      */
     public function handle($request, Closure $next)
     {
+        if (config('app.env') === 'development') {
+            return $next($request);
+        }
+
         if (!$authToken = $request->cookie('AT')) {
             return $this->run(RespondWithJsonErrorJob::class, [
                 'message' => 'Non authorized',

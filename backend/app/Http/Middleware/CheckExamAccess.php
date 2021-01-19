@@ -27,6 +27,10 @@ class CheckExamAccess
      */
     public function handle($request, Closure $next)
     {
+        if (config('app.env') === 'development') {
+            return $next($request);
+        }
+
         $user = Auth::getAuthUser();
         $lastFinishedExamSession = $user->lastFinishedExamSession();
 

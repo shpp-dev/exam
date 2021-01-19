@@ -11,6 +11,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        if (config('app.env') === 'development') {
+            $this->call(TestUserSeeder::class);
+        }
+
         switch (config('app.locale')) {
             case 'ru':
                 $this->call(TasksSeederRU::class);

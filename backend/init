@@ -3,6 +3,6 @@
 
 exec('composer install');
 exec('php artisan key:generate');
+exec('php artisan config:cache');
 exec('php artisan migrate');
 exec('php artisan db:seed');
-exec('php artisan config:cache');
