@@ -13,9 +13,6 @@ COPY backend /project/backend
 
 WORKDIR /project/backend
 
-RUN cd /project/backend && composer install
-RUN cd /project/backend && php artisan config:cache
-
 EXPOSE 8080
 
 CMD php artisan serve --host=0.0.0.0 --port=8080
