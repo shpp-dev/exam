@@ -1,0 +1,2 @@
+@yield('subtitle')
+@yield('content')
