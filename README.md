@@ -1,2 +1,0 @@
-# exam
-Laravel + VueJS Application
