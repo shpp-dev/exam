@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+
+echo "Generate application key\n";
+exec('php artisan key:generate');
+
+echo "Cache configuration\n";
+exec('php artisan config:cache');
+
+echo "Migrate database\n";
+exec('php artisan migrate');
+
+echo "Seed database\n";
+exec('php artisan db:seed');
+
+echo "Start server\n";
+exec('php artisan serve --host=0.0.0.0 --port=8080');

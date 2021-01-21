@@ -61,21 +61,17 @@ class AdminControllerTest extends TestCase
 
     public function testCheckExamForUser()
     {
-        $response = $this->withoutMiddleware()->post('admin/check', [
-
-        ]);
-
-        $response->assertStatus(200);
+        // todo
     }
 
     public function testEverCookieForClient()
     {
-
+        // todo
     }
 
     public function testDisableCheckingLocation()
     {
-
+        // todo
     }
 
 }

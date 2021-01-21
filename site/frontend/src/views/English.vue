@@ -90,7 +90,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import store from "@/store";
+import store from "@/store/index";
 import statusCodes from "@/config/status-codes";
 
 export default Vue.extend({

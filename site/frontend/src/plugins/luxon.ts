@@ -1,5 +1,5 @@
 import Vue from "vue";
-import {DateTime, Duration, Info, Interval, Settings} from "@/plugins/luxon";
+import {DateTime, Duration, Info, Interval, Settings} from "luxon";
 
 // luxon setup
 // use it like: this.$dt.local().toFormat("MMMM dd, yyyy");

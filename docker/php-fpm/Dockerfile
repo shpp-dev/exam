@@ -7,12 +7,12 @@ RUN apk add --no-cache $PHPIZE_DEPS oniguruma-dev libzip-dev curl-dev \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --version=1.8.5
 
-RUN mkdir -p /project/backend
-
-COPY backend /project/backend
-
 WORKDIR /project/backend
+
+COPY site/backend/ ./
+
+RUN composer install
 
 EXPOSE 8080
 
-CMD php artisan serve --host=0.0.0.0 --port=8080
+CMD php start-server

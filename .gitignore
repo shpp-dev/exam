@@ -10,5 +10,10 @@
 /site/backend/npm-debug.log
 /site/backend/yarn-error.log
 /site/frontend/node_modules
+/site/frontend/dist
+/site/frontend/package-lock.json
 /site/frontend-admin/node_modules
+/site/frontend-admin/dist
+/site/frontend-admin/package-lock.json
+
 .idea

@@ -1,6 +1,6 @@
 import {ApiConfig} from "@/types";
 
-const API_BASE_URL: string = (process.env.VUE_APP_API_URL || "") + "api/exam";
+const API_BASE_URL: string = (process.env.VUE_APP_API_URL || "") + "/api/exam";
 const SIGN_IN_URL: string = process.env.VUE_APP_SIGN_IN_URL || "";
 const LOGOUT_URL: string = process.env.VUE_APP_LOGOUT_URL || "";
 const SUPPORT_EMAIL: string = process.env.VUE_APP_SUPPORT_EMAIL || "";

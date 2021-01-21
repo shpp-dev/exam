@@ -13,16 +13,19 @@ services:
     depends_on:
       - backend
       - frontend
-      - db
+      - frontend-admin
 
   backend:
     build:
       context: .
       dockerfile: docker/php-fpm/Dockerfile
     image: exam-backend
+    tty: true
     container_name: backend
     restart: always
-    command: "php artisan serve --host=0.0.0.0 --port=8080"
+    volumes:
+      - ./site/backend:/project/backend
+      - /project/backend/vendor
     depends_on:
       - db
     networks:
@@ -31,10 +34,28 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: docker/node/Dockerfile
+      dockerfile: docker/node/frontend/Dockerfile
+    tty: true
     image: exam-frontend
     container_name: frontend
-    command: "npm run serve"
+    volumes:
+      - ./site/frontend:/project/frontend
+      - /project/frontend/node_modules
+      - /project/frontend/dist
+    networks:
+      - app-network
+
+  frontend-admin:
+    build:
+      context: .
+      dockerfile: docker/node/frontend-admin/Dockerfile
+    image: exam-frontend-admin
+    tty: true
+    container_name: frontend-admin
+    volumes:
+      - ./site/frontend-admin:/project/frontend-admin
+      - /project/frontend-admin/node_modules
+      - /project/frontend-admin/dist
     networks:
       - app-network
 
@@ -53,6 +74,7 @@ services:
 
   db-adminer:
     image: adminer
+    container_name: adminer
     restart: always
     ports:
       - 8081:8080
