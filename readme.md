@@ -6,7 +6,7 @@ The architecture consists of three different microservices:
 - User page based on VueJS framework
 - Admin page based on VueJS framework
 
-## Deploy for local development
+## Deployment for local development
 
 ### Requirements
 
